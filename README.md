@@ -8,9 +8,10 @@ First release targets a no-login, same-screen MVP:
 
 - category switcher for lunch, dinner, drinks, and sweets
 - one-tap "today's expedition" flow
-- random destiny card effects
-- slot-machine reveal animation
+- staged destiny-card reveal
+- slot-style destination animation
 - direct Google Maps launch
+- one-time reroll when the drawn card allows it
 - lightweight content and docs sync inside this repo
 
 ## Getting Started
@@ -43,5 +44,5 @@ The repository now includes:
 - fantasy expedition app shell
 - category-based restaurant pools
 - destiny card filtering with fallback behavior
-- expedition result reveal
+- staged expedition reveal flow
 - one-time reroll when the round grants reroll power

@@ -1,13 +1,17 @@
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { fireEvent, render, screen } from '@testing-library/react';
 import App from '../App';
 
 test('starts an expedition and reveals a destination', async () => {
-  const user = userEvent.setup();
   render(<App />);
 
-  await user.click(screen.getByRole('button', { name: '開啟今日遠征' }));
+  fireEvent.click(screen.getByRole('button', { name: '開啟今日遠征' }));
 
-  expect(await screen.findByText(/本日遠征目的地/)).toBeInTheDocument();
+  expect(screen.getAllByText('命運卡揭示中')).toHaveLength(2);
+  expect(screen.getByText(/命運卡：/)).toBeInTheDocument();
+  expect(screen.queryByText(/本日遠征目的地/)).not.toBeInTheDocument();
+
+  expect(
+    await screen.findByText(/本日遠征目的地/, {}, { timeout: 2500 }),
+  ).toBeInTheDocument();
   expect(screen.getByRole('link', { name: '出發去吃' })).toBeInTheDocument();
 });

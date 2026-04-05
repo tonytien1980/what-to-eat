@@ -1,5 +1,4 @@
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { fireEvent, render, screen } from '@testing-library/react';
 import App from '../App';
 
 test('allows a single reroll when the round grants reroll power', async () => {
@@ -10,17 +9,19 @@ test('allows a single reroll when the round grants reroll power', async () => {
     .mockReturnValueOnce(0)
     .mockReturnValueOnce(0);
 
-  const user = userEvent.setup();
   render(<App />);
 
-  await user.click(screen.getByRole('button', { name: '開啟今日遠征' }));
+  fireEvent.click(screen.getByRole('button', { name: '開啟今日遠征' }));
+  await screen.findByText(/本日遠征目的地/, {}, { timeout: 2500 });
 
-  const rerollButton = await screen.findByRole('button', { name: '逆天改命' });
+  const rerollButton = screen.getByRole('button', { name: '逆天改命' });
   expect(rerollButton).toBeEnabled();
 
-  await user.click(rerollButton);
+  fireEvent.click(rerollButton);
+  expect(screen.getAllByText('命運卡揭示中')).toHaveLength(2);
+  await screen.findByText(/本日遠征目的地/, {}, { timeout: 2500 });
 
-  expect(screen.getByRole('button', { name: '逆天改命' })).toBeDisabled();
+  expect(screen.getByRole('button', { name: '逆天改命已用盡' })).toBeDisabled();
 
   randomSpy.mockRestore();
 });

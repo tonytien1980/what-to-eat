@@ -34,6 +34,7 @@ Should include:
 - short effect description
 - spinning restaurant names
 - a dramatic but short stop animation
+- a total reveal window that still resolves inside roughly 1.5 seconds
 
 ### 3. 遠征結果
 
@@ -67,6 +68,13 @@ Should include:
 - `逆天改命` 不是每局都可用
 - 只有抽到 `宿命重骰` 時才開放一次
 - 使用後按鈕保留但禁用，明確表示本局容錯已耗盡
+
+## Current Motion Rule
+
+- 第一步先顯示命運卡揭示狀態
+- 第二步再進入命運之輪輪播
+- 最後才出現結果按鈕列
+- 若使用者偏好 reduced motion，應直接簡化為快速揭曉
 
 ## Success Criteria
 

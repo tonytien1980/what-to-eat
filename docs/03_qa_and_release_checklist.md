@@ -17,6 +17,7 @@
 - large titles do not overflow
 - disabled or missing data states are readable
 - animations do not block the final result
+- reduced-motion users still get a valid quick reveal
 
 ## Verification Commands
 
