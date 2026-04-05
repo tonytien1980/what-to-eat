@@ -9,13 +9,10 @@
   color-scheme: dark;
   --ink-strong: #f9f3ed;
   --ink-soft: rgba(249, 243, 237, 0.78);
-  --panel-bg: rgba(9, 12, 18, 0.56);
-  --panel-strong: rgba(14, 18, 25, 0.74);
   --line-soft: rgba(255, 239, 209, 0.14);
   --gold: #f1c56f;
   --ember: #ff8559;
   --jade: #61c4b1;
-  --violet: #a389ff;
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -49,7 +46,7 @@ a {
 .scene-surface {
   position: relative;
   min-height: 100vh;
-  padding: clamp(18px, 3vw, 32px);
+  padding: 20px;
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -59,71 +56,28 @@ a {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 15% 20%, rgba(18, 36, 48, 0.16), transparent 24%),
-    linear-gradient(90deg, rgba(5, 7, 10, 0.66) 0%, rgba(5, 7, 10, 0.34) 40%, rgba(5, 7, 10, 0.58) 100%),
-    linear-gradient(180deg, rgba(5, 7, 10, 0.18) 0%, rgba(5, 7, 10, 0.72) 100%);
+    radial-gradient(circle at 50% 45%, rgba(0, 0, 0, 0.04), transparent 22%),
+    linear-gradient(180deg, rgba(3, 5, 9, 0.26) 0%, rgba(3, 5, 9, 0.56) 100%);
 }
 
-.interface-shell {
+.central-altar {
   position: relative;
   z-index: 1;
-  width: min(100%, 1280px);
+  width: min(100%, 560px);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.85fr);
-  gap: clamp(18px, 2vw, 26px);
-  min-height: calc(100vh - clamp(36px, 6vw, 64px));
+  gap: 14px;
+  padding: clamp(18px, 3vw, 24px);
+  min-height: calc(100vh - 40px);
+  align-content: center;
 }
 
-.command-panel,
-.altar-panel {
-  position: relative;
-  overflow: hidden;
-  border-radius: 32px;
-  border: 1px solid var(--line-soft);
-  box-shadow:
-    0 18px 70px rgba(0, 0, 0, 0.24),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-}
-
-.command-panel {
-  padding: clamp(22px, 3vw, 34px);
-  background:
-    linear-gradient(180deg, rgba(6, 10, 15, 0.48), rgba(10, 14, 21, 0.66)),
-    radial-gradient(circle at top left, rgba(83, 151, 169, 0.14), transparent 24%);
-  backdrop-filter: blur(12px);
-}
-
-.altar-panel {
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  min-height: 100%;
-}
-
-.altar-overlay {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg, rgba(4, 6, 10, 0.34), rgba(5, 7, 11, 0.84)),
-    radial-gradient(circle at top, rgba(92, 162, 198, 0.14), transparent 34%);
-}
-
-.altar-content {
-  position: relative;
-  z-index: 1;
-  padding: clamp(20px, 2.8vw, 28px);
-  display: grid;
-  gap: 16px;
-  height: 100%;
-}
-
-.scene-status-row {
+.top-status {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
 }
 
 .eyebrow,
@@ -148,15 +102,20 @@ a {
   box-shadow: 0 0 0 4px rgba(241, 197, 111, 0.18);
 }
 
-.weather-source-pill {
+.weather-source-pill,
+.weather-pill,
+.meta-pill,
+.card-meta-pill {
   display: inline-flex;
   align-items: center;
   min-height: 34px;
   padding: 8px 12px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  font-size: 0.84rem;
+  background: rgba(8, 11, 16, 0.42);
+  backdrop-filter: blur(10px);
+  color: rgba(255, 248, 240, 0.86);
+  font-size: 0.86rem;
   font-weight: 700;
 }
 
@@ -173,148 +132,44 @@ a {
 }
 
 .title-block {
-  margin-top: 18px;
+  display: grid;
+  gap: 10px;
+  text-align: center;
 }
 
 .city-kicker {
   margin: 0;
-  color: rgba(255, 255, 255, 0.72);
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.9rem;
+  font-weight: 800;
 }
 
 .title-block h1 {
-  margin: 10px 0 0;
+  margin: 0;
   font-family: 'Noto Serif TC', serif;
-  font-size: clamp(3rem, 6vw, 5.6rem);
-  line-height: 0.96;
+  font-size: clamp(3rem, 11vw, 4.8rem);
+  line-height: 0.95;
   text-wrap: balance;
 }
 
 .tagline {
-  margin: 18px 0 0;
-  max-width: 38rem;
+  margin: 0;
   color: var(--ink-soft);
-  font-size: 1.08rem;
+  font-size: 1rem;
 }
 
-.weather-hero-card {
-  margin-top: 24px;
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(220px, 0.8fr);
-  gap: 18px;
-  padding: 18px;
-  border-radius: 28px;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
-    radial-gradient(circle at bottom right, rgba(255, 197, 111, 0.12), transparent 24%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.hero-kicker {
-  margin: 0;
-  color: #d7f8ff;
-  font-size: 0.86rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-}
-
-.weather-hero-copy h2 {
-  margin: 10px 0 0;
-  font-family: 'Noto Serif TC', serif;
-  font-size: clamp(1.8rem, 3vw, 2.5rem);
-  line-height: 1.04;
-}
-
-.weather-hero-copy p:last-child {
-  margin: 12px 0 0;
-  color: var(--ink-soft);
-}
-
-.weather-hero-metrics {
-  display: grid;
-  gap: 12px;
-}
-
-.weather-metric {
-  display: grid;
-  gap: 2px;
-  padding: 14px 16px;
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.weather-metric strong {
-  font-size: 1.5rem;
-  line-height: 1;
-}
-
-.weather-metric span:last-child {
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 0.92rem;
-}
-
-.forecast-strip {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 18px;
-}
-
-.forecast-card {
-  position: relative;
-  min-height: 140px;
-  border-radius: 24px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.forecast-card-active {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
-}
-
-.forecast-card-image,
-.destiny-card-scene {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.forecast-card-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.72));
-}
-
-.forecast-card-content {
-  position: absolute;
-  inset: auto 14px 14px 14px;
-  display: grid;
-  gap: 4px;
-}
-
-.forecast-card-content p,
-.forecast-card-content span {
-  margin: 0;
-  font-size: 0.86rem;
-  color: rgba(255, 255, 255, 0.82);
-}
-
-.forecast-card-content h3 {
-  margin: 0;
-  font-family: 'Noto Serif TC', serif;
-  font-size: 1.15rem;
+.weather-strip {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
 }
 
 .category-tabs {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 10px;
-  margin-top: 24px;
 }
 
 .category-pill {
@@ -322,18 +177,17 @@ a {
   padding: 11px 16px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(8, 11, 16, 0.42);
+  backdrop-filter: blur(10px);
   color: var(--ink-strong);
   cursor: pointer;
   transition:
     transform 160ms var(--ease-out-quart),
-    background-color 160ms var(--ease-out-quart),
-    box-shadow 160ms var(--ease-out-quart);
+    background-color 160ms var(--ease-out-quart);
 }
 
 .category-pill:hover {
   transform: translateY(-1px);
-  background: rgba(255, 255, 255, 0.08);
 }
 
 .category-pill-active {
@@ -349,7 +203,6 @@ a {
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  margin-top: 18px;
 }
 
 .status-copy {
@@ -357,22 +210,7 @@ a {
   color: var(--ink-soft);
 }
 
-.meta-pill,
-.card-meta-pill {
-  display: inline-flex;
-  align-items: center;
-  min-height: 34px;
-  padding: 8px 12px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.84);
-  font-weight: 700;
-  font-size: 0.88rem;
-}
-
 .start-button {
-  margin-top: 18px;
   min-height: 56px;
   padding: 14px 28px;
   border: 0;
@@ -384,7 +222,6 @@ a {
   box-shadow: 0 18px 40px rgba(97, 196, 177, 0.22);
   transition:
     transform 180ms var(--ease-out-expo),
-    box-shadow 180ms var(--ease-out-expo),
     filter 180ms var(--ease-out-expo);
 }
 
@@ -398,36 +235,65 @@ a {
   cursor: progress;
 }
 
+.altar-panel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 30px;
+  border: 1px solid var(--line-soft);
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  box-shadow:
+    0 20px 70px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.altar-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(4, 6, 10, 0.28), rgba(4, 6, 10, 0.72)),
+    radial-gradient(circle at top, rgba(92, 162, 198, 0.12), transparent 36%);
+}
+
+.altar-content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+}
+
 .idle-state,
 .destiny-card,
 .slot-stage,
 .result-actions {
   position: relative;
   overflow: hidden;
-  border-radius: 28px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(6, 9, 14, 0.42);
-  backdrop-filter: blur(12px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(7, 10, 14, 0.42);
+  backdrop-filter: blur(10px);
 }
 
 .idle-state,
 .destiny-card,
 .result-actions {
-  padding: 18px;
+  padding: 16px;
 }
 
 .idle-state h2,
 .destiny-card h2 {
-  margin: 12px 0 0;
+  margin: 10px 0 0;
   font-family: 'Noto Serif TC', serif;
-  font-size: clamp(1.65rem, 2.8vw, 2.3rem);
+  font-size: clamp(1.5rem, 5vw, 2rem);
   line-height: 1.08;
 }
 
 .card-description,
 .result-summary,
 .result-subcopy {
-  color: rgba(255, 246, 237, 0.8);
+  color: rgba(255, 246, 237, 0.82);
 }
 
 .destiny-card-revealing {
@@ -436,41 +302,48 @@ a {
 
 .destiny-card-frame {
   display: grid;
-  gap: 16px;
+  gap: 14px;
 }
 
 .destiny-card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
 }
 
 .destiny-card-subtitle {
   color: rgba(255, 255, 255, 0.72);
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   font-weight: 700;
 }
 
 .destiny-card-illustration {
   position: relative;
-  min-height: 178px;
-  border-radius: 22px;
+  min-height: 148px;
+  border-radius: 18px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.destiny-card-scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .destiny-card-illustration::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.42));
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.44));
 }
 
 .destiny-card-art {
   position: absolute;
   inset: 50% auto auto 50%;
-  width: min(180px, 64%);
+  width: min(150px, 56%);
   height: auto;
   transform: translate(-50%, -50%);
   z-index: 1;
@@ -506,51 +379,29 @@ a {
   fill: rgba(28, 16, 11, 0.5);
 }
 
-.destiny-card-ember .destiny-card-art {
-  filter: drop-shadow(0 12px 24px rgba(255, 133, 89, 0.22));
-}
-
-.destiny-card-jade .destiny-card-art {
-  filter: drop-shadow(0 12px 24px rgba(97, 196, 177, 0.22));
-}
-
-.destiny-card-gold .destiny-card-art {
-  filter: drop-shadow(0 12px 24px rgba(241, 197, 111, 0.22));
-}
-
-.destiny-card-violet .destiny-card-art {
-  filter: drop-shadow(0 12px 24px rgba(163, 137, 255, 0.22));
-}
-
-.destiny-card-body {
-  display: grid;
-  gap: 10px;
-}
-
 .card-meta-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 2px;
+  gap: 8px;
 }
 
 .slot-stage {
-  padding: 18px;
+  padding: 16px;
 }
 
 .slot-label {
   margin: 0;
   color: rgba(255, 236, 201, 0.88);
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   font-weight: 800;
   letter-spacing: 0.08em;
 }
 
 .slot-window {
   position: relative;
-  margin-top: 12px;
-  min-height: 118px;
-  border-radius: 22px;
+  margin-top: 10px;
+  min-height: 108px;
+  border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background:
     radial-gradient(circle at center, rgba(255, 170, 104, 0.14), transparent 34%),
@@ -563,8 +414,8 @@ a {
 .slot-window::before {
   content: '';
   position: absolute;
-  inset: 10px;
-  border-radius: 18px;
+  inset: 8px;
+  border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -581,7 +432,7 @@ a {
   z-index: 1;
   max-width: 92%;
   text-align: center;
-  font-size: clamp(2rem, 4.2vw, 3.35rem);
+  font-size: clamp(1.8rem, 6vw, 2.8rem);
   font-weight: 900;
   line-height: 1.02;
 }
@@ -605,7 +456,7 @@ a {
   align-items: center;
   gap: 10px;
   width: fit-content;
-  min-height: 42px;
+  min-height: 40px;
   padding: 8px 12px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.06);
@@ -628,7 +479,7 @@ a {
 .action-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
 }
 
 .map-link,
@@ -643,14 +494,12 @@ a {
   text-decoration: none;
   transition:
     transform 160ms var(--ease-out-quart),
-    filter 160ms var(--ease-out-quart),
-    box-shadow 160ms var(--ease-out-quart);
+    filter 160ms var(--ease-out-quart);
 }
 
 .map-link {
   background: linear-gradient(135deg, var(--gold), #ffdfa4);
   color: #27160d;
-  box-shadow: 0 14px 28px rgba(241, 197, 111, 0.18);
 }
 
 .reroll-button {
@@ -662,8 +511,7 @@ a {
 
 .map-link:hover,
 .reroll-button:hover:not(:disabled),
-.category-pill:hover,
-.forecast-card:hover {
+.category-pill:hover {
   transform: translateY(-1px);
 }
 
@@ -704,62 +552,44 @@ a {
   }
 }
 
-@media (max-width: 1040px) {
-  .interface-shell {
-    grid-template-columns: 1fr;
-  }
-
-  .weather-hero-card {
-    grid-template-columns: 1fr;
-  }
-
-  .forecast-strip {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
 @media (max-width: 640px) {
   .scene-surface {
+    padding: 12px;
+  }
+
+  .central-altar {
+    width: 100%;
+    min-height: calc(100vh - 24px);
     padding: 14px;
   }
 
-  .interface-shell {
-    gap: 14px;
-  }
-
-  .command-panel,
-  .altar-content {
-    padding: 18px;
-  }
-
   .title-block h1 {
-    font-size: clamp(2.7rem, 15vw, 4rem);
+    font-size: clamp(2.5rem, 15vw, 4rem);
   }
 
-  .forecast-strip {
-    grid-template-columns: 1fr;
+  .top-status,
+  .control-row,
+  .destiny-card-header,
+  .action-row {
+    flex-direction: column;
+    align-items: stretch;
   }
 
-  .category-pill {
-    flex: 1 1 calc(50% - 8px);
-  }
-
+  .category-pill,
   .start-button,
+  .weather-source-pill,
+  .meta-pill,
+  .weather-pill,
   .map-link,
   .reroll-button,
   .reroll-status {
     width: 100%;
+    justify-content: center;
   }
 
-  .action-row {
-    flex-direction: column;
-  }
-
-  .scene-status-row,
-  .control-row,
-  .destiny-card-header {
-    align-items: flex-start;
-    flex-direction: column;
+  .weather-strip,
+  .category-tabs {
+    justify-content: stretch;
   }
 }
 
