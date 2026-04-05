@@ -86,3 +86,4 @@ The current implementation uses:
 - one guaranteed reroll every round
 - one optional bonus reroll if the expedition first reveals `宿命重骰`
 - local JSON data under `data/restaurants.json`
+- `npm run data:import` to refresh the local snapshot from the public reference sheets

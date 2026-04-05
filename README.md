@@ -19,6 +19,7 @@ First release targets a no-login, same-screen MVP:
 
 ```bash
 npm install
+npm run data:import
 npm run dev
 ```
 
@@ -43,8 +44,9 @@ npm run build
 The repository now includes:
 
 - fantasy expedition app shell
-- category-based restaurant pools
+- full imported restaurant snapshot from the reference public sheets
 - destiny card filtering with fallback behavior
 - staged expedition reveal flow
 - one guaranteed reroll every round
 - bonus reroll when luck grants `宿命重骰`
+- illustrated destiny cards with game-style presentation

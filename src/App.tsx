@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { categories } from './features/restaurants/data';
+import { DestinyCardView } from './components/destiny-card-view';
+import { categories, restaurants } from './features/restaurants/data';
 import {
   getCategorySummary,
   getPhaseLabel,
@@ -39,7 +40,7 @@ export default function App() {
             <div className="intro-meta">
               <span className="meta-pill">同螢幕直接玩</span>
               <span className="meta-pill">90 秒內決定</span>
-              <span className="meta-pill">資料可自己維護</span>
+              <span className="meta-pill">現在有 {restaurants.length} 家可抽</span>
             </div>
             <div className="category-tabs" role="tablist" aria-label="遠征類型">
               {categories.map((category) => (
@@ -78,21 +79,12 @@ export default function App() {
           >
             {round ? (
               <>
-                <article
-                  className={
-                    phase === 'revealing'
-                      ? 'destiny-card destiny-card-revealing'
-                      : 'destiny-card'
-                  }
-                >
-                  <p className="phase-badge">{getPhaseLabel(phase)}</p>
-                  <h2>命運卡：{round.destinyCard.name}</h2>
-                  <p className="card-description">{round.destinyCard.description}</p>
-                  <div className="card-meta-row">
-                    <span className="card-meta-pill">{rerollCopy.hint}</span>
-                    <span className="card-meta-pill">資料池 {round.pool.length} 家</span>
-                  </div>
-                </article>
+                <DestinyCardView
+                  card={round.destinyCard}
+                  isRevealing={phase === 'revealing'}
+                  meta={[rerollCopy.hint, `資料池 ${round.pool.length} 家`]}
+                  phaseLabel={getPhaseLabel(phase)}
+                />
 
                 <div className="slot-stage">
                   <p className="slot-label">{getSlotLabel(phase)}</p>

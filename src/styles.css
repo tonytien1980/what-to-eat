@@ -268,6 +268,110 @@ a {
   animation: card-rise 420ms var(--ease-out-expo);
 }
 
+.destiny-card-frame {
+  display: grid;
+  gap: 16px;
+}
+
+.destiny-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.destiny-card-subtitle {
+  color: rgba(255, 242, 222, 0.7);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.destiny-card-illustration {
+  position: relative;
+  min-height: 184px;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 226, 193, 0.12);
+  display: grid;
+  place-items: center;
+}
+
+.destiny-card-illustration::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top, rgba(255, 234, 188, 0.2), transparent 32%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+}
+
+.destiny-card-body {
+  display: grid;
+  gap: 10px;
+}
+
+.destiny-card-ember .destiny-card-illustration {
+  background:
+    radial-gradient(circle at top, rgba(255, 160, 122, 0.4), transparent 34%),
+    linear-gradient(180deg, rgba(207, 82, 53, 0.26), rgba(57, 19, 18, 0.18));
+}
+
+.destiny-card-gold .destiny-card-illustration {
+  background:
+    radial-gradient(circle at top, rgba(255, 225, 138, 0.42), transparent 34%),
+    linear-gradient(180deg, rgba(214, 165, 65, 0.24), rgba(64, 37, 13, 0.16));
+}
+
+.destiny-card-jade .destiny-card-illustration {
+  background:
+    radial-gradient(circle at top, rgba(122, 255, 228, 0.26), transparent 34%),
+    linear-gradient(180deg, rgba(47, 125, 114, 0.24), rgba(17, 47, 43, 0.18));
+}
+
+.destiny-card-violet .destiny-card-illustration {
+  background:
+    radial-gradient(circle at top, rgba(197, 149, 255, 0.26), transparent 34%),
+    linear-gradient(180deg, rgba(109, 73, 170, 0.24), rgba(34, 23, 56, 0.18));
+}
+
+.destiny-card-art {
+  width: min(240px, 72%);
+  height: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.card-art-orb {
+  fill: rgba(255, 248, 232, 0.06);
+}
+
+.card-art-ring {
+  stroke: rgba(255, 235, 193, 0.2);
+  stroke-width: 2;
+}
+
+.card-art-fill {
+  fill: rgba(255, 225, 164, 0.92);
+}
+
+.card-art-stroke {
+  stroke: rgba(255, 239, 205, 0.92);
+  stroke-width: 12;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.card-art-detail {
+  stroke: rgba(69, 35, 19, 0.5);
+  stroke-width: 8;
+  stroke-linecap: round;
+}
+
+.card-art-detail-fill {
+  fill: rgba(69, 35, 19, 0.54);
+}
+
 .card-meta-row {
   display: flex;
   flex-wrap: wrap;
@@ -476,6 +580,11 @@ a {
 
   .slot-window {
     min-height: 98px;
+  }
+
+  .destiny-card-header {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
 

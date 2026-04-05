@@ -30,7 +30,8 @@ Should include:
 
 Should include:
 
-- a revealed destiny card
+- a revealed destiny card in card format
+- emblem or sigil artwork per card
 - short effect description
 - spinning restaurant names
 - a dramatic but short stop animation
@@ -75,6 +76,12 @@ Should include:
 - 第二步再進入命運之輪輪播
 - 最後才出現結果按鈕列
 - 若使用者偏好 reduced motion，應直接簡化為快速揭曉
+
+## Current Visual Rule
+
+- 命運卡要像真的抽卡 UI，不是單純文字區塊
+- 每張卡都要有可辨識圖案或符印
+- 主畫面整體要偏向奇幻桌遊 / 派對遊戲，而不是舊式 RPG 官網
 
 ## Success Criteria
 

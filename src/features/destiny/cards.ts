@@ -4,7 +4,10 @@ export const destinyCards: DestinyCard[] = [
   {
     id: 'swift-wind',
     name: '疾風祝福',
+    subtitle: '祝福系命運卡',
     type: 'filter',
+    art: 'wind',
+    accent: 'jade',
     description: '只從近距離據點中抽出今日遠征地。',
     filter: {
       distanceLevel: ['near'],
@@ -14,7 +17,10 @@ export const destinyCards: DestinyCard[] = [
   {
     id: 'golden-famine',
     name: '黃金匱乏',
+    subtitle: '節制系命運卡',
     type: 'filter',
+    art: 'gold',
+    accent: 'gold',
     description: '命運要求今日先以省錢為上，優先低價據點。',
     filter: {
       priceLevel: ['low'],
@@ -24,7 +30,10 @@ export const destinyCards: DestinyCard[] = [
   {
     id: 'flame-summoning',
     name: '熾焰召喚',
+    subtitle: '熱度系命運卡',
     type: 'filter',
+    art: 'flame',
+    accent: 'ember',
     description: '今天只對熱食有回應，冰冷選項全部退下。',
     filter: {
       requiredTags: ['hot'],
@@ -34,28 +43,40 @@ export const destinyCards: DestinyCard[] = [
   {
     id: 'mist-shroud',
     name: '迷霧籠罩',
+    subtitle: '異象系命運卡',
     type: 'flavor',
+    art: 'mist',
+    accent: 'violet',
     description: '迷霧遮蔽前路，今日結果完全交給命運。',
     allowReroll: false,
   },
   {
     id: 'ancient-whisper',
     name: '古神低語',
+    subtitle: '異象系命運卡',
     type: 'flavor',
+    art: 'eye',
+    accent: 'violet',
     description: '古老低語已降下旨意，請不要質疑命運。',
     allowReroll: false,
   },
   {
     id: 'festival-day',
     name: '慶典之日',
+    subtitle: '歡慶系命運卡',
     type: 'flavor',
+    art: 'festival',
+    accent: 'gold',
     description: '今天適合熱鬧揭曉，目的地仍由命運決定。',
     allowReroll: false,
   },
   {
     id: 'fate-reroll',
     name: '宿命重骰',
+    subtitle: '奇蹟系命運卡',
     type: 'reroll',
+    art: 'dice',
+    accent: 'ember',
     description: '若第一次結果不合天意，本局可逆天改命一次。',
     allowReroll: true,
   },

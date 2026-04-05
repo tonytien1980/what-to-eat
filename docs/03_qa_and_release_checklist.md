@@ -19,6 +19,7 @@
 - disabled or missing data states are readable
 - animations do not block the final result
 - reduced-motion users still get a valid quick reveal
+- imported reference snapshot remains available locally after build
 
 ## Verification Commands
 

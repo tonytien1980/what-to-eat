@@ -1,6 +1,10 @@
 import { restaurants } from '../features/restaurants/data';
 import { getCandidatePool } from '../features/restaurants/selectors';
 
+test('includes the imported full reference snapshot', () => {
+  expect(restaurants.length).toBeGreaterThanOrEqual(39);
+});
+
 test('filters active category and enabled restaurants', () => {
   const pool = getCandidatePool(restaurants, 'lunch');
 
