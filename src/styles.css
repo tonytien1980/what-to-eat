@@ -282,6 +282,36 @@ a {
   padding: 16px;
 }
 
+.destiny-card {
+  --card-accent: rgba(241, 197, 111, 0.9);
+  --card-glow: rgba(241, 197, 111, 0.22);
+  --card-highlight: rgba(255, 240, 219, 0.2);
+}
+
+.destiny-card-jade {
+  --card-accent: rgba(116, 230, 202, 0.92);
+  --card-glow: rgba(97, 196, 177, 0.22);
+  --card-highlight: rgba(214, 255, 242, 0.18);
+}
+
+.destiny-card-gold {
+  --card-accent: rgba(248, 207, 118, 0.94);
+  --card-glow: rgba(241, 197, 111, 0.22);
+  --card-highlight: rgba(255, 245, 214, 0.2);
+}
+
+.destiny-card-ember {
+  --card-accent: rgba(255, 151, 99, 0.92);
+  --card-glow: rgba(255, 133, 89, 0.24);
+  --card-highlight: rgba(255, 228, 207, 0.18);
+}
+
+.destiny-card-violet {
+  --card-accent: rgba(164, 182, 255, 0.9);
+  --card-glow: rgba(120, 137, 226, 0.22);
+  --card-highlight: rgba(226, 232, 255, 0.18);
+}
+
 .idle-state h2,
 .destiny-card h2 {
   margin: 10px 0 0;
@@ -300,27 +330,95 @@ a {
   animation: card-rise 420ms var(--ease-out-expo);
 }
 
-.destiny-card-frame {
-  display: grid;
-  gap: 14px;
+.tarot-card {
+  position: relative;
+  min-height: 430px;
+  border-radius: 20px;
+  overflow: hidden;
+  perspective: 1400px;
 }
 
-.destiny-card-header {
+.tarot-card-shell {
+  position: relative;
+  height: 100%;
+  min-height: 398px;
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px solid var(--card-highlight);
+  background:
+    radial-gradient(circle at top, color-mix(in srgb, var(--card-accent) 18%, transparent), transparent 48%),
+    linear-gradient(180deg, rgba(255, 250, 240, 0.06), rgba(255, 250, 240, 0.01)),
+    rgba(11, 8, 14, 0.44);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 10px 24px rgba(0, 0, 0, 0.18),
+    0 0 0 1px rgba(0, 0, 0, 0.1),
+    0 0 34px var(--card-glow);
+}
+
+.tarot-card::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border-radius: 16px;
+  border: 1px solid color-mix(in srgb, var(--card-accent) 38%, transparent);
+  pointer-events: none;
+}
+
+.tarot-card-shell::before,
+.tarot-card-shell::after {
+  content: '';
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border: 1px solid color-mix(in srgb, var(--card-accent) 44%, transparent);
+  opacity: 0.72;
+  pointer-events: none;
+}
+
+.tarot-card-shell::before {
+  top: 10px;
+  left: 10px;
+  border-right: 0;
+  border-bottom: 0;
+  border-top-left-radius: 12px;
+}
+
+.tarot-card-shell::after {
+  right: 10px;
+  bottom: 10px;
+  border-left: 0;
+  border-top: 0;
+  border-bottom-right-radius: 12px;
+}
+
+.tarot-card-front {
+  animation: tarot-front-in 340ms var(--ease-out-expo);
+}
+
+.tarot-card-back {
+  animation: tarot-back-shift 420ms var(--ease-out-expo);
+}
+
+.tarot-card-banner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid color-mix(in srgb, var(--card-accent) 22%, transparent);
 }
 
 .destiny-card-subtitle {
-  color: rgba(255, 255, 255, 0.72);
+  color: color-mix(in srgb, var(--card-accent) 56%, white);
   font-size: 0.82rem;
   font-weight: 700;
 }
 
 .destiny-card-illustration {
   position: relative;
-  min-height: 148px;
+  min-height: 176px;
+  margin-top: 14px;
   border-radius: 18px;
   overflow: hidden;
 }
@@ -337,33 +435,133 @@ a {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.44));
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.56)),
+    radial-gradient(circle at center, color-mix(in srgb, var(--card-accent) 18%, transparent), transparent 40%);
 }
 
 .destiny-card-art {
   position: absolute;
   inset: 50% auto auto 50%;
-  width: min(150px, 56%);
+  width: min(154px, 56%);
   height: auto;
   transform: translate(-50%, -50%);
   z-index: 1;
 }
 
+.destiny-card-body {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.destiny-card-body h2 {
+  margin: 0;
+}
+
+.tarot-back-border {
+  position: absolute;
+  inset: 14px;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--card-accent) 34%, transparent);
+  pointer-events: none;
+}
+
+.tarot-back-core {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  min-height: 362px;
+  display: grid;
+  place-items: center;
+  gap: 18px;
+  text-align: center;
+  background:
+    radial-gradient(circle at center, color-mix(in srgb, var(--card-accent) 18%, transparent), transparent 30%),
+    linear-gradient(180deg, rgba(24, 17, 32, 0.88), rgba(10, 8, 16, 0.96));
+}
+
+.tarot-rarity {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  right: 18px;
+  text-align: center;
+  color: color-mix(in srgb, var(--card-accent) 58%, white);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.tarot-back-sigil {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  filter: drop-shadow(0 0 28px var(--card-glow));
+  animation: tarot-sigil-pulse 1800ms ease-in-out infinite;
+}
+
+.tarot-back-ring,
+.tarot-back-star {
+  position: absolute;
+  inset: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+}
+
+.tarot-back-ring-outer {
+  width: 168px;
+  height: 168px;
+  border: 2px solid color-mix(in srgb, var(--card-accent) 62%, transparent);
+  box-shadow: 0 0 0 12px color-mix(in srgb, var(--card-accent) 12%, transparent);
+}
+
+.tarot-back-ring-inner {
+  width: 104px;
+  height: 104px;
+  border: 2px solid color-mix(in srgb, var(--card-accent) 42%, white 10%);
+}
+
+.tarot-back-star {
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(135deg, var(--card-accent), #fff0c1);
+  box-shadow:
+    0 0 22px color-mix(in srgb, var(--card-accent) 42%, transparent),
+    0 0 0 10px color-mix(in srgb, var(--card-accent) 12%, transparent);
+}
+
+.tarot-back-copy {
+  display: grid;
+  gap: 6px;
+}
+
+.tarot-back-copy strong {
+  font-family: 'Noto Serif TC', serif;
+  font-size: clamp(1.7rem, 5vw, 2.3rem);
+  line-height: 1;
+}
+
+.tarot-back-copy span {
+  color: rgba(255, 245, 235, 0.74);
+  font-size: 0.92rem;
+}
+
 .card-art-orb {
-  fill: rgba(255, 248, 232, 0.09);
+  fill: color-mix(in srgb, var(--card-accent) 12%, rgba(255, 248, 232, 0.04));
 }
 
 .card-art-ring {
-  stroke: rgba(255, 235, 193, 0.26);
+  stroke: color-mix(in srgb, var(--card-accent) 34%, rgba(255, 235, 193, 0.18));
   stroke-width: 2;
 }
 
 .card-art-fill {
-  fill: rgba(255, 223, 153, 0.9);
+  fill: color-mix(in srgb, var(--card-accent) 72%, rgba(255, 223, 153, 0.28));
 }
 
 .card-art-stroke {
-  stroke: rgba(255, 239, 205, 0.92);
+  stroke: color-mix(in srgb, var(--card-accent) 58%, white 18%);
   stroke-width: 12;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -532,6 +730,43 @@ a {
   }
 }
 
+@keyframes tarot-back-shift {
+  from {
+    opacity: 0;
+    transform: rotateY(24deg) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotateY(0deg) scale(1);
+  }
+}
+
+@keyframes tarot-front-in {
+  from {
+    opacity: 0;
+    transform: rotateY(-14deg) translateY(10px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotateY(0deg) translateY(0) scale(1);
+  }
+}
+
+@keyframes tarot-sigil-pulse {
+  0%,
+  100% {
+    transform: scale(0.98);
+    opacity: 0.92;
+  }
+
+  50% {
+    transform: scale(1.02);
+    opacity: 1;
+  }
+}
+
 @keyframes slot-bob {
   from {
     transform: translateY(-5px);
@@ -569,7 +804,7 @@ a {
 
   .top-status,
   .control-row,
-  .destiny-card-header,
+  .tarot-card-banner,
   .action-row {
     flex-direction: column;
     align-items: stretch;

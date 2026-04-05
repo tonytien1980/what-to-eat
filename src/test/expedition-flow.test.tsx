@@ -7,7 +7,7 @@ test('starts an expedition and reveals a destination', async () => {
   fireEvent.click(screen.getByRole('button', { name: '開啟今日遠征' }));
 
   expect(screen.getAllByText('命運卡翻面中')).toHaveLength(2);
-  expect(screen.getByText(/命運卡：/)).toBeInTheDocument();
+  expect(screen.getByLabelText('命運卡卡背')).toBeInTheDocument();
   expect(screen.queryByText(/本日遠征目的地/)).not.toBeInTheDocument();
 
   expect(

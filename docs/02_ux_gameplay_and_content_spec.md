@@ -32,8 +32,9 @@ Should include:
 
 Should include:
 
-- a revealed destiny card in card format
+- a tarot-style destiny card with a dedicated card back before reveal
 - emblem or sigil artwork per card
+- accent-tinted frames per card family
 - short effect description
 - spinning restaurant names
 - a dramatic but short stop animation
@@ -82,7 +83,9 @@ Should include:
 ## Current Visual Rule
 
 - 命運卡要像真的抽卡 UI，不是單純文字區塊
+- 命運卡揭示階段要先看到卡背，再翻成正面卡面
 - 每張卡都要有可辨識圖案或符印
+- 每張卡要有自己的色系重點，不能全部長得像同一張卡
 - 主畫面整體要偏向奇幻桌遊 / 派對遊戲，而不是舊式 RPG 官網
 - 場景背景要清楚可見，面板只能局部遮罩，不可整片洗白
 - 天氣資訊、場景名稱、預報時間都要直接看得到

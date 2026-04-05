@@ -4,6 +4,7 @@
 
 - category switch changes the candidate pool
 - destiny card is drawn before each expedition
+- destiny card back is shown before the face card content appears
 - spin result always belongs to the active category
 - filtered card falls back safely when no record matches
 - result screen shows correct destination name
@@ -20,6 +21,7 @@
 - large titles do not overflow
 - disabled or missing data states are readable
 - animations do not block the final result
+- tarot card reveal still resolves correctly on desktop and mobile
 - reduced-motion users still get a valid quick reveal
 - imported reference snapshot remains available locally after build
 

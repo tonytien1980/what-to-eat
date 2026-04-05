@@ -11,6 +11,7 @@ First release targets a no-login, same-screen MVP:
 - category switcher for lunch, dinner, drinks, and sweets
 - one-tap "today's expedition" flow
 - staged destiny-card reveal
+- tarot-style destiny card back and flip reveal
 - slot-style destination animation
 - direct Google Maps launch
 - one guaranteed reroll every round
@@ -60,3 +61,4 @@ The repository now includes:
 - one guaranteed reroll every round
 - bonus reroll when luck grants `宿命重骰`
 - illustrated destiny cards with game-style presentation
+- fantasy tarot card back, accent-tinted frames, and flip-style reveal
