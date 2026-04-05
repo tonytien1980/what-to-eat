@@ -13,6 +13,7 @@ test('always allows one reroll even when the first round is not a reroll card', 
 
   render(<App />);
 
+  fireEvent.click(screen.getByRole('button', { name: '午餐' }));
   fireEvent.click(screen.getByRole('button', { name: '開啟今日遠征' }));
   await screen.findByRole('link', { name: '出發去吃' }, { timeout: 4000 });
 

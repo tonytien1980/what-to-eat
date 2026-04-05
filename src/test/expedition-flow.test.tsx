@@ -4,6 +4,7 @@ import App from '../App';
 test('starts an expedition and reveals a destination', async () => {
   render(<App />);
 
+  fireEvent.click(screen.getByRole('button', { name: '午餐' }));
   fireEvent.click(screen.getByRole('button', { name: '開啟今日遠征' }));
 
   expect(screen.getByLabelText(/遠征卡背/)).toBeInTheDocument();

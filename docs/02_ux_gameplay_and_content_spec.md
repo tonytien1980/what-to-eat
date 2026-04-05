@@ -26,8 +26,9 @@ Should include:
 - scene line under the hero title
 - two weather info lines under the scene line
 - visible full-scene background, not faded into the back
-- fantasy-styled category selector
-- one primary CTA to start the expedition
+- fantasy-styled category selector using `images/notice/`
+- no category selected on first load
+- one primary CTA to start the expedition using `images/scrolls/`
 - one currently selected card back visible before the run begins
 
 ### 2. 命運揭示與拉霸
@@ -87,8 +88,9 @@ Should include:
 - 卡片要是長條直式撲克牌比例，不是正方卡
 - 卡背要直接使用圖檔，不是只用符印佔位
 - 正面也要使用對應稀有度的 face 模板，不是單純裸底圖
-- 卡片要有深色切邊與陰影，避免和背景混在一起
+- 卡片要有深色切邊與陰影，但不能被黑色大色塊包住
 - 稀有度光暈必須有明顯區別
+- 卡片後方要用透明式光場與稀有度 aura 做分離，而不是深色面板
 - 主畫面整體要偏向奇幻桌遊 / 派對遊戲，而不是舊式 RPG 官網
 - 場景背景要清楚可見，面板只能局部遮罩，不可整片洗白
 - 主標固定兩行，不因螢幕大小而跑版

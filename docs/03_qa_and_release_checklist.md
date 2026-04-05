@@ -2,10 +2,12 @@
 
 ## MVP Functional Checks
 
+- first load should show no selected category
 - category switch changes the candidate pool
 - runtime restaurant catalog loads from Google Sheet when available
 - runtime restaurant catalog falls back to bundled snapshot when sheet loading fails
 - one weighted card back is visible before the first draw begins
+- card back rarity always matches the face template rarity
 - reroll changes both the destination and the card back
 - destiny card is drawn before each expedition
 - visible card back is shown before the face card content appears
@@ -23,9 +25,11 @@
 - Traditional Chinese copy is consistent
 - mobile viewport remains usable
 - large titles do not overflow
+- category buttons and scroll CTA remain legible with the provided artwork
 - disabled or missing data states are readable
 - animations do not block the final result
 - tall reveal card still resolves correctly on desktop and mobile
+- transparent altar stage keeps the scene visible behind the card
 - reduced-motion users still get a valid quick reveal
 - imported reference snapshot remains available locally after build
 - sheet source list and fallback snapshot stay aligned after `npm run data:import`

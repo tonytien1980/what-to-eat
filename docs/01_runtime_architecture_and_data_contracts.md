@@ -35,6 +35,7 @@ MVP state should track:
 - active category
 - available restaurants
 - current weighted card back
+- current rarity-matched card face template
 - current destiny card
 - selected destination
 - reroll availability
@@ -105,9 +106,11 @@ The current implementation uses:
 
 - `startExpedition(category, restaurants, cardBack)` to bind one weighted card back to each round
 - `useExpedition(category, restaurants)` to manage `idle -> revealing -> spinning -> result`
+- `activeCategory = null` as the first-load idle state so the user must choose a type before starting
 - one guaranteed reroll every round
 - one optional bonus reroll if the expedition first reveals `宿命重骰`
 - weighted card-back selection on initial page load and every reroll
+- rarity-matched face templates under `images/faces/`
 - runtime Google Sheet data as the primary restaurant source
 - local fallback JSON under `data/restaurants.json`
 - `data/restaurant-sheet-sources.json` as the single editable list of sheet URLs

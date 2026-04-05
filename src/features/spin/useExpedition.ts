@@ -54,7 +54,7 @@ function prefersReducedMotion() {
 }
 
 export function useExpedition(
-  category: Category,
+  category: Category | null,
   restaurants: RestaurantRecord[],
 ) {
   const [phase, setPhase] = useState<ExpeditionPhase>('idle');
@@ -100,7 +100,7 @@ export function useExpedition(
   }
 
   function start() {
-    if (restaurants.length === 0) {
+    if (!category || restaurants.length === 0) {
       return;
     }
 
@@ -117,7 +117,7 @@ export function useExpedition(
   }
 
   function reroll() {
-    if (!round || rerollsRemaining <= 0 || restaurants.length === 0) {
+    if (!round || !category || rerollsRemaining <= 0 || restaurants.length === 0) {
       return;
     }
 
@@ -141,6 +141,14 @@ export function useExpedition(
   }
 
   useEffect(() => () => clearTimers(), []);
+
+  useEffect(() => {
+    clearTimers();
+    setPhase('idle');
+    setRound(null);
+    setRerollsRemaining(0);
+    setBonusRerollGranted(false);
+  }, [category]);
 
   return {
     phase,

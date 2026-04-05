@@ -18,3 +18,20 @@ test('maps weighted random boundaries to the expected card backs', () => {
   expect(pickWeightedCardBack(0.989).id).toBe('card-back-legendary-omega');
   expect(pickWeightedCardBack(0.999).id).toBe('card-back-hidden');
 });
+
+test('uses a rarity-matched face template for every card back', () => {
+  const faceByRarity = new Map<string, string>();
+
+  for (const cardBack of cardBacks) {
+    const existingFace = faceByRarity.get(cardBack.rarity);
+
+    if (existingFace) {
+      expect(cardBack.faceImageUrl).toBe(existingFace);
+      continue;
+    }
+
+    faceByRarity.set(cardBack.rarity, cardBack.faceImageUrl);
+  }
+
+  expect(faceByRarity.size).toBe(5);
+});

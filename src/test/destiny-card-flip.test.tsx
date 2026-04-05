@@ -4,6 +4,7 @@ import App from '../App';
 test('shows a tarot card back before revealing the card front', async () => {
   render(<App />);
 
+  fireEvent.click(screen.getByRole('button', { name: '午餐' }));
   fireEvent.click(screen.getByRole('button', { name: '開啟今日遠征' }));
 
   expect(screen.getByLabelText(/遠征卡背/)).toBeInTheDocument();

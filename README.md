@@ -10,9 +10,11 @@ First release targets a no-login, same-screen MVP:
 - weather-selected fantasy scene backgrounds
 - Google Sheet runtime restaurant loading
 - category switcher for lunch, dinner, drinks, and sweets
+- no preselected category on first load
 - one-tap "today's expedition" flow
 - weighted card-back draw on load and reroll
 - tall playing-card reveal with cloud-clearing animation
+- notice-board category buttons and scroll-style CTA artwork
 - direct Google Maps launch
 - one guaranteed reroll every round
 - `宿命重骰` can grant one extra reroll
@@ -55,11 +57,13 @@ npm run build:pages
 The repository now includes:
 
 - fantasy expedition app shell
-- full imported restaurant snapshot from the reference public sheets
+- bundled fallback snapshot refreshed from your published Google Sheet
+- runtime sheet sources switched to the owner's published Google Sheet
 - runtime Google Sheet loading with bundled fallback snapshot
 - Taipei weather scene selection via official CWA county forecast data
 - destiny card filtering with fallback behavior
 - simplified altar header with fixed two-line title
+- transparent altar stage so the card stands on the scene instead of a dark panel
 - one guaranteed reroll every round
 - bonus reroll when luck grants `宿命重骰`
 - weighted fantasy card backs with rarity glow tiers

@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import type { CSSProperties } from 'react';
+import { uiOrnaments } from './assets/ui-ornaments';
 import { DestinyCardView } from './components/destiny-card-view';
 import { categories } from './features/restaurants/data';
 import { getCandidatePool } from './features/restaurants/selectors';
@@ -15,7 +17,7 @@ import type { Category } from './features/restaurants/types';
 import './styles.css';
 
 export default function App() {
-  const [activeCategory, setActiveCategory] = useState<Category>('lunch');
+  const [activeCategory, setActiveCategory] = useState<Category | null>(null);
   const restaurantCatalog = useRestaurantCatalog();
   const {
     phase,
@@ -29,14 +31,16 @@ export default function App() {
   } = useExpedition(activeCategory, restaurantCatalog.restaurants);
   const { snapshot } = useTaipeiWeather();
   const rerollCopy = getRerollCopy(rerollsRemaining);
-  const categoryLabel = getCategoryLabel(activeCategory);
-  const activeCategoryCount = getCandidatePool(
-    restaurantCatalog.restaurants,
-    activeCategory,
-  ).length;
+  const categoryLabel = activeCategory ? getCategoryLabel(activeCategory) : '';
+  const activeCategoryCount = activeCategory
+    ? getCandidatePool(restaurantCatalog.restaurants, activeCategory).length
+    : 0;
   const weatherSceneLine = `臺北市 · ${snapshot.activeScene.sceneLabel} · ${snapshot.activeScene.variantLabel}`;
   const weatherPrimaryLine = `${snapshot.currentPeriod.weatherText} · ${snapshot.currentPeriod.lowTemp}°-${snapshot.currentPeriod.highTemp}°`;
   const weatherSecondaryLine = `降雨 ${snapshot.currentPeriod.pop}% · ${getComfortCopy(snapshot.currentPeriod.comfort)}`;
+
+  const startButtonLabel =
+    activeCategory === null ? '先選遠征類型' : '開啟今日遠征';
 
   return (
     <main className="app-shell">
@@ -67,6 +71,15 @@ export default function App() {
                     ? 'category-pill category-pill-active'
                     : 'category-pill'
                 }
+                style={
+                  {
+                    backgroundImage: `url(${
+                      category.id === activeCategory
+                        ? uiOrnaments.categoryButtonNoticeActive
+                        : uiOrnaments.categoryButtonNotice
+                    })`,
+                  } as CSSProperties
+                }
                 type="button"
                 onClick={() => setActiveCategory(category.id)}
               >
@@ -76,20 +89,31 @@ export default function App() {
           </div>
 
           <p className="status-copy">
-            {getCategorySummary(activeCategory, activeCategoryCount)}
+            {activeCategory
+              ? getCategorySummary(activeCategory, activeCategoryCount)
+              : '請先選擇遠征類型'}
           </p>
 
           <button
             className="start-button"
+            style={
+              {
+                backgroundImage: `url(${uiOrnaments.ctaScrollBannerOrnate})`,
+              } as CSSProperties
+            }
             type="button"
             onClick={start}
-            disabled={isAnimating || restaurantCatalog.restaurants.length === 0}
+            disabled={
+              isAnimating ||
+              restaurantCatalog.restaurants.length === 0 ||
+              activeCategory === null
+            }
           >
             {isAnimating
               ? '遠征占卜中...'
               : restaurantCatalog.restaurants.length === 0
                 ? '目前沒有可用據點'
-                : '開啟今日遠征'}
+                : startButtonLabel}
           </button>
 
           <section
