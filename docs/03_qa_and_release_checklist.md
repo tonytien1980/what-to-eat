@@ -27,8 +27,10 @@
 - mobile viewport remains usable
 - large titles do not overflow
 - category buttons and scroll CTA remain legible with the provided artwork
+- button and scroll artwork should still match the documented safe-frame guides after any asset swap
 - disabled or missing data states are readable
 - animations do not block the final result
+- reveal charge-up, flip burst, and result settle pulse should all remain usable on mobile
 - tall reveal card still resolves correctly on desktop and mobile
 - transparent altar stage keeps the scene visible behind the card
 - reduced-motion users still get a valid quick reveal

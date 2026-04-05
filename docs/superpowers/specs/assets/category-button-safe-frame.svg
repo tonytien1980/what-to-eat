@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="768" height="384" viewBox="0 0 768 384" fill="none">
+  <rect width="768" height="384" fill="#10151f"/>
+  <rect x="72" y="66" width="624" height="252" fill="rgba(236,195,130,0.12)" stroke="#F0C777" stroke-width="4"/>
+  <rect x="192" y="138" width="384" height="108" fill="rgba(87,174,247,0.12)" stroke="#57AEF7" stroke-width="4" stroke-dasharray="12 8"/>
+  <line x1="384" y1="66" x2="384" y2="318" stroke="#F6F6F6" stroke-opacity="0.5" stroke-dasharray="10 10"/>
+  <line x1="72" y1="192" x2="696" y2="192" stroke="#F6F6F6" stroke-opacity="0.5" stroke-dasharray="10 10"/>
+  <text x="24" y="32" fill="#F9F3ED" font-size="24" font-family="Noto Sans TC, sans-serif">Canvas 768x384</text>
+  <text x="84" y="94" fill="#F0C777" font-size="20" font-family="Noto Sans TC, sans-serif">Visible plaque bounds 624x252</text>
+  <text x="204" y="132" fill="#57AEF7" font-size="20" font-family="Noto Sans TC, sans-serif">Label safe box 384x108</text>
+</svg>

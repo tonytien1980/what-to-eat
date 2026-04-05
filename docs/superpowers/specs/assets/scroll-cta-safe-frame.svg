@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1536" height="1024" viewBox="0 0 1536 1024" fill="none">
+  <rect width="1536" height="1024" fill="#10151f"/>
+  <rect x="56" y="276" width="1423" height="434" fill="rgba(236,195,130,0.10)" stroke="#F0C777" stroke-width="6"/>
+  <rect x="332" y="362" width="872" height="172" fill="rgba(240,199,119,0.08)" stroke="#F0C777" stroke-width="4" stroke-dasharray="16 10"/>
+  <rect x="430" y="420" width="676" height="92" fill="rgba(87,174,247,0.12)" stroke="#57AEF7" stroke-width="5" stroke-dasharray="14 10"/>
+  <line x1="768" y1="276" x2="768" y2="710" stroke="#F6F6F6" stroke-opacity="0.5" stroke-dasharray="12 12"/>
+  <line x1="56" y1="493" x2="1479" y2="493" stroke="#F6F6F6" stroke-opacity="0.5" stroke-dasharray="12 12"/>
+  <text x="36" y="58" fill="#F9F3ED" font-size="38" font-family="Noto Sans TC, sans-serif">Canvas 1536x1024</text>
+  <text x="80" y="324" fill="#F0C777" font-size="30" font-family="Noto Sans TC, sans-serif">Visible scroll object 1423x434</text>
+  <text x="356" y="396" fill="#F0C777" font-size="30" font-family="Noto Sans TC, sans-serif">Parchment-safe box 872x172</text>
+  <text x="454" y="458" fill="#57AEF7" font-size="30" font-family="Noto Sans TC, sans-serif">CTA label box 676x92</text>
+</svg>

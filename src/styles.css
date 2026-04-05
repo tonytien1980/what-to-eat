@@ -284,6 +284,22 @@ a {
   z-index: 0;
 }
 
+.expedition-card-stage::after {
+  content: '';
+  position: absolute;
+  inset: 12% 18%;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at center, color-mix(in srgb, var(--card-glow-primary) 84%, white 10%), transparent 30%),
+    radial-gradient(circle at center, color-mix(in srgb, var(--card-glow-outer) 92%, transparent), transparent 62%);
+  mix-blend-mode: screen;
+  filter: blur(14px);
+  opacity: 0;
+  transform: scale(0.7);
+  pointer-events: none;
+  z-index: 0;
+}
+
 .expedition-card-rarity-common {
   --card-border-soft: rgba(245, 245, 245, 0.32);
   --card-glow-primary: rgba(255, 255, 255, 0.42);
@@ -336,6 +352,8 @@ a {
     0 0 0 1px var(--card-border-core),
     0 0 28px var(--card-glow-primary),
     0 0 78px var(--card-glow-outer);
+  transform-style: preserve-3d;
+  will-change: transform, filter;
   z-index: 1;
 }
 
@@ -378,6 +396,11 @@ a {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.expedition-card-back-image {
+  transform-origin: center center;
+  will-change: transform, filter;
 }
 
 .expedition-card-back-shade,
@@ -611,12 +634,20 @@ a {
 @keyframes expedition-card-flip-in {
   from {
     opacity: 0;
-    transform: rotateY(-18deg) scale(0.96) translateY(12px);
+    transform: perspective(1200px) rotateY(-96deg) rotateZ(1.6deg) scale(0.88) translateY(18px);
+    filter: brightness(1.28) saturate(1.14);
+  }
+
+  52% {
+    opacity: 1;
+    transform: perspective(1200px) rotateY(16deg) rotateZ(-0.8deg) scale(1.02) translateY(-3px);
+    filter: brightness(1.08) saturate(1.06);
   }
 
   to {
     opacity: 1;
-    transform: rotateY(0deg) scale(1) translateY(0);
+    transform: perspective(1200px) rotateY(0deg) rotateZ(0deg) scale(1) translateY(0);
+    filter: brightness(1) saturate(1);
   }
 }
 
@@ -664,6 +695,52 @@ a {
   }
 }
 
+@keyframes expedition-burst {
+  from {
+    opacity: 0;
+    transform: scale(0.72);
+  }
+
+  38% {
+    opacity: 0.9;
+    transform: scale(1.02);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1.42);
+  }
+}
+
+@keyframes expedition-back-charge {
+  from {
+    transform: scale(1);
+    filter: brightness(0.98) saturate(0.98);
+  }
+
+  to {
+    transform: scale(1.05);
+    filter: brightness(1.14) saturate(1.12);
+  }
+}
+
+@keyframes expedition-front-settle {
+  from {
+    opacity: 0.32;
+    transform: scale(0.94);
+  }
+
+  50% {
+    opacity: 0.84;
+    transform: scale(1.03);
+  }
+
+  to {
+    opacity: 0.62;
+    transform: scale(1);
+  }
+}
+
 .expedition-card-stage-idle .expedition-card-back {
   animation: expedition-card-idle 2200ms ease-in-out infinite alternate;
 }
@@ -677,12 +754,25 @@ a {
   transform: scale(1.08);
 }
 
+.expedition-card-stage-revealing::after {
+  opacity: 0.7;
+  transform: scale(1.02);
+}
+
+.expedition-card-stage-revealing .expedition-card-back-image {
+  animation: expedition-back-charge 760ms ease-in-out infinite alternate;
+}
+
 .expedition-card-stage-revealing .expedition-card {
   box-shadow:
     0 22px 34px rgba(0, 0, 0, 0.22),
     0 0 0 1px var(--card-border-core),
     0 0 72px color-mix(in srgb, var(--card-glow-primary) 128%, white 12%),
     0 0 144px color-mix(in srgb, var(--card-glow-outer) 200%, transparent);
+}
+
+.expedition-card-stage-spinning::after {
+  animation: expedition-burst 780ms var(--ease-out-expo) forwards;
 }
 
 .expedition-card-stage-spinning .expedition-card-front {
@@ -699,6 +789,19 @@ a {
 
 .expedition-card-stage-spinning .expedition-card-front-content {
   animation: card-rise 920ms var(--ease-out-expo);
+}
+
+.expedition-card-stage-spinning .expedition-card-front-glow,
+.expedition-card-stage-result .expedition-card-front-glow {
+  animation: expedition-front-settle 900ms var(--ease-out-expo);
+}
+
+.expedition-card-stage-result .expedition-card {
+  box-shadow:
+    0 20px 32px rgba(0, 0, 0, 0.2),
+    0 0 0 1px var(--card-border-core),
+    0 0 34px color-mix(in srgb, var(--card-glow-primary) 112%, white 6%),
+    0 0 96px color-mix(in srgb, var(--card-glow-outer) 150%, transparent);
 }
 
 @media (max-width: 640px) {

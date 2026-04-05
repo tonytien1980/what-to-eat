@@ -31,6 +31,7 @@ Should include:
 - no category selected on first load
 - one primary CTA to start the expedition using `images/scrolls/`
 - scroll CTA copy should align to the visible parchment window, not the raw image bounds
+- the exact art-safe guides live in `docs/superpowers/specs/2026-04-06-artwork-safe-frames-and-flip-design.md`
 - one currently selected card back visible before the run begins
 
 ### 2. 命運揭示與拉霸
@@ -44,6 +45,7 @@ Should include:
 - a brief ritual animation on the card back
 - one flip transition into the final destination reveal
 - a cloud-clearing style reveal once the card face appears
+- a burst / settle pulse should reinforce the flip without extending the round too much
 
 ### 3. 遠征結果
 
