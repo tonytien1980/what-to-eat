@@ -1,0 +1,122 @@
+[
+  {
+    "id": "hong-kong-tea-house",
+    "name": "香港茶水攤",
+    "category": "lunch",
+    "mapUrl": "https://maps.app.goo.gl/ix3KJoMjm872P9c56",
+    "tags": ["rice", "hot", "savory"],
+    "priceLevel": "medium",
+    "distanceLevel": "near",
+    "isEnabled": true
+  },
+  {
+    "id": "lan-fang-noodles",
+    "name": "蘭芳麵食館",
+    "category": "lunch",
+    "mapUrl": "https://maps.app.goo.gl/4ZrEHVtwMV9avskk6",
+    "tags": ["noodle", "hot", "soup"],
+    "priceLevel": "medium",
+    "distanceLevel": "mid",
+    "isEnabled": true
+  },
+  {
+    "id": "yuan-lunchbox",
+    "name": "圓仔便當店",
+    "category": "lunch",
+    "mapUrl": "https://maps.app.goo.gl/Xwk7Apdv8KDfYEf87",
+    "tags": ["rice", "hot", "boxed"],
+    "priceLevel": "low",
+    "distanceLevel": "near",
+    "isEnabled": true
+  },
+  {
+    "id": "panda-mama",
+    "name": "PANDA-MAMA 麻辣干鍋",
+    "category": "lunch",
+    "mapUrl": "https://maps.app.goo.gl/dJuzD3XoLkwEpREC8",
+    "tags": ["hot", "spicy", "fried"],
+    "priceLevel": "high",
+    "distanceLevel": "far",
+    "isEnabled": false
+  },
+  {
+    "id": "youyou-1969",
+    "name": "有有1969",
+    "category": "dinner",
+    "mapUrl": "https://maps.app.goo.gl/eZZUMSyZyhLpSf4w5",
+    "tags": ["rice", "hot", "set-meal"],
+    "priceLevel": "medium",
+    "distanceLevel": "mid",
+    "isEnabled": true
+  },
+  {
+    "id": "kouji-pasta",
+    "name": "糀日和 Kouji Wafu Pasta",
+    "category": "dinner",
+    "mapUrl": "https://maps.app.goo.gl/Pv1MRzQxho4SWThj6",
+    "tags": ["noodle", "warm", "western"],
+    "priceLevel": "high",
+    "distanceLevel": "far",
+    "isEnabled": true
+  },
+  {
+    "id": "jenjudan",
+    "name": "珍煮丹",
+    "category": "drinks",
+    "mapUrl": "https://maps.app.goo.gl/M9ncQLTQgWPS4d4H6",
+    "tags": ["drink", "tea", "sweet"],
+    "priceLevel": "low",
+    "distanceLevel": "near",
+    "isEnabled": true
+  },
+  {
+    "id": "lim-teh",
+    "name": "LIM TEH",
+    "category": "drinks",
+    "mapUrl": "https://maps.app.goo.gl/hcSqTP36LntYKEYHA",
+    "tags": ["drink", "tea", "specialty"],
+    "priceLevel": "medium",
+    "distanceLevel": "mid",
+    "isEnabled": true
+  },
+  {
+    "id": "dejeng",
+    "name": "得正",
+    "category": "drinks",
+    "mapUrl": "https://maps.app.goo.gl/hqAheq1AWYmSYKmx8",
+    "tags": ["drink", "tea", "cold"],
+    "priceLevel": "low",
+    "distanceLevel": "near",
+    "isEnabled": true
+  },
+  {
+    "id": "black-mochi",
+    "name": "黑麻糬",
+    "category": "sweets",
+    "mapUrl": "https://maps.app.goo.gl/vh2cDn7vc21KqJn66",
+    "tags": ["dessert", "sweet", "snack"],
+    "priceLevel": "low",
+    "distanceLevel": "near",
+    "isEnabled": true
+  },
+  {
+    "id": "chiffon-cake",
+    "name": "CHIFFON手工蛋糕店",
+    "category": "sweets",
+    "mapUrl": "https://maps.app.goo.gl/MWohLyvmNur5jHbq5",
+    "tags": ["dessert", "sweet", "cake"],
+    "priceLevel": "medium",
+    "distanceLevel": "mid",
+    "isEnabled": true
+  },
+  {
+    "id": "hakka-tangyuan",
+    "name": "客家自製湯圓",
+    "category": "sweets",
+    "mapUrl": "https://maps.app.goo.gl/Qgri6q8LWwaYeeEX6",
+    "tags": ["dessert", "hot", "sweet"],
+    "priceLevel": "low",
+    "distanceLevel": "far",
+    "isEnabled": true
+  }
+]
