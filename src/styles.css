@@ -118,18 +118,18 @@ a {
 }
 
 .category-tabs {
-  width: min(100%, 500px);
+  width: min(100%, 504px);
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 6px;
+  gap: 8px;
 }
 
 .category-pill {
   position: relative;
   width: 100%;
   aspect-ratio: 2 / 1;
-  padding: 0 10px 2px;
+  padding: 0 10px;
   border: 0;
   display: inline-flex;
   align-items: center;
@@ -137,10 +137,10 @@ a {
   background-color: transparent;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 108% 108%;
+  background-size: 100% 100%;
   color: #4d2f16;
   cursor: pointer;
-  font-size: clamp(0.92rem, 2vw, 1.04rem);
+  font-size: clamp(0.82rem, 1.8vw, 0.96rem);
   font-weight: 900;
   letter-spacing: 0.04em;
   line-height: 1;
@@ -181,9 +181,9 @@ a {
   overflow: hidden;
   width: min(100%, 472px);
   justify-self: center;
-  aspect-ratio: 3 / 1;
+  aspect-ratio: 3.28 / 1;
   min-height: 0;
-  padding: 0 44px;
+  padding: 0 36px;
   border: 0;
   display: inline-flex;
   align-items: stretch;
@@ -191,9 +191,9 @@ a {
   background-color: transparent;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-size: 100% auto;
   color: #3a2512;
-  font-size: clamp(1.24rem, 3.6vw, 1.5rem);
+  font-size: clamp(1.28rem, 3.5vw, 1.52rem);
   font-weight: 900;
   letter-spacing: 0.05em;
   line-height: 1.05;
@@ -210,8 +210,8 @@ a {
 .start-button-label {
   position: absolute;
   left: 50%;
-  top: 57%;
-  width: min(60%, 13ch);
+  top: 53%;
+  width: min(56%, 12ch);
   text-align: center;
   transform: translate(-50%, -50%);
 }
@@ -722,26 +722,24 @@ a {
   }
 
   .category-tabs {
-    width: 100%;
-    margin-inline: 0;
-    gap: 4px;
+    width: min(100%, 392px);
+    gap: 6px;
   }
 
   .category-pill {
-    padding: 0 4px 1px;
-    background-size: 110% 110%;
-    font-size: 0.82rem;
+    padding: 0 4px;
+    font-size: 0.75rem;
   }
 
   .start-button {
     width: min(100%, 396px);
-    padding: 0 34px;
-    font-size: 1.08rem;
+    padding: 0 28px;
+    font-size: 1.1rem;
   }
 
   .start-button-label {
-    top: 58%;
-    width: min(62%, 12ch);
+    top: 54%;
+    width: min(58%, 11ch);
   }
 
   .action-row {
