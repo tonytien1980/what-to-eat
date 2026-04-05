@@ -1,9 +1,9 @@
-import { gameArt } from '../assets/game-art';
 import { DestinyCardArtView } from '../features/destiny/card-art';
 import type { DestinyCard } from '../features/destiny/types';
 
 interface DestinyCardViewProps {
   card: DestinyCard;
+  backdropUrl: string;
   phaseLabel: string;
   meta: string[];
   isRevealing: boolean;
@@ -11,6 +11,7 @@ interface DestinyCardViewProps {
 
 export function DestinyCardView({
   card,
+  backdropUrl,
   phaseLabel,
   meta,
   isRevealing,
@@ -30,20 +31,8 @@ export function DestinyCardView({
         </div>
 
         <div className="destiny-card-illustration">
-          <img
-            alt=""
-            className="destiny-card-scene"
-            src={gameArt.forestRuinsBackground}
-          />
-          {card.art === 'dice' ? (
-            <img
-              alt=""
-              className="destiny-card-item"
-              src={gameArt.healingPotionIcon}
-            />
-          ) : (
-            <DestinyCardArtView art={card.art} />
-          )}
+          <img alt="" className="destiny-card-scene" src={backdropUrl} />
+          <DestinyCardArtView art={card.art} />
         </div>
 
         <div className="destiny-card-body">

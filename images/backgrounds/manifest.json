@@ -1,0 +1,194 @@
+{
+  "version": 1,
+  "base_path": "output/backgrounds",
+  "naming_convention": "<scene>/<variant>.webp",
+  "cwa_notes": {
+    "clear_cloudy": "Mostly mapped from CWA Wx 1-5",
+    "overcast": "Mostly mapped from CWA Wx 6-7",
+    "rain": "Mostly mapped from CWA Wx 8-14, 38-39",
+    "heavy_rain": "Project-side heavy-rain variant layered on top of rain-oriented Wx groups",
+    "thunderstorm": "Mostly mapped from CWA Wx 15-18, 33-36, 41",
+    "dense_fog": "Mostly mapped from CWA Wx 31-32",
+    "freezing_fog": "Closest to CWA Wx 37",
+    "snow": "Mostly mapped from CWA Wx 42"
+  },
+  "scenes": {
+    "forest_ruins": {
+      "default": "forest_ruins/default.webp",
+      "type": "outdoor",
+      "variants": {
+        "clear_cloudy": {
+          "file": "forest_ruins/clear_cloudy.webp",
+          "label_zh": "晴到多雲",
+          "cwa_wx_codes": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "overcast": {
+          "file": "forest_ruins/overcast.webp",
+          "label_zh": "陰天",
+          "cwa_wx_codes": [
+            6,
+            7
+          ]
+        },
+        "dense_fog": {
+          "file": "forest_ruins/dense_fog.webp",
+          "label_zh": "濃霧",
+          "cwa_wx_codes": [
+            31,
+            32
+          ]
+        },
+        "freezing_fog": {
+          "file": "forest_ruins/freezing_fog.webp",
+          "label_zh": "凍霧或雨雪霧",
+          "cwa_wx_codes": [
+            37
+          ]
+        },
+        "rain": {
+          "file": "forest_ruins/rain.webp",
+          "label_zh": "雨天",
+          "cwa_wx_codes": [
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            38,
+            39
+          ]
+        },
+        "heavy_rain": {
+          "file": "forest_ruins/heavy_rain.webp",
+          "label_zh": "豪雨",
+          "cwa_wx_codes": [
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            38,
+            39
+          ]
+        },
+        "thunderstorm": {
+          "file": "forest_ruins/thunderstorm.webp",
+          "label_zh": "雷雨",
+          "cwa_wx_codes": [
+            15,
+            16,
+            17,
+            18,
+            33,
+            34,
+            35,
+            36,
+            41
+          ]
+        },
+        "snow": {
+          "file": "forest_ruins/snow.webp",
+          "label_zh": "下雪",
+          "cwa_wx_codes": [
+            42
+          ]
+        }
+      }
+    },
+    "floating_isles": {
+      "default": "floating_isles/default.webp",
+      "type": "outdoor",
+      "variants": {
+        "clear_cloudy": {
+          "file": "floating_isles/clear_cloudy.webp",
+          "label_zh": "晴到多雲",
+          "cwa_wx_codes": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "overcast": {
+          "file": "floating_isles/overcast.webp",
+          "label_zh": "陰天",
+          "cwa_wx_codes": [
+            6,
+            7
+          ]
+        },
+        "thunderstorm": {
+          "file": "floating_isles/thunderstorm.webp",
+          "label_zh": "雷雨",
+          "cwa_wx_codes": [
+            15,
+            16,
+            17,
+            18,
+            33,
+            34,
+            35,
+            36,
+            41
+          ]
+        }
+      }
+    },
+    "desert_oasis": {
+      "default": "desert_oasis/default.webp",
+      "type": "outdoor",
+      "variants": {
+        "clear_cloudy": {
+          "file": "desert_oasis/clear_cloudy.webp",
+          "label_zh": "晴到多雲",
+          "cwa_wx_codes": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "overcast": {
+          "file": "desert_oasis/overcast.webp",
+          "label_zh": "陰天",
+          "cwa_wx_codes": [
+            6,
+            7
+          ]
+        },
+        "rain": {
+          "file": "desert_oasis/rain.webp",
+          "label_zh": "雨天",
+          "cwa_wx_codes": [
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            38,
+            39
+          ]
+        }
+      }
+    },
+    "crystal_cavern": {
+      "default": "crystal_cavern/default.webp",
+      "type": "special_indoor",
+      "variants": {}
+    }
+  }
+}

@@ -12,7 +12,7 @@ The MVP should be a static-friendly frontend app:
 ## Core Modules
 
 - `src/app/`: app shell and top-level state flow
-- `src/assets/game-art.ts`: imported local artwork references
+- `src/features/weather/`: official CWA county forecast loading, normalization, and scene mapping
 - `src/features/restaurants/types.ts`: restaurant domain types
 - `src/features/restaurants/`: restaurant data loading and filtering
 - `src/features/destiny/types.ts`: destiny card domain types
@@ -90,3 +90,5 @@ The current implementation uses:
 - local JSON data under `data/restaurants.json`
 - `npm run data:import` to refresh the local snapshot from the public reference sheets
 - `npm run build:pages` now builds with a relative asset base for GitHub Pages hosting
+- `https://www.cwa.gov.tw/Data/js/TableData_36hr_County_C.js` as the browser-loaded official forecast source
+- city code `63` as the default Taipei weather source

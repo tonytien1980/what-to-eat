@@ -6,6 +6,8 @@
 
 First release targets a no-login, same-screen MVP:
 
+- Taipei weather driven by the official CWA 36-hour county forecast
+- weather-selected fantasy scene backgrounds
 - category switcher for lunch, dinner, drinks, and sweets
 - one-tap "today's expedition" flow
 - staged destiny-card reveal
@@ -52,6 +54,7 @@ The repository now includes:
 
 - fantasy expedition app shell
 - full imported restaurant snapshot from the reference public sheets
+- Taipei weather scene selection via official CWA county forecast data
 - destiny card filtering with fallback behavior
 - staged expedition reveal flow
 - one guaranteed reroll every round

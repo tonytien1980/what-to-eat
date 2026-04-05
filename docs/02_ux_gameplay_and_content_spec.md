@@ -22,6 +22,8 @@
 Should include:
 
 - title and short fantasy tagline
+- Taipei weather as first-class information
+- visible full-scene background, not faded into the back
 - category selector
 - one primary CTA to start the expedition
 - current readiness hint
@@ -82,6 +84,8 @@ Should include:
 - 命運卡要像真的抽卡 UI，不是單純文字區塊
 - 每張卡都要有可辨識圖案或符印
 - 主畫面整體要偏向奇幻桌遊 / 派對遊戲，而不是舊式 RPG 官網
+- 場景背景要清楚可見，面板只能局部遮罩，不可整片洗白
+- 天氣資訊、場景名稱、預報時間都要直接看得到
 
 ## Success Criteria
 
