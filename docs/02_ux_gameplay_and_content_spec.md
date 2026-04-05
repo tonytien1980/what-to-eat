@@ -71,11 +71,11 @@ Should include:
 
 - 頁面打開就要先抽到一張卡背
 - `再抽一次` 會依同樣權重再抽一張新卡背
-- common: 普通白光
-- rare: 高強度白光
-- epic: 金光
-- legendary: 紫光
-- hidden: 藍光
+- common: 普通白光，17.25% x4
+- rare: 高強度白光，10% x2
+- epic: 金光，4% x2
+- legendary: 紫光，2% x1
+- hidden: 藍光，1% x1
 
 ## Current Motion Rule
 

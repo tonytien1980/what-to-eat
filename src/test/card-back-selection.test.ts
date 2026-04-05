@@ -11,12 +11,15 @@ test('card back weights add up to exactly one full draw table', () => {
 
 test('maps weighted random boundaries to the expected card backs', () => {
   expect(pickWeightedCardBack(0).id).toBe('card-back-common-earth');
-  expect(pickWeightedCardBack(0.19725).id).toBe('card-back-common-water');
-  expect(pickWeightedCardBack(0.3945).id).toBe('card-back-common-fire');
-  expect(pickWeightedCardBack(0.789).id).toBe('card-back-rare-light');
-  expect(pickWeightedCardBack(0.949).id).toBe('card-back-epic-order');
-  expect(pickWeightedCardBack(0.989).id).toBe('card-back-legendary-omega');
-  expect(pickWeightedCardBack(0.999).id).toBe('card-back-hidden');
+  expect(pickWeightedCardBack(0.172501).id).toBe('card-back-common-water');
+  expect(pickWeightedCardBack(0.345001).id).toBe('card-back-common-fire');
+  expect(pickWeightedCardBack(0.517501).id).toBe('card-back-common-wind');
+  expect(pickWeightedCardBack(0.690001).id).toBe('card-back-rare-light');
+  expect(pickWeightedCardBack(0.790001).id).toBe('card-back-rare-dark');
+  expect(pickWeightedCardBack(0.890001).id).toBe('card-back-epic-order');
+  expect(pickWeightedCardBack(0.930001).id).toBe('card-back-epic-chaos');
+  expect(pickWeightedCardBack(0.970001).id).toBe('card-back-legendary-omega');
+  expect(pickWeightedCardBack(0.990001).id).toBe('card-back-hidden');
 });
 
 test('uses a rarity-matched face template for every card back', () => {

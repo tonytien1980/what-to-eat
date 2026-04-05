@@ -22,11 +22,11 @@
 - 重新整理頁面自然會重新抽卡背
 - 卡背素材來自 `images/backs/`
 - 稀有度與權重如下：
-  - `common`: 19.725% x4
-  - `rare`: 8% x2
-  - `epic`: 2% x2
-  - `legendary`: 1% x1
-  - `hidden`: 0.1% x1
+  - `common`: 17.25% x4
+  - `rare`: 10% x2
+  - `epic`: 4% x2
+  - `legendary`: 2% x1
+  - `hidden`: 1% x1
 
 ## Rarity Glow Rule
 
