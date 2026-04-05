@@ -80,7 +80,7 @@ a {
 
 .hero-title {
   display: grid;
-  gap: 2px;
+  gap: 12px;
   margin: 0;
   font-family: 'Noto Serif TC', serif;
   font-size: clamp(3rem, 12vw, 5rem);
@@ -126,17 +126,18 @@ a {
 
 .category-pill {
   position: relative;
-  min-width: 76px;
-  min-height: 48px;
-  padding: 11px 18px;
-  border-radius: 18px;
-  border: 1px solid rgba(255, 229, 192, 0.16);
+  min-width: 82px;
+  min-height: 50px;
+  padding: 12px 20px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 229, 192, 0.18);
   background:
-    linear-gradient(180deg, rgba(26, 20, 29, 0.82), rgba(13, 10, 17, 0.9)),
+    radial-gradient(circle at top, rgba(255, 214, 145, 0.12), transparent 58%),
+    linear-gradient(180deg, rgba(34, 25, 21, 0.92), rgba(17, 12, 10, 0.96)),
     rgba(8, 11, 16, 0.42);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    0 6px 20px rgba(0, 0, 0, 0.18);
+    0 6px 20px rgba(0, 0, 0, 0.2);
   color: rgba(255, 244, 230, 0.92);
   cursor: pointer;
   font-size: 0.92rem;
@@ -152,9 +153,9 @@ a {
 .category-pill::after {
   content: '';
   position: absolute;
-  width: 16px;
-  height: 16px;
-  border: 1px solid rgba(255, 225, 184, 0.18);
+  width: 18px;
+  height: 18px;
+  border: 1px solid rgba(255, 225, 184, 0.22);
   pointer-events: none;
 }
 
@@ -178,20 +179,22 @@ a {
   transform: translateY(-2px);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    0 12px 24px rgba(0, 0, 0, 0.22);
+    0 12px 24px rgba(0, 0, 0, 0.24),
+    0 0 18px rgba(255, 212, 145, 0.12);
 }
 
 .category-pill-active {
   background:
-    radial-gradient(circle at top, rgba(255, 214, 123, 0.42), transparent 56%),
-    linear-gradient(180deg, rgba(67, 44, 20, 0.96), rgba(40, 26, 12, 0.98));
-  border-color: rgba(255, 226, 154, 0.4);
+    radial-gradient(circle at top, rgba(255, 216, 133, 0.5), transparent 56%),
+    linear-gradient(180deg, rgba(83, 56, 27, 0.98), rgba(47, 31, 14, 1));
+  border-color: rgba(255, 226, 154, 0.46);
   color: #fff4d5;
   font-weight: 900;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.12),
     0 0 0 1px rgba(255, 212, 116, 0.18),
-    0 0 24px rgba(255, 188, 90, 0.22);
+    0 0 24px rgba(255, 188, 90, 0.22),
+    0 12px 26px rgba(0, 0, 0, 0.28);
 }
 
 .status-copy {
@@ -207,19 +210,18 @@ a {
   overflow: hidden;
   min-height: 60px;
   padding: 16px 28px;
-  border: 1px solid rgba(176, 255, 226, 0.32);
+  border: 1px solid rgba(224, 195, 141, 0.42);
   border-radius: 22px;
   background:
-    linear-gradient(180deg, rgba(26, 64, 58, 0.96), rgba(17, 46, 42, 0.98)),
-    linear-gradient(135deg, var(--jade), #8ef0c1);
-  color: #f2fff8;
+    linear-gradient(180deg, rgba(162, 126, 74, 0.96), rgba(120, 90, 52, 0.98)),
+    linear-gradient(135deg, rgba(247, 232, 201, 0.96), rgba(210, 182, 129, 0.96));
+  color: #3a2512;
   font-weight: 900;
   letter-spacing: 0.08em;
   cursor: pointer;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.14),
-    0 16px 40px rgba(17, 55, 49, 0.36),
-    0 0 28px rgba(97, 196, 177, 0.16);
+    0 14px 34px rgba(33, 21, 11, 0.34);
   transition:
     transform 180ms var(--ease-out-expo),
     filter 180ms var(--ease-out-expo),
@@ -229,9 +231,19 @@ a {
 .start-button::before {
   content: '';
   position: absolute;
-  inset: 6px;
+  inset: 7px 24px;
   border-radius: 16px;
-  border: 1px solid rgba(203, 255, 239, 0.14);
+  border: 1px solid rgba(117, 77, 38, 0.18);
+  pointer-events: none;
+}
+
+.start-button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at left center, rgba(240, 223, 189, 0.52), transparent 18%),
+    radial-gradient(circle at right center, rgba(240, 223, 189, 0.52), transparent 18%);
   pointer-events: none;
 }
 
@@ -240,8 +252,8 @@ a {
   filter: brightness(1.04);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.16),
-    0 20px 44px rgba(17, 55, 49, 0.42),
-    0 0 36px rgba(97, 196, 177, 0.22);
+    0 20px 40px rgba(33, 21, 11, 0.38),
+    0 0 24px rgba(240, 208, 145, 0.16);
 }
 
 .start-button:disabled {
@@ -277,34 +289,41 @@ a {
 }
 
 .expedition-card-stage {
-  --card-glow-primary: rgba(255, 255, 255, 0.3);
-  --card-glow-outer: rgba(255, 255, 255, 0.12);
+  --card-border-core: rgba(15, 18, 26, 0.92);
+  --card-border-soft: rgba(255, 255, 255, 0.18);
+  --card-glow-primary: rgba(255, 255, 255, 0.22);
+  --card-glow-outer: rgba(255, 255, 255, 0.08);
   width: 100%;
 }
 
 .expedition-card-rarity-common {
-  --card-glow-primary: rgba(255, 255, 255, 0.34);
-  --card-glow-outer: rgba(255, 255, 255, 0.12);
+  --card-border-soft: rgba(245, 245, 245, 0.2);
+  --card-glow-primary: rgba(255, 255, 255, 0.24);
+  --card-glow-outer: rgba(255, 255, 255, 0.08);
 }
 
 .expedition-card-rarity-rare {
-  --card-glow-primary: rgba(255, 255, 255, 0.62);
-  --card-glow-outer: rgba(255, 255, 255, 0.24);
+  --card-border-soft: rgba(255, 255, 255, 0.38);
+  --card-glow-primary: rgba(255, 255, 255, 0.48);
+  --card-glow-outer: rgba(255, 255, 255, 0.18);
 }
 
 .expedition-card-rarity-epic {
-  --card-glow-primary: rgba(245, 205, 112, 0.66);
-  --card-glow-outer: rgba(245, 205, 112, 0.24);
+  --card-border-soft: rgba(245, 205, 112, 0.34);
+  --card-glow-primary: rgba(245, 205, 112, 0.42);
+  --card-glow-outer: rgba(245, 205, 112, 0.18);
 }
 
 .expedition-card-rarity-legendary {
-  --card-glow-primary: rgba(175, 132, 255, 0.72);
-  --card-glow-outer: rgba(165, 118, 248, 0.28);
+  --card-border-soft: rgba(175, 132, 255, 0.4);
+  --card-glow-primary: rgba(175, 132, 255, 0.46);
+  --card-glow-outer: rgba(165, 118, 248, 0.2);
 }
 
 .expedition-card-rarity-hidden {
-  --card-glow-primary: rgba(87, 174, 247, 0.72);
-  --card-glow-outer: rgba(87, 174, 247, 0.26);
+  --card-border-soft: rgba(87, 174, 247, 0.42);
+  --card-glow-primary: rgba(87, 174, 247, 0.48);
+  --card-glow-outer: rgba(87, 174, 247, 0.2);
 }
 
 .expedition-card {
@@ -316,8 +335,8 @@ a {
   overflow: hidden;
   box-shadow:
     0 22px 44px rgba(0, 0, 0, 0.42),
-    0 0 0 2px rgba(7, 10, 16, 0.88),
-    0 0 0 4px rgba(255, 255, 255, 0.05),
+    0 0 0 2px var(--card-border-core),
+    0 0 0 4px rgba(255, 255, 255, 0.04),
     0 0 36px var(--card-glow-primary),
     0 0 76px var(--card-glow-outer);
 }
@@ -326,8 +345,8 @@ a {
   position: relative;
   height: 100%;
   border-radius: 28px;
-  border: 1px solid rgba(255, 247, 231, 0.16);
-  background: linear-gradient(180deg, rgba(9, 12, 18, 0.78), rgba(11, 14, 20, 0.92));
+  border: 1px solid var(--card-border-soft);
+  background: transparent;
 }
 
 .expedition-card-frame::before {
@@ -335,7 +354,7 @@ a {
   position: absolute;
   inset: 10px;
   border-radius: 20px;
-  border: 1px solid rgba(255, 236, 207, 0.14);
+  border: 1px solid color-mix(in srgb, var(--card-border-soft) 70%, rgba(255, 255, 255, 0.12));
   pointer-events: none;
   z-index: 3;
 }
@@ -487,6 +506,17 @@ a {
   opacity: 0.62;
 }
 
+.expedition-card-rarity-hidden .expedition-card-back::before {
+  content: '';
+  position: absolute;
+  inset: 10% 16%;
+  background: linear-gradient(180deg, transparent, rgba(122, 203, 255, 0.22), transparent);
+  filter: blur(6px);
+  mix-blend-mode: screen;
+  animation: hidden-scan 1800ms linear infinite;
+  z-index: 2;
+}
+
 .action-row {
   display: flex;
   flex-wrap: wrap;
@@ -563,18 +593,18 @@ a {
 
 @keyframes expedition-card-ritual {
   from {
-    transform: rotate(-1.4deg) scale(0.986);
-    filter: brightness(0.94);
+    transform: translateY(-4px) rotate(-3deg) scale(0.98);
+    filter: brightness(0.9);
   }
 
   50% {
-    transform: rotate(1.2deg) scale(1.012);
-    filter: brightness(1.06);
+    transform: translateY(3px) rotate(3deg) scale(1.03);
+    filter: brightness(1.12);
   }
 
   to {
-    transform: rotate(-0.8deg) scale(1);
-    filter: brightness(1);
+    transform: translateY(-2px) rotate(-2.2deg) scale(1.01);
+    filter: brightness(0.96);
   }
 }
 
@@ -614,12 +644,41 @@ a {
   }
 }
 
+@keyframes hidden-scan {
+  from {
+    transform: translateY(-120%);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0.55;
+  }
+
+  80% {
+    opacity: 0.55;
+  }
+
+  to {
+    transform: translateY(120%);
+    opacity: 0;
+  }
+}
+
 .expedition-card-stage-idle .expedition-card-back {
   animation: expedition-card-idle 2200ms ease-in-out infinite alternate;
 }
 
 .expedition-card-stage-revealing .expedition-card-back {
-  animation: expedition-card-ritual 360ms ease-in-out infinite alternate;
+  animation: expedition-card-ritual 220ms ease-in-out infinite alternate;
+}
+
+.expedition-card-stage-revealing .expedition-card {
+  box-shadow:
+    0 24px 46px rgba(0, 0, 0, 0.46),
+    0 0 0 2px var(--card-border-core),
+    0 0 0 4px rgba(255, 255, 255, 0.05),
+    0 0 52px color-mix(in srgb, var(--card-glow-primary) 120%, white 8%),
+    0 0 110px color-mix(in srgb, var(--card-glow-outer) 150%, transparent);
 }
 
 .expedition-card-stage-spinning .expedition-card-front {

@@ -2,10 +2,15 @@ import commonEarth from '../../../images/backs/card_back_common_earth.webp';
 import commonFire from '../../../images/backs/card_back_common_fire.webp';
 import commonWater from '../../../images/backs/card_back_common_water.webp';
 import commonWind from '../../../images/backs/card_back_common_wind.webp';
+import commonFace from '../../../images/faces/card_face_template_common.webp';
 import epicChaos from '../../../images/backs/card_back_epic_chaos.webp';
 import epicOrder from '../../../images/backs/card_back_epic_order.webp';
+import epicFace from '../../../images/faces/card_face_template_epic.webp';
+import hiddenFace from '../../../images/faces/card_face_template_hidden.webp';
 import hiddenBack from '../../../images/backs/card_back_hidden.webp';
+import legendaryFace from '../../../images/faces/card_face_template_legendary.webp';
 import legendaryOmega from '../../../images/backs/card_back_legendary_omega.webp';
+import rareFace from '../../../images/faces/card_face_template_rare.webp';
 import rareDark from '../../../images/backs/card_back_rare_dark.webp';
 import rareLight from '../../../images/backs/card_back_rare_light.webp';
 
@@ -21,6 +26,7 @@ export interface CardBackRecord {
   rarity: CardBackRarity;
   weight: number;
   imageUrl: string;
+  faceImageUrl: string;
 }
 
 const TOTAL_WEIGHT_BASIS = 100000;
@@ -31,60 +37,70 @@ export const cardBacks: CardBackRecord[] = [
     rarity: 'common',
     weight: 19725,
     imageUrl: commonEarth,
+    faceImageUrl: commonFace,
   },
   {
     id: 'card-back-common-water',
     rarity: 'common',
     weight: 19725,
     imageUrl: commonWater,
+    faceImageUrl: commonFace,
   },
   {
     id: 'card-back-common-fire',
     rarity: 'common',
     weight: 19725,
     imageUrl: commonFire,
+    faceImageUrl: commonFace,
   },
   {
     id: 'card-back-common-wind',
     rarity: 'common',
     weight: 19725,
     imageUrl: commonWind,
+    faceImageUrl: commonFace,
   },
   {
     id: 'card-back-rare-light',
     rarity: 'rare',
     weight: 8000,
     imageUrl: rareLight,
+    faceImageUrl: rareFace,
   },
   {
     id: 'card-back-rare-dark',
     rarity: 'rare',
     weight: 8000,
     imageUrl: rareDark,
+    faceImageUrl: rareFace,
   },
   {
     id: 'card-back-epic-order',
     rarity: 'epic',
     weight: 2000,
     imageUrl: epicOrder,
+    faceImageUrl: epicFace,
   },
   {
     id: 'card-back-epic-chaos',
     rarity: 'epic',
     weight: 2000,
     imageUrl: epicChaos,
+    faceImageUrl: epicFace,
   },
   {
     id: 'card-back-legendary-omega',
     rarity: 'legendary',
     weight: 1000,
     imageUrl: legendaryOmega,
+    faceImageUrl: legendaryFace,
   },
   {
     id: 'card-back-hidden',
     rarity: 'hidden',
     weight: 100,
     imageUrl: hiddenBack,
+    faceImageUrl: hiddenFace,
   },
 ];
 

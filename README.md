@@ -65,3 +65,4 @@ The repository now includes:
 - weighted fantasy card backs with rarity glow tiers
 - single source list for published restaurant sheets
 - tall reveal card with detached action buttons
+- rarity-matched front face templates from `images/faces/`

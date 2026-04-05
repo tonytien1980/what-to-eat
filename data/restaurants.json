@@ -260,6 +260,64 @@
     "isEnabled": true
   },
   {
+    "id": "lunch-陶然亭餐廳",
+    "name": "陶然亭餐廳",
+    "category": "lunch",
+    "mapUrl": "https://maps.app.goo.gl/meptLbYuJDjdkLNHA",
+    "tags": [
+      "lunch",
+      "meal",
+      "hot"
+    ],
+    "priceLevel": "medium",
+    "distanceLevel": "near",
+    "isEnabled": true
+  },
+  {
+    "id": "lunch-pasta-co",
+    "name": "Pasta & Co.",
+    "category": "lunch",
+    "mapUrl": "https://maps.app.goo.gl/1FQPWUpKAecrTpxN9",
+    "tags": [
+      "lunch",
+      "meal",
+      "hot",
+      "noodle"
+    ],
+    "priceLevel": "high",
+    "distanceLevel": "far",
+    "isEnabled": true
+  },
+  {
+    "id": "lunch-鬥牛士經典牛排",
+    "name": "鬥牛士經典牛排",
+    "category": "lunch",
+    "mapUrl": "https://maps.app.goo.gl/gsf5otKHoRERVLaY7",
+    "tags": [
+      "lunch",
+      "meal",
+      "hot"
+    ],
+    "priceLevel": "medium",
+    "distanceLevel": "mid",
+    "isEnabled": true
+  },
+  {
+    "id": "lunch-阿懋炒飯",
+    "name": "阿懋炒飯",
+    "category": "lunch",
+    "mapUrl": "https://maps.app.goo.gl/uqPwJyhy1565pdLu6",
+    "tags": [
+      "lunch",
+      "meal",
+      "hot",
+      "rice"
+    ],
+    "priceLevel": "low",
+    "distanceLevel": "near",
+    "isEnabled": true
+  },
+  {
     "id": "dinner-有有1969",
     "name": "有有1969",
     "category": "dinner",
@@ -285,6 +343,34 @@
       "noodle"
     ],
     "priceLevel": "high",
+    "distanceLevel": "mid",
+    "isEnabled": true
+  },
+  {
+    "id": "dinner-來來鵝肉活海鮮",
+    "name": "來來鵝肉活海鮮",
+    "category": "dinner",
+    "mapUrl": "https://maps.app.goo.gl/P53g7d3iwD2GYDk17",
+    "tags": [
+      "dinner",
+      "meal",
+      "hot"
+    ],
+    "priceLevel": "medium",
+    "distanceLevel": "mid",
+    "isEnabled": true
+  },
+  {
+    "id": "dinner-壽司郎",
+    "name": "壽司郎",
+    "category": "dinner",
+    "mapUrl": "https://maps.app.goo.gl/MRwzppqNVD7cVQLn9",
+    "tags": [
+      "dinner",
+      "meal",
+      "hot"
+    ],
+    "priceLevel": "medium",
     "distanceLevel": "mid",
     "isEnabled": true
   },

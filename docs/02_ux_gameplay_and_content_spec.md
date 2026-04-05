@@ -36,6 +36,7 @@ Should include:
 
 - a tall playing-card ratio card
 - one weighted random card back chosen on load and reroll
+- one rarity-matched face template once the card flips
 - rarity glow tied to the current back
 - a brief ritual animation on the card back
 - one flip transition into the final destination reveal
@@ -85,6 +86,7 @@ Should include:
 
 - 卡片要是長條直式撲克牌比例，不是正方卡
 - 卡背要直接使用圖檔，不是只用符印佔位
+- 正面也要使用對應稀有度的 face 模板，不是單純裸底圖
 - 卡片要有深色切邊與陰影，避免和背景混在一起
 - 稀有度光暈必須有明顯區別
 - 主畫面整體要偏向奇幻桌遊 / 派對遊戲，而不是舊式 RPG 官網

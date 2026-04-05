@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import App from '../App';
 
 test('renders expedition board title and start button', () => {
@@ -9,10 +9,20 @@ test('renders expedition board title and start button', () => {
   expect(
     screen.getByRole('button', { name: '開啟今日遠征' }),
   ).toBeInTheDocument();
-  expect(screen.getByText('午餐遠征 · 可抽 39 家')).toBeInTheDocument();
+  expect(screen.getByText('午餐遠征 · 可抽 22 家')).toBeInTheDocument();
   expect(screen.getByLabelText(/遠征卡背/)).toBeInTheDocument();
   expect(
     screen.queryByText('中央氣象署 36 小時縣市預報'),
   ).not.toBeInTheDocument();
   expect(screen.queryByText('Google Sheet 即時資料')).not.toBeInTheDocument();
+});
+
+test('updates the visible candidate count when category changes', () => {
+  render(<App />);
+
+  fireEvent.click(screen.getByRole('button', { name: '晚餐' }));
+  expect(screen.getByText('晚餐遠征 · 可抽 4 家')).toBeInTheDocument();
+
+  fireEvent.click(screen.getByRole('button', { name: '飲料' }));
+  expect(screen.getByText('飲料遠征 · 可抽 15 家')).toBeInTheDocument();
 });

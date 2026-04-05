@@ -3,7 +3,6 @@ import type { ExpeditionPhase } from '../features/spin/useExpedition';
 
 interface DestinyCardViewProps {
   cardBack: CardBackRecord;
-  backdropUrl: string;
   categoryLabel: string;
   destinationName?: string;
   phase: ExpeditionPhase;
@@ -11,7 +10,6 @@ interface DestinyCardViewProps {
 
 export function DestinyCardView({
   cardBack,
-  backdropUrl,
   categoryLabel,
   destinationName,
   phase,
@@ -26,7 +24,7 @@ export function DestinyCardView({
       {isShowingFront ? (
         <div className="expedition-card expedition-card-front" aria-label="遠征結果卡">
           <div className="expedition-card-frame">
-            <img alt="" className="expedition-card-scene" src={backdropUrl} />
+            <img alt="" className="expedition-card-scene" src={cardBack.faceImageUrl} />
             <div className="expedition-card-front-shade" />
             <div className="expedition-card-front-cloud expedition-card-front-cloud-left" />
             <div className="expedition-card-front-cloud expedition-card-front-cloud-right" />

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { DestinyCardView } from './components/destiny-card-view';
 import { categories } from './features/restaurants/data';
+import { getCandidatePool } from './features/restaurants/selectors';
 import {
   getCategoryLabel,
   getCategorySummary,
@@ -29,6 +30,10 @@ export default function App() {
   const { snapshot } = useTaipeiWeather();
   const rerollCopy = getRerollCopy(rerollsRemaining);
   const categoryLabel = getCategoryLabel(activeCategory);
+  const activeCategoryCount = getCandidatePool(
+    restaurantCatalog.restaurants,
+    activeCategory,
+  ).length;
   const weatherSceneLine = `臺北市 · ${snapshot.activeScene.sceneLabel} · ${snapshot.activeScene.variantLabel}`;
   const weatherPrimaryLine = `${snapshot.currentPeriod.weatherText} · ${snapshot.currentPeriod.lowTemp}°-${snapshot.currentPeriod.highTemp}°`;
   const weatherSecondaryLine = `降雨 ${snapshot.currentPeriod.pop}% · ${getComfortCopy(snapshot.currentPeriod.comfort)}`;
@@ -71,7 +76,7 @@ export default function App() {
           </div>
 
           <p className="status-copy">
-            {getCategorySummary(activeCategory, restaurantCatalog.restaurants.length)}
+            {getCategorySummary(activeCategory, activeCategoryCount)}
           </p>
 
           <button
@@ -93,7 +98,6 @@ export default function App() {
           >
             <div className="altar-content">
               <DestinyCardView
-                backdropUrl={snapshot.activeScene.imageUrl}
                 cardBack={round?.cardBack ?? currentCardBack}
                 categoryLabel={categoryLabel}
                 destinationName={round?.destination.name}
