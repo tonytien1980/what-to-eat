@@ -1,10 +1,10 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import App from '../App';
 
-test('allows a single reroll when the round grants reroll power', async () => {
+test('always allows one reroll even when the first round is not a reroll card', async () => {
   const randomSpy = vi
     .spyOn(Math, 'random')
-    .mockReturnValueOnce(0.99)
+    .mockReturnValueOnce(0)
     .mockReturnValueOnce(0)
     .mockReturnValueOnce(0)
     .mockReturnValueOnce(0);
@@ -12,16 +12,16 @@ test('allows a single reroll when the round grants reroll power', async () => {
   render(<App />);
 
   fireEvent.click(screen.getByRole('button', { name: '開啟今日遠征' }));
-  await screen.findByText(/本日遠征目的地/, {}, { timeout: 2500 });
+  await screen.findByRole('link', { name: '出發去吃' }, { timeout: 2500 });
 
-  const rerollButton = screen.getByRole('button', { name: '逆天改命' });
+  const rerollButton = screen.getByRole('button', { name: '再抽一次' });
   expect(rerollButton).toBeEnabled();
 
   fireEvent.click(rerollButton);
-  expect(screen.getAllByText('命運卡揭示中')).toHaveLength(2);
-  await screen.findByText(/本日遠征目的地/, {}, { timeout: 2500 });
+  expect(screen.getAllByText('命運卡翻面中')).toHaveLength(2);
+  await screen.findByRole('link', { name: '出發去吃' }, { timeout: 2500 });
 
-  expect(screen.getByRole('button', { name: '逆天改命已用盡' })).toBeDisabled();
+  expect(screen.getByRole('button', { name: '重選次數已用盡' })).toBeDisabled();
 
   randomSpy.mockRestore();
 });

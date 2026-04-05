@@ -83,5 +83,6 @@ The current implementation uses:
 
 - `startExpedition(category)` to draw a destiny card and destination together
 - `useExpedition(category)` to manage `idle -> revealing -> spinning -> result`
-- a single reroll path only when the drawn card grants reroll power
+- one guaranteed reroll every round
+- one optional bonus reroll if the expedition first reveals `宿命重骰`
 - local JSON data under `data/restaurants.json`

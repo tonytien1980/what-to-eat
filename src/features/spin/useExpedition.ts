@@ -47,7 +47,8 @@ export function useExpedition(category: Category) {
   const [phase, setPhase] = useState<ExpeditionPhase>('idle');
   const [round, setRound] = useState<ExpeditionRound | null>(null);
   const [displayedName, setDisplayedName] = useState('');
-  const [hasRerolled, setHasRerolled] = useState(false);
+  const [rerollsRemaining, setRerollsRemaining] = useState(0);
+  const [bonusRerollGranted, setBonusRerollGranted] = useState(false);
   const timersRef = useRef<number[]>([]);
 
   function clearTimers() {
@@ -97,17 +98,29 @@ export function useExpedition(category: Category) {
   }
 
   function start() {
-    setHasRerolled(false);
-    runRound(startExpedition(category));
+    const firstRound = startExpedition(category);
+    const initialRerolls = firstRound.canReroll ? 2 : 1;
+
+    setBonusRerollGranted(firstRound.canReroll);
+    setRerollsRemaining(initialRerolls);
+    runRound(firstRound);
   }
 
   function reroll() {
-    if (!round || hasRerolled || !round.canReroll) {
+    if (!round || rerollsRemaining <= 0) {
       return;
     }
 
-    setHasRerolled(true);
-    runRound(startExpedition(category));
+    const nextRound = startExpedition(category);
+    const shouldGrantBonus = nextRound.canReroll && !bonusRerollGranted;
+    const nextRemaining = Math.max(rerollsRemaining - 1, 0) + (shouldGrantBonus ? 1 : 0);
+
+    if (shouldGrantBonus) {
+      setBonusRerollGranted(true);
+    }
+
+    setRerollsRemaining(nextRemaining);
+    runRound(nextRound);
   }
 
   useEffect(() => () => clearTimers(), []);
@@ -116,11 +129,11 @@ export function useExpedition(category: Category) {
     phase,
     round,
     displayedName,
-    hasRerolled,
+    rerollsRemaining,
     start,
     reroll,
     isAnimating: phase === 'revealing' || phase === 'spinning',
-    showReroll: Boolean(round?.canReroll || hasRerolled),
-    canReroll: Boolean(round?.canReroll) && !hasRerolled,
+    showReroll: Boolean(round),
+    canReroll: rerollsRemaining > 0,
   };
 }

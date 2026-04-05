@@ -8,7 +8,8 @@
 - filtered card falls back safely when no record matches
 - result screen shows correct destination name
 - map button opens the selected restaurant URL
-- reroll only works when allowed by the round rules
+- every round exposes at least one reroll path
+- bonus reroll appears correctly when special destiny rules grant it
 
 ## Quality Checks
 

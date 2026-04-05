@@ -11,7 +11,8 @@ First release targets a no-login, same-screen MVP:
 - staged destiny-card reveal
 - slot-style destination animation
 - direct Google Maps launch
-- one-time reroll when the drawn card allows it
+- one guaranteed reroll every round
+- `宿命重骰` can grant one extra reroll
 - lightweight content and docs sync inside this repo
 
 ## Getting Started
@@ -45,4 +46,5 @@ The repository now includes:
 - category-based restaurant pools
 - destiny card filtering with fallback behavior
 - staged expedition reveal flow
-- one-time reroll when the round grants reroll power
+- one guaranteed reroll every round
+- bonus reroll when luck grants `宿命重骰`

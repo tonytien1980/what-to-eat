@@ -3,6 +3,7 @@ import { categories } from './features/restaurants/data';
 import {
   getCategorySummary,
   getPhaseLabel,
+  getRerollCopy,
   getRoundSummary,
   getSlotLabel,
 } from './features/result/result-copy';
@@ -16,13 +17,14 @@ export default function App() {
     phase,
     round,
     displayedName,
-    hasRerolled,
+    rerollsRemaining,
     start,
     reroll,
     isAnimating,
     showReroll,
     canReroll,
   } = useExpedition(activeCategory);
+  const rerollCopy = getRerollCopy(rerollsRemaining);
 
   return (
     <main className="app-shell">
@@ -32,8 +34,13 @@ export default function App() {
             <p className="eyebrow">{getPhaseLabel(phase)}</p>
             <h1>今天吃什麼：命運遠征</h1>
             <p className="tagline">
-              召集旅伴、啟動命運，讓今天的午餐像接下一張告示牌任務。
+              別再開十個分頁找餐廳了，讓命運先幫你把答案縮到只剩一個。
             </p>
+            <div className="intro-meta">
+              <span className="meta-pill">同螢幕直接玩</span>
+              <span className="meta-pill">90 秒內決定</span>
+              <span className="meta-pill">資料可自己維護</span>
+            </div>
             <div className="category-tabs" role="tablist" aria-label="遠征類型">
               {categories.map((category) => (
                 <button
@@ -81,6 +88,10 @@ export default function App() {
                   <p className="phase-badge">{getPhaseLabel(phase)}</p>
                   <h2>命運卡：{round.destinyCard.name}</h2>
                   <p className="card-description">{round.destinyCard.description}</p>
+                  <div className="card-meta-row">
+                    <span className="card-meta-pill">{rerollCopy.hint}</span>
+                    <span className="card-meta-pill">資料池 {round.pool.length} 家</span>
+                  </div>
                 </article>
 
                 <div className="slot-stage">
@@ -101,6 +112,9 @@ export default function App() {
                 {phase === 'result' ? (
                   <div className="result-actions">
                     <p className="result-summary">{getRoundSummary(round)}</p>
+                    <p className="result-subcopy">
+                      不想吃這家也沒關係，下面直接再抽，不用重開整局。
+                    </p>
                     <div className="action-row">
                       <a
                         className="map-link"
@@ -117,7 +131,7 @@ export default function App() {
                           disabled={!canReroll}
                           onClick={reroll}
                         >
-                          {hasRerolled ? '逆天改命已用盡' : '逆天改命'}
+                          {rerollCopy.label}
                         </button>
                       ) : null}
                     </div>
