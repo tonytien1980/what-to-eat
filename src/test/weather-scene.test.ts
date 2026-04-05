@@ -40,4 +40,19 @@ test('maps thunderstorm forecast to the ruins scene', () => {
       timeRange: '04/05-18:00 ~ 04/06-06:00',
     }),
   ).toBe('forest_ruins');
+  expect(
+    pickSceneForPeriod(
+      {
+        wxCode: 17,
+        highTemp: 25,
+        lowTemp: 20,
+        pop: 60,
+        type: 'TN',
+        weatherText: '陰時多雲短暫陣雨或雷雨',
+        comfort: '舒適',
+        timeRange: '04/05-18:00 ~ 04/06-06:00',
+      },
+      0.999,
+    ),
+  ).toBe('floating_isles');
 });

@@ -47,6 +47,63 @@ function resolveBackgroundFile(relativePath: string) {
   return backgroundModules[`../../../images/backgrounds/${relativePath}`];
 }
 
+function normalizeRandomValue(randomValue: number) {
+  return Math.min(Math.max(randomValue, 0), 0.999999);
+}
+
+function sceneSupportsVariant(sceneKey: SceneKey, variantKey: SceneVariantKey) {
+  const scene = manifest.scenes[sceneKey];
+
+  if (!scene || scene.type === 'special_indoor') {
+    return false;
+  }
+
+  if (variantKey === 'default') {
+    return true;
+  }
+
+  return Boolean(scene.variants[variantKey]);
+}
+
+function getWeightedSceneCandidates(
+  variantKey: SceneVariantKey,
+  period: CwaForecastPeriod,
+) {
+  const candidates = (Object.keys(manifest.scenes) as SceneKey[]).filter((sceneKey) =>
+    sceneSupportsVariant(sceneKey, variantKey),
+  );
+
+  if (candidates.length === 0) {
+    return ['forest_ruins'] as SceneKey[];
+  }
+
+  const weighted = [...candidates];
+
+  if (variantKey === 'thunderstorm') {
+    weighted.unshift('forest_ruins');
+  }
+
+  if (variantKey === 'rain') {
+    weighted.unshift('forest_ruins');
+
+    if (period.highTemp >= 27 && candidates.includes('desert_oasis')) {
+      weighted.unshift('desert_oasis');
+    }
+  }
+
+  if (variantKey === 'clear_cloudy' || variantKey === 'overcast') {
+    if (period.highTemp >= 28 && candidates.includes('desert_oasis')) {
+      weighted.unshift('desert_oasis');
+    }
+
+    if (period.highTemp <= 26 && candidates.includes('floating_isles')) {
+      weighted.unshift('floating_isles');
+    }
+  }
+
+  return weighted;
+}
+
 export function mapWxCodeToVariant(wxCode: number): SceneVariantKey {
   const variants = manifest.scenes.forest_ruins.variants;
 
@@ -59,33 +116,21 @@ export function mapWxCodeToVariant(wxCode: number): SceneVariantKey {
   return 'default';
 }
 
-export function pickSceneForPeriod(period: CwaForecastPeriod): SceneKey {
+export function pickSceneForPeriod(
+  period: CwaForecastPeriod,
+  randomValue = 0,
+): SceneKey {
   const variantKey = mapWxCodeToVariant(period.wxCode);
+  const candidates = getWeightedSceneCandidates(variantKey, period);
+  const selectedIndex = Math.floor(normalizeRandomValue(randomValue) * candidates.length);
 
-  if (
-    variantKey === 'thunderstorm' ||
-    variantKey === 'heavy_rain' ||
-    variantKey === 'dense_fog' ||
-    variantKey === 'freezing_fog' ||
-    variantKey === 'snow'
-  ) {
-    return 'forest_ruins';
-  }
-
-  if (variantKey === 'rain') {
-    return period.highTemp >= 27 ? 'desert_oasis' : 'forest_ruins';
-  }
-
-  if (variantKey === 'clear_cloudy' || variantKey === 'overcast') {
-    return period.highTemp >= 28 ? 'desert_oasis' : 'floating_isles';
-  }
-
-  return 'forest_ruins';
+  return candidates[selectedIndex] ?? 'forest_ruins';
 }
 
 export function getSceneAsset(
   sceneKey: SceneKey,
   variantKey: SceneVariantKey = 'default',
+  randomValue = 0,
 ) {
   const scene = manifest.scenes[sceneKey];
 
@@ -93,16 +138,39 @@ export function getSceneAsset(
     return '';
   }
 
-  if (variantKey !== 'default' && scene.variants[variantKey]) {
-    return resolveBackgroundFile(scene.variants[variantKey]!.file);
-  }
+  const targetFile =
+    variantKey !== 'default' && scene.variants[variantKey]
+      ? scene.variants[variantKey]!.file
+      : scene.default;
 
-  return resolveBackgroundFile(scene.default);
+  const targetBaseName = targetFile.replace(/\.webp$/, '');
+  const assetCandidates = Object.entries(backgroundModules)
+    .filter(([modulePath]) =>
+      new RegExp(
+        `^\\.\\.\\/\\.\\.\\/\\.\\.\\/images/backgrounds/${sceneKey}/${targetBaseName.split('/').pop()!}(?:[-_][^/]+)?\\.webp$`,
+      ).test(modulePath),
+    )
+    .map(([, assetUrl]) => assetUrl)
+    .sort();
+
+  const resolvedCandidates =
+    assetCandidates.length > 0
+      ? assetCandidates
+      : [resolveBackgroundFile(targetFile)].filter(Boolean);
+
+  const selectedIndex = Math.floor(
+    normalizeRandomValue(randomValue) * resolvedCandidates.length,
+  );
+
+  return resolvedCandidates[selectedIndex] ?? resolvedCandidates[0] ?? '';
 }
 
-export function resolveSceneSelection(period: CwaForecastPeriod): ActiveSceneSelection {
+export function resolveSceneSelection(
+  period: CwaForecastPeriod,
+  randomValue = 0,
+): ActiveSceneSelection {
   const variantKey = mapWxCodeToVariant(period.wxCode);
-  const sceneKey = pickSceneForPeriod(period);
+  const sceneKey = pickSceneForPeriod(period, randomValue);
   const scene = manifest.scenes[sceneKey];
   const label =
     variantKey !== 'default' && scene.variants[variantKey]
@@ -114,7 +182,7 @@ export function resolveSceneSelection(period: CwaForecastPeriod): ActiveSceneSel
     sceneLabel: sceneLabelMap[sceneKey],
     variantKey,
     variantLabel: label,
-    imageUrl: getSceneAsset(sceneKey, variantKey),
+    imageUrl: getSceneAsset(sceneKey, variantKey, randomValue),
   };
 }
 

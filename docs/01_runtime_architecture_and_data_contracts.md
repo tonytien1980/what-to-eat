@@ -118,3 +118,4 @@ The current implementation uses:
 - `npm run build:pages` now builds with a relative asset base for GitHub Pages hosting
 - `https://www.cwa.gov.tw/Data/js/TableData_36hr_County_C.js` as the browser-loaded official forecast source
 - city code `63` as the default Taipei weather source
+- scene selection now supports reload-time rotation across compatible fantasy scenes for the same weather variant

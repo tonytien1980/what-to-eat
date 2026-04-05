@@ -19,6 +19,7 @@
 - bonus reroll appears correctly when special destiny rules grant it
 - Taipei weather snapshot loads and updates the scene selection
 - fallback weather snapshot still renders if official weather data cannot load
+- reloading the page can rotate to another compatible scene for the same current weather variant
 
 ## Quality Checks
 

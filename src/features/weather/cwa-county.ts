@@ -75,6 +75,7 @@ export function extractCwaCountyScriptData(scriptText: string): CwaCountyDataset
 
 export function buildTaipeiWeatherSnapshot(
   dataset: CwaCountyDataset,
+  activeSceneSeed = 0,
 ): TaipeiWeatherSnapshot {
   const taipeiPeriods = dataset.tableData[TAIPEI_CITY_CODE];
 
@@ -91,8 +92,8 @@ export function buildTaipeiWeatherSnapshot(
     sourceLabel: '中央氣象署 36 小時縣市預報',
     currentPeriod,
     upcomingPeriods: normalized.slice(1),
-    activeScene: resolveSceneSelection(currentPeriod),
-    forecastScenes: normalized.map(resolveSceneSelection),
+    activeScene: resolveSceneSelection(currentPeriod, activeSceneSeed),
+    forecastScenes: normalized.map((period) => resolveSceneSelection(period)),
   };
 }
 
@@ -158,59 +159,17 @@ export function loadCwaCountyDataset(): Promise<CwaCountyDataset> {
   return countyScriptPromise;
 }
 
-export async function loadTaipeiWeatherSnapshot() {
+export async function loadTaipeiWeatherSnapshot(activeSceneSeed = Math.random()) {
   const dataset = await loadCwaCountyDataset();
-  return buildTaipeiWeatherSnapshot(dataset);
+  return buildTaipeiWeatherSnapshot(dataset, activeSceneSeed);
 }
 
-export const fallbackTaipeiWeatherSnapshot: TaipeiWeatherSnapshot = {
-  cityName: '臺北市',
-  issuedTime: '預設模式',
-  sourceLabel: '預設備景',
-  currentPeriod: {
-    timeRange: '今天白天',
-    type: 'TD',
-    lowTemp: 24,
-    highTemp: 28,
-    pop: 20,
-    wxCode: 5,
-    weatherText: '多雲時陰',
-    comfort: '舒適',
-  },
-  upcomingPeriods: [
-    {
-      timeRange: '今晚明晨',
-      type: 'TN',
-      lowTemp: 20,
-      highTemp: 24,
-      pop: 60,
-      wxCode: 17,
-      weatherText: '陰時多雲短暫陣雨或雷雨',
-      comfort: '舒適',
-    },
-    {
-      timeRange: '明天白天',
-      type: 'TM',
-      lowTemp: 20,
-      highTemp: 27,
-      pop: 50,
-      wxCode: 18,
-      weatherText: '陰短暫陣雨或雷雨',
-      comfort: '舒適',
-    },
-  ],
-  activeScene: resolveSceneSelection({
-    timeRange: '今天白天',
-    type: 'TD',
-    lowTemp: 24,
-    highTemp: 28,
-    pop: 20,
-    wxCode: 5,
-    weatherText: '多雲時陰',
-    comfort: '舒適',
-  }),
-  forecastScenes: [
-    resolveSceneSelection({
+export function createFallbackTaipeiWeatherSnapshot(activeSceneSeed = 0): TaipeiWeatherSnapshot {
+  return {
+    cityName: '臺北市',
+    issuedTime: '預設模式',
+    sourceLabel: '預設備景',
+    currentPeriod: {
       timeRange: '今天白天',
       type: 'TD',
       lowTemp: 24,
@@ -219,26 +178,75 @@ export const fallbackTaipeiWeatherSnapshot: TaipeiWeatherSnapshot = {
       wxCode: 5,
       weatherText: '多雲時陰',
       comfort: '舒適',
-    }),
-    resolveSceneSelection({
-      timeRange: '今晚明晨',
-      type: 'TN',
-      lowTemp: 20,
-      highTemp: 24,
-      pop: 60,
-      wxCode: 17,
-      weatherText: '陰時多雲短暫陣雨或雷雨',
-      comfort: '舒適',
-    }),
-    resolveSceneSelection({
-      timeRange: '明天白天',
-      type: 'TM',
-      lowTemp: 20,
-      highTemp: 27,
-      pop: 50,
-      wxCode: 18,
-      weatherText: '陰短暫陣雨或雷雨',
-      comfort: '舒適',
-    }),
-  ],
-};
+    },
+    upcomingPeriods: [
+      {
+        timeRange: '今晚明晨',
+        type: 'TN',
+        lowTemp: 20,
+        highTemp: 24,
+        pop: 60,
+        wxCode: 17,
+        weatherText: '陰時多雲短暫陣雨或雷雨',
+        comfort: '舒適',
+      },
+      {
+        timeRange: '明天白天',
+        type: 'TM',
+        lowTemp: 20,
+        highTemp: 27,
+        pop: 50,
+        wxCode: 18,
+        weatherText: '陰短暫陣雨或雷雨',
+        comfort: '舒適',
+      },
+    ],
+    activeScene: resolveSceneSelection(
+      {
+        timeRange: '今天白天',
+        type: 'TD',
+        lowTemp: 24,
+        highTemp: 28,
+        pop: 20,
+        wxCode: 5,
+        weatherText: '多雲時陰',
+        comfort: '舒適',
+      },
+      activeSceneSeed,
+    ),
+    forecastScenes: [
+      resolveSceneSelection({
+        timeRange: '今天白天',
+        type: 'TD',
+        lowTemp: 24,
+        highTemp: 28,
+        pop: 20,
+        wxCode: 5,
+        weatherText: '多雲時陰',
+        comfort: '舒適',
+      }),
+      resolveSceneSelection({
+        timeRange: '今晚明晨',
+        type: 'TN',
+        lowTemp: 20,
+        highTemp: 24,
+        pop: 60,
+        wxCode: 17,
+        weatherText: '陰時多雲短暫陣雨或雷雨',
+        comfort: '舒適',
+      }),
+      resolveSceneSelection({
+        timeRange: '明天白天',
+        type: 'TM',
+        lowTemp: 20,
+        highTemp: 27,
+        pop: 50,
+        wxCode: 18,
+        weatherText: '陰短暫陣雨或雷雨',
+        comfort: '舒適',
+      }),
+    ],
+  };
+}
+
+export const fallbackTaipeiWeatherSnapshot = createFallbackTaipeiWeatherSnapshot();

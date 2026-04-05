@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import {
+  createFallbackTaipeiWeatherSnapshot,
   fallbackTaipeiWeatherSnapshot,
   loadTaipeiWeatherSnapshot,
 } from './cwa-county';
 import type { TaipeiWeatherSnapshot } from './types';
 
 export function useTaipeiWeather() {
-  const [snapshot, setSnapshot] = useState<TaipeiWeatherSnapshot>(
-    fallbackTaipeiWeatherSnapshot,
+  const [snapshot, setSnapshot] = useState<TaipeiWeatherSnapshot>(() =>
+    import.meta.env.MODE === 'test'
+      ? fallbackTaipeiWeatherSnapshot
+      : createFallbackTaipeiWeatherSnapshot(Math.random()),
   );
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>(
     import.meta.env.MODE === 'test' ? 'ready' : 'loading',
@@ -20,7 +23,7 @@ export function useTaipeiWeather() {
 
     let isCancelled = false;
 
-    loadTaipeiWeatherSnapshot()
+    loadTaipeiWeatherSnapshot(Math.random())
       .then((nextSnapshot) => {
         if (isCancelled) {
           return;

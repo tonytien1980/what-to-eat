@@ -26,6 +26,7 @@ Should include:
 - scene line under the hero title
 - two weather info lines under the scene line
 - visible full-scene background, not faded into the back
+- same weather variant may rotate between multiple compatible background scenes on reload
 - fantasy-styled category selector using `images/notice/`
 - no category selected on first load
 - one primary CTA to start the expedition using `images/scrolls/`
