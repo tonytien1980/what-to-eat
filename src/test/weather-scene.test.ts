@@ -1,6 +1,8 @@
 import {
   buildTaipeiWeatherSnapshot,
+  buildZhongshanDistrictWeatherSnapshot,
   extractCwaCountyScriptData,
+  extractCwaTownScriptData,
   mapWxCodeToVariant,
   pickSceneForPeriod,
 } from '../features/weather/cwa-county';
@@ -13,6 +15,30 @@ var TableData_36hr = {
     {'TimeRange':'04/05-18:00 ~ 04/06-06:00','Type':'TN','Temp':{'C':{'L':'20','H':'25'},'F':{'L':'68','H':'77'}},'PoP':'60','Wx_Icon':'17','Wx':'陰時多雲短暫陣雨或雷雨','CI':'舒適'},
     {'TimeRange':'04/06-06:00 ~ 04/06-18:00','Type':'TM','Temp':{'C':{'L':'20','H':'27'},'F':{'L':'68','H':'81'}},'PoP':'50','Wx_Icon':'18','Wx':'陰短暫陣雨或雷雨','CI':'舒適'}
   ]
+};`;
+
+const sampleTownThreeHourScript = `
+// Updated: 2026/04/06 01:01:02
+var Time_3hr = {'C':['01 04/06<br><span>(一)</span>','02 04/06<br><span>(一)</span>']};
+var TempArray_3hr = {
+  '6300400':{
+    'C':{
+      'T':[22,23],
+      'AT':[25,26],
+      'Wx':{'C':[['15','短暫陣雨或雷雨'],['07','陰']]}
+    }
+  }
+};`;
+
+const sampleTownGtScript = `
+// Updated: 2026/04/06 01:00:33
+var TempArray_GT24hr = {
+  '6300400':{
+    'C':{
+      'T':[19,20,21,22],
+      'AT':[21,22,23,24]
+    }
+  }
 };`;
 
 test('extracts taipei weather from the official county script and derives a scene', () => {
@@ -55,4 +81,18 @@ test('maps thunderstorm forecast to the ruins scene', () => {
       0.999,
     ),
   ).toBe('floating_isles');
+});
+
+test('extracts Zhongshan district weather from official town scripts', () => {
+  const dataset = extractCwaTownScriptData({
+    threeHourScript: sampleTownThreeHourScript,
+    gt24hrScript: sampleTownGtScript,
+  });
+  const snapshot = buildZhongshanDistrictWeatherSnapshot(dataset);
+
+  expect(snapshot.cityName).toBe('臺北市中山區');
+  expect(snapshot.currentPeriod.wxCode).toBe(15);
+  expect(snapshot.currentPeriod.currentTemp).toBe(22);
+  expect(snapshot.currentPeriod.feelsLikeTemp).toBe(24);
+  expect(snapshot.activeScene.variantKey).toBe('thunderstorm');
 });

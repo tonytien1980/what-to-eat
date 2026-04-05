@@ -35,9 +35,15 @@ export default function App() {
   const activeCategoryCount = activeCategory
     ? getCandidatePool(restaurantCatalog.restaurants, activeCategory).length
     : 0;
-  const weatherSceneLine = `臺北市 · ${snapshot.activeScene.sceneLabel} · ${snapshot.activeScene.variantLabel}`;
-  const weatherPrimaryLine = `${snapshot.currentPeriod.weatherText} · ${snapshot.currentPeriod.lowTemp}°-${snapshot.currentPeriod.highTemp}°`;
-  const weatherSecondaryLine = `降雨 ${snapshot.currentPeriod.pop}% · ${getComfortCopy(snapshot.currentPeriod.comfort)}`;
+  const weatherSceneLine = `${snapshot.cityName} · ${snapshot.activeScene.sceneLabel} · ${snapshot.activeScene.variantLabel}`;
+  const weatherPrimaryLine =
+    snapshot.currentPeriod.currentTemp !== undefined
+      ? `${snapshot.currentPeriod.weatherText} · 現在 ${snapshot.currentPeriod.currentTemp}°`
+      : `${snapshot.currentPeriod.weatherText} · ${snapshot.currentPeriod.lowTemp}°-${snapshot.currentPeriod.highTemp}°`;
+  const weatherSecondaryLine =
+    snapshot.currentPeriod.feelsLikeTemp !== undefined
+      ? `體感 ${snapshot.currentPeriod.feelsLikeTemp}° · 今日 ${snapshot.currentPeriod.lowTemp}°-${snapshot.currentPeriod.highTemp}°`
+      : `降雨 ${snapshot.currentPeriod.pop}% · ${getComfortCopy(snapshot.currentPeriod.comfort)}`;
 
   const startButtonLabel =
     activeCategory === null ? '先選遠征類型' : '開啟今日遠征';

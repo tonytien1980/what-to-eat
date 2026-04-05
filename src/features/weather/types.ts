@@ -17,13 +17,15 @@ export type SceneVariantKey =
 
 export interface CwaForecastPeriod {
   timeRange: string;
-  type: 'TD' | 'TN' | 'TM' | 'TMN';
+  type: 'TD' | 'TN' | 'TM' | 'TMN' | '3hr';
   lowTemp: number;
   highTemp: number;
   pop: number;
   wxCode: number;
   weatherText: string;
   comfort: string;
+  currentTemp?: number;
+  feelsLikeTemp?: number;
 }
 
 export interface ActiveSceneSelection {
@@ -35,7 +37,7 @@ export interface ActiveSceneSelection {
 }
 
 export interface TaipeiWeatherSnapshot {
-  cityName: '臺北市';
+  cityName: string;
   issuedTime: string;
   sourceLabel: string;
   currentPeriod: CwaForecastPeriod;

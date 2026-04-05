@@ -12,7 +12,7 @@ The MVP should be a static-friendly frontend app:
 ## Core Modules
 
 - `src/app/`: app shell and top-level state flow
-- `src/features/weather/`: official CWA county forecast loading, normalization, and scene mapping
+- `src/features/weather/`: official CWA Zhongshan District town-forecast loading, normalization, and scene mapping
 - `src/features/card-backs/`: weighted back deck definitions and rarity styling metadata
 - `src/features/restaurants/types.ts`: restaurant domain types
 - `src/features/restaurants/data.ts`: fallback snapshot and sheet-source configuration
@@ -116,6 +116,7 @@ The current implementation uses:
 - `data/restaurant-sheet-sources.json` as the single editable list of sheet URLs
 - `npm run data:import` to refresh the fallback snapshot from the current published sheets
 - `npm run build:pages` now builds with a relative asset base for GitHub Pages hosting
-- `https://www.cwa.gov.tw/Data/js/TableData_36hr_County_C.js` as the browser-loaded official forecast source
-- city code `63` as the default Taipei weather source
+- `https://www.cwa.gov.tw/Data/js/3hr/ChartData_3hr_T_63.js` as the browser-loaded Zhongshan District 3-hour source
+- `https://www.cwa.gov.tw/Data/js/GT/ChartData_GT24hr_T_63.js` as the browser-loaded Zhongshan District temperature / feels-like source
+- town id `6300400` as the fixed Zhongshan District weather source
 - scene selection now supports reload-time rotation across compatible fantasy scenes for the same weather variant

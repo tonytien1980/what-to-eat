@@ -41,6 +41,7 @@ const timeLabelMap = {
   TN: '今晚明晨',
   TM: '明天白天',
   TMN: '明天夜晚',
+  '3hr': '中山區 3 小時預報',
 } as const;
 
 function resolveBackgroundFile(relativePath: string) {

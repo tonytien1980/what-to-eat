@@ -17,7 +17,7 @@
 - map button opens the selected restaurant URL
 - every round exposes at least one reroll path
 - bonus reroll appears correctly when special destiny rules grant it
-- Taipei weather snapshot loads and updates the scene selection
+- Zhongshan District weather snapshot loads and updates the scene selection
 - fallback weather snapshot still renders if official weather data cannot load
 - reloading the page can rotate to another compatible scene for the same current weather variant
 

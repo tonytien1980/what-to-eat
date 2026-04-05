@@ -22,9 +22,9 @@
 Should include:
 
 - fixed two-line hero title
-- Taipei weather as first-class information
+- Taipei Zhongshan District weather as first-class information
 - scene line under the hero title
-- two weather info lines under the scene line
+- two weather info lines under the scene line, using current temperature and feels-like data for Zhongshan District
 - visible full-scene background, not faded into the back
 - same weather variant may rotate between multiple compatible background scenes on reload
 - fantasy-styled category selector using `images/notice/`

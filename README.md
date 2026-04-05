@@ -6,7 +6,7 @@
 
 First release targets a no-login, same-screen MVP:
 
-- Taipei weather driven by the official CWA 36-hour county forecast
+- Taipei Zhongshan District weather driven by official CWA town forecast scripts
 - weather-selected fantasy scene backgrounds with reload-time scene rotation
 - Google Sheet runtime restaurant loading
 - category switcher for lunch, dinner, drinks, and sweets
