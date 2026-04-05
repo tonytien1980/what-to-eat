@@ -21,76 +21,76 @@
 
 Should include:
 
-- title and short fantasy tagline
+- fixed two-line hero title
 - Taipei weather as first-class information
-- restaurant data source status
+- scene line under the hero title
+- two weather info lines under the scene line
 - visible full-scene background, not faded into the back
-- category selector
+- fantasy-styled category selector
 - one primary CTA to start the expedition
-- current readiness hint
+- one currently selected card back visible before the run begins
 
 ### 2. 命運揭示與拉霸
 
 Should include:
 
-- a tarot-style destiny card with a dedicated card back before reveal
-- emblem or sigil artwork per card
-- accent-tinted frames per card family
-- short effect description
-- spinning restaurant names
-- a dramatic but short stop animation
-- a total reveal window that still resolves inside roughly 1.5 seconds
+- a tall playing-card ratio card
+- one weighted random card back chosen on load and reroll
+- rarity glow tied to the current back
+- a brief ritual animation on the card back
+- one flip transition into the final destination reveal
+- a cloud-clearing style reveal once the card face appears
 
 ### 3. 遠征結果
 
 Should include:
 
-- selected destination
-- destiny card summary
-- `出發去吃`
-- `逆天改命`
-- `返回告示牌`
+- selected destination as the dominant card-face content
+- no visible destiny-card rules or filter explanation on the card face
+- `出發去吃` below the card
+- `再抽一次` below the card
 
-## Destiny Card Content Rules
+## Hidden Destiny Rule
 
-- keep total MVP cards under 8
-- effect must be understandable in one sentence
-- card effects should change filtering or presentation, not require player strategy
-- one reroll-enabling card is enough for MVP
-
-## MVP Destiny Card Set
-
-- 疾風祝福: near only
-- 黃金匱乏: prefer low price
-- 熾焰召喚: hot food focused
-- 迷霧籠罩: fully random
-- 古神低語: fully random with stronger presentation
-- 慶典之日: festive presentation
-- 宿命重骰: grants one reroll
+- internal destiny-card rules still control filtering
+- those rules are not surfaced as visible card copy in the new card-face UI
+- reroll rules still follow the hidden destiny logic behind the scenes
 
 ## Reroll Rule
 
 - 每局保底可重選一次
 - 若抽到 `宿命重骰`，則額外再送一次
+- `再抽一次` 會同時重新抽卡背與目的地
 - 使用完後按鈕保留但禁用，明確表示本局容錯已耗盡
+
+## Card Back Rule
+
+- 頁面打開就要先抽到一張卡背
+- `再抽一次` 會依同樣權重再抽一張新卡背
+- common: 普通白光
+- rare: 高強度白光
+- epic: 金光
+- legendary: 紫光
+- hidden: 藍光
 
 ## Current Motion Rule
 
-- 第一步先顯示命運卡揭示狀態
-- 第二步再進入命運之輪輪播
-- 最後才出現結果按鈕列
+- 第一步先顯示卡背儀式動畫
+- 第二步整張牌翻面
+- 第三步以撥雲見日的方式揭示餐廳名稱
+- 最後才出現卡片下方操作按鈕
 - 若使用者偏好 reduced motion，應直接簡化為快速揭曉
 
 ## Current Visual Rule
 
-- 命運卡要像真的抽卡 UI，不是單純文字區塊
-- 命運卡揭示階段要先看到卡背，再翻成正面卡面
-- 每張卡都要有可辨識圖案或符印
-- 每張卡要有自己的色系重點，不能全部長得像同一張卡
+- 卡片要是長條直式撲克牌比例，不是正方卡
+- 卡背要直接使用圖檔，不是只用符印佔位
+- 卡片要有深色切邊與陰影，避免和背景混在一起
+- 稀有度光暈必須有明顯區別
 - 主畫面整體要偏向奇幻桌遊 / 派對遊戲，而不是舊式 RPG 官網
 - 場景背景要清楚可見，面板只能局部遮罩，不可整片洗白
-- 天氣資訊、場景名稱、預報時間都要直接看得到
-- 餐廳資料目前是即時試算表還是本地備援，要在首頁看得出來
+- 主標固定兩行，不因螢幕大小而跑版
+- 天氣資訊與場景資訊要壓成兩小行，避免 header 太滿
 
 ## Success Criteria
 

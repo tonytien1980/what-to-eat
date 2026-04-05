@@ -5,8 +5,10 @@
 - category switch changes the candidate pool
 - runtime restaurant catalog loads from Google Sheet when available
 - runtime restaurant catalog falls back to bundled snapshot when sheet loading fails
+- one weighted card back is visible before the first draw begins
+- reroll changes both the destination and the card back
 - destiny card is drawn before each expedition
-- destiny card back is shown before the face card content appears
+- visible card back is shown before the face card content appears
 - spin result always belongs to the active category
 - filtered card falls back safely when no record matches
 - result screen shows correct destination name
@@ -23,7 +25,7 @@
 - large titles do not overflow
 - disabled or missing data states are readable
 - animations do not block the final result
-- tarot card reveal still resolves correctly on desktop and mobile
+- tall reveal card still resolves correctly on desktop and mobile
 - reduced-motion users still get a valid quick reveal
 - imported reference snapshot remains available locally after build
 - sheet source list and fallback snapshot stay aligned after `npm run data:import`

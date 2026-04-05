@@ -11,9 +11,8 @@ First release targets a no-login, same-screen MVP:
 - Google Sheet runtime restaurant loading
 - category switcher for lunch, dinner, drinks, and sweets
 - one-tap "today's expedition" flow
-- staged destiny-card reveal
-- tarot-style destiny card back and flip reveal
-- slot-style destination animation
+- weighted card-back draw on load and reroll
+- tall playing-card reveal with cloud-clearing animation
 - direct Google Maps launch
 - one guaranteed reroll every round
 - `宿命重骰` can grant one extra reroll
@@ -60,9 +59,9 @@ The repository now includes:
 - runtime Google Sheet loading with bundled fallback snapshot
 - Taipei weather scene selection via official CWA county forecast data
 - destiny card filtering with fallback behavior
-- staged expedition reveal flow
+- simplified altar header with fixed two-line title
 - one guaranteed reroll every round
 - bonus reroll when luck grants `宿命重骰`
-- illustrated destiny cards with game-style presentation
+- weighted fantasy card backs with rarity glow tiers
 - single source list for published restaurant sheets
-- fantasy tarot card back, accent-tinted frames, and flip-style reveal
+- tall reveal card with detached action buttons

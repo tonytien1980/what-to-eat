@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+import { pickWeightedCardBack } from '../card-backs/deck';
+import type { CardBackRecord } from '../card-backs/deck';
 import { drawDestinyCard } from '../destiny/draw';
 import type { DestinyCard } from '../destiny/types';
 import {
@@ -9,6 +11,7 @@ import type { Category, RestaurantRecord } from '../restaurants/types';
 
 export interface ExpeditionRound {
   category: Category;
+  cardBack: CardBackRecord;
   destinyCard: DestinyCard;
   pool: RestaurantRecord[];
   destination: RestaurantRecord;
@@ -20,6 +23,7 @@ export type ExpeditionPhase = 'idle' | 'revealing' | 'spinning' | 'result';
 export function startExpedition(
   category: Category,
   restaurants: RestaurantRecord[],
+  cardBack: CardBackRecord,
   randomSource: () => number = Math.random,
 ): ExpeditionRound {
   const destinyCard = drawDestinyCard(randomSource());
@@ -33,6 +37,7 @@ export function startExpedition(
 
   return {
     category,
+    cardBack,
     destinyCard,
     pool,
     destination,
@@ -53,8 +58,10 @@ export function useExpedition(
   restaurants: RestaurantRecord[],
 ) {
   const [phase, setPhase] = useState<ExpeditionPhase>('idle');
+  const [currentCardBack, setCurrentCardBack] = useState<CardBackRecord>(() =>
+    pickWeightedCardBack(Math.random()),
+  );
   const [round, setRound] = useState<ExpeditionRound | null>(null);
-  const [displayedName, setDisplayedName] = useState('');
   const [rerollsRemaining, setRerollsRemaining] = useState(0);
   const [bonusRerollGranted, setBonusRerollGranted] = useState(false);
   const timersRef = useRef<number[]>([]);
@@ -71,11 +78,9 @@ export function useExpedition(
   function runRound(nextRound: ExpeditionRound) {
     clearTimers();
     setRound(nextRound);
-    setDisplayedName('命運尚未揭曉');
 
     if (prefersReducedMotion()) {
       setPhase('result');
-      setDisplayedName(nextRound.destination.name);
       return;
     }
 
@@ -84,23 +89,12 @@ export function useExpedition(
     const revealTimer = window.setTimeout(() => {
       setPhase('spinning');
 
-      let index = 0;
-      const spinInterval = window.setInterval(() => {
-        const candidate =
-          nextRound.pool[index % nextRound.pool.length] ?? nextRound.destination;
-        setDisplayedName(candidate.name);
-        index += 1;
-      }, 90);
-
       const resultTimer = window.setTimeout(() => {
-        window.clearInterval(spinInterval);
-        setDisplayedName(nextRound.destination.name);
         setPhase('result');
-      }, 900);
+      }, 920);
 
-      timersRef.current.push(spinInterval);
       timersRef.current.push(resultTimer);
-    }, 480);
+    }, 1600);
 
     timersRef.current.push(revealTimer);
   }
@@ -110,7 +104,11 @@ export function useExpedition(
       return;
     }
 
-    const firstRound = startExpedition(category, restaurants);
+    const firstRound = startExpedition(
+      category,
+      restaurants,
+      currentCardBack,
+    );
     const initialRerolls = firstRound.canReroll ? 2 : 1;
 
     setBonusRerollGranted(firstRound.canReroll);
@@ -123,7 +121,14 @@ export function useExpedition(
       return;
     }
 
-    const nextRound = startExpedition(category, restaurants);
+    const nextCardBack = pickWeightedCardBack(Math.random());
+    setCurrentCardBack(nextCardBack);
+
+    const nextRound = startExpedition(
+      category,
+      restaurants,
+      nextCardBack,
+    );
     const shouldGrantBonus = nextRound.canReroll && !bonusRerollGranted;
     const nextRemaining = Math.max(rerollsRemaining - 1, 0) + (shouldGrantBonus ? 1 : 0);
 
@@ -140,7 +145,7 @@ export function useExpedition(
   return {
     phase,
     round,
-    displayedName,
+    currentCardBack,
     rerollsRemaining,
     start,
     reroll,

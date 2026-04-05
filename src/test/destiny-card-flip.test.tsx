@@ -6,10 +6,9 @@ test('shows a tarot card back before revealing the card front', async () => {
 
   fireEvent.click(screen.getByRole('button', { name: '開啟今日遠征' }));
 
-  expect(screen.getByLabelText('命運卡卡背')).toBeInTheDocument();
+  expect(screen.getByLabelText(/遠征卡背/)).toBeInTheDocument();
   expect(screen.queryByText(/命運卡：/)).not.toBeInTheDocument();
+  expect(screen.queryByText('本日遠征目的地')).not.toBeInTheDocument();
 
-  expect(
-    await screen.findByText(/命運卡：/, {}, { timeout: 2500 }),
-  ).toBeInTheDocument();
+  expect(await screen.findByText('今日遠征地', {}, { timeout: 4000 })).toBeInTheDocument();
 });

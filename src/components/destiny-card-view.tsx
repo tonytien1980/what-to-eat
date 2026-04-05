@@ -1,70 +1,58 @@
-import { DestinyCardArtView } from '../features/destiny/card-art';
-import type { DestinyCard } from '../features/destiny/types';
+import type { CardBackRecord } from '../features/card-backs/deck';
+import type { ExpeditionPhase } from '../features/spin/useExpedition';
 
 interface DestinyCardViewProps {
-  card: DestinyCard;
+  cardBack: CardBackRecord;
   backdropUrl: string;
-  phaseLabel: string;
-  meta: string[];
-  isRevealing: boolean;
+  categoryLabel: string;
+  destinationName?: string;
+  phase: ExpeditionPhase;
 }
 
 export function DestinyCardView({
-  card,
+  cardBack,
   backdropUrl,
-  phaseLabel,
-  meta,
-  isRevealing,
+  categoryLabel,
+  destinationName,
+  phase,
 }: DestinyCardViewProps) {
+  const isShowingFront = phase === 'spinning' || phase === 'result';
+  const backLabel = `遠征卡背 ${cardBack.id}`;
+
   return (
     <article
-      className={
-        isRevealing
-          ? `destiny-card destiny-card-${card.accent} destiny-card-revealing`
-          : `destiny-card destiny-card-${card.accent} destiny-card-revealed`
-      }
+      className={`expedition-card-stage expedition-card-rarity-${cardBack.rarity} expedition-card-stage-${phase}`}
     >
-      {isRevealing ? (
-        <div className="tarot-card tarot-card-back" aria-label="命運卡卡背">
-          <div className="tarot-card-shell">
-            <div className="tarot-back-border" />
-            <div className="tarot-back-core">
-              <span className="tarot-rarity">命運祭壇</span>
-              <div className="tarot-back-sigil" aria-hidden="true">
-                <span className="tarot-back-ring tarot-back-ring-outer" />
-                <span className="tarot-back-ring tarot-back-ring-inner" />
-                <span className="tarot-back-star" />
-              </div>
-              <div className="tarot-back-copy">
-                <strong>命運之輪</strong>
-                <span>{phaseLabel}</span>
-              </div>
+      {isShowingFront ? (
+        <div className="expedition-card expedition-card-front" aria-label="遠征結果卡">
+          <div className="expedition-card-frame">
+            <img alt="" className="expedition-card-scene" src={backdropUrl} />
+            <div className="expedition-card-front-shade" />
+            <div className="expedition-card-front-cloud expedition-card-front-cloud-left" />
+            <div className="expedition-card-front-cloud expedition-card-front-cloud-right" />
+            <div className="expedition-card-front-glow" />
+            <div className="expedition-card-front-content">
+              <p className="expedition-card-kicker">今日遠征地</p>
+              <h2>{destinationName}</h2>
+              <p className="expedition-card-subcopy">{categoryLabel}遠征已揭曉，直接出發。</p>
             </div>
           </div>
         </div>
       ) : (
-        <div className="tarot-card tarot-card-front">
-          <div className="tarot-card-shell">
-            <div className="tarot-card-banner">
-              <span className="phase-badge">{phaseLabel}</span>
-              <span className="destiny-card-subtitle">{card.subtitle}</span>
-            </div>
-
-            <div className="destiny-card-illustration">
-              <img alt="" className="destiny-card-scene" src={backdropUrl} />
-              <DestinyCardArtView art={card.art} />
-            </div>
-
-            <div className="destiny-card-body">
-              <h2>命運卡：{card.name}</h2>
-              <p className="card-description">{card.description}</p>
-              <div className="card-meta-row">
-                {meta.map((item) => (
-                  <span key={item} className="card-meta-pill">
-                    {item}
-                  </span>
-                ))}
-              </div>
+        <div className="expedition-card expedition-card-back" aria-label={backLabel}>
+          <div className="expedition-card-frame">
+            <img alt="" className="expedition-card-back-image" src={cardBack.imageUrl} />
+            <div className="expedition-card-back-shade" />
+            <div className="expedition-card-back-glow" />
+            <div className="expedition-card-back-copy">
+              <p className="expedition-card-back-title">
+                {phase === 'revealing' ? '遠征占卜中' : '等待遠征啟動'}
+              </p>
+              <p className="expedition-card-back-subcopy">
+                {phase === 'revealing'
+                  ? '牌面正在洗出今日目的地'
+                  : '按下啟動鈕，讓牌面替你決定今天吃哪裡'}
+              </p>
             </div>
           </div>
         </div>

@@ -2,15 +2,13 @@ import { useState } from 'react';
 import { DestinyCardView } from './components/destiny-card-view';
 import { categories } from './features/restaurants/data';
 import {
+  getCategoryLabel,
   getCategorySummary,
-  getPhaseLabel,
+  getComfortCopy,
   getRerollCopy,
-  getRoundSummary,
-  getSlotLabel,
 } from './features/result/result-copy';
 import { useRestaurantCatalog } from './features/restaurants/use-restaurant-catalog';
 import { useExpedition } from './features/spin/useExpedition';
-import { getAltarSceneAsset } from './features/weather/cwa-county';
 import { useTaipeiWeather } from './features/weather/useTaipeiWeather';
 import type { Category } from './features/restaurants/types';
 import './styles.css';
@@ -21,17 +19,19 @@ export default function App() {
   const {
     phase,
     round,
-    displayedName,
+    currentCardBack,
     rerollsRemaining,
     start,
     reroll,
-    isAnimating,
-    showReroll,
     canReroll,
+    isAnimating,
   } = useExpedition(activeCategory, restaurantCatalog.restaurants);
-  const { snapshot, status } = useTaipeiWeather();
+  const { snapshot } = useTaipeiWeather();
   const rerollCopy = getRerollCopy(rerollsRemaining);
-  const altarBackdropUrl = getAltarSceneAsset();
+  const categoryLabel = getCategoryLabel(activeCategory);
+  const weatherSceneLine = `臺北市 · ${snapshot.activeScene.sceneLabel} · ${snapshot.activeScene.variantLabel}`;
+  const weatherPrimaryLine = `${snapshot.currentPeriod.weatherText} · ${snapshot.currentPeriod.lowTemp}°-${snapshot.currentPeriod.highTemp}°`;
+  const weatherSecondaryLine = `降雨 ${snapshot.currentPeriod.pop}% · ${getComfortCopy(snapshot.currentPeriod.comfort)}`;
 
   return (
     <main className="app-shell">
@@ -41,34 +41,16 @@ export default function App() {
       >
         <div className="scene-vignette" />
         <section className="central-altar" aria-label="今日遠征告示牌">
-          <div className="top-status">
-            <p className="eyebrow">{getPhaseLabel(phase)}</p>
-            <span className={`weather-source-pill weather-source-${status}`}>
-              {status === 'ready'
-                ? snapshot.sourceLabel
-                : status === 'loading'
-                  ? '讀取台北市預報中'
-                  : '天氣讀取失敗，先用預設場景'}
-            </span>
-          </div>
-
           <div className="title-block">
-            <p className="city-kicker">
-              臺北市 · {snapshot.activeScene.sceneLabel} · {snapshot.activeScene.variantLabel}
-            </p>
-            <h1>今天吃什麼：命運遠征</h1>
-            <p className="tagline">
-              台北天氣先決定今天的冒險場景，命運卡再決定你這一餐的答案。
-            </p>
-          </div>
-
-          <div className="weather-strip">
-            <span className="weather-pill">{snapshot.currentPeriod.weatherText}</span>
-            <span className="weather-pill">
-              {snapshot.currentPeriod.lowTemp}°-{snapshot.currentPeriod.highTemp}°
-            </span>
-            <span className="weather-pill">降雨 {snapshot.currentPeriod.pop}%</span>
-            <span className="weather-pill">{snapshot.currentPeriod.comfort}</span>
+            <h1 className="hero-title">
+              <span className="hero-title-line">今天吃什麼</span>
+              <span className="hero-title-line">命運遠征</span>
+            </h1>
+            <p className="scene-line">{weatherSceneLine}</p>
+            <div className="weather-lines">
+              <p className="weather-line">{weatherPrimaryLine}</p>
+              <p className="weather-line weather-line-soft">{weatherSecondaryLine}</p>
+            </div>
           </div>
 
           <div className="category-tabs" role="tablist" aria-label="遠征類型">
@@ -88,17 +70,9 @@ export default function App() {
             ))}
           </div>
 
-          <div className="control-row">
-            <p className="status-copy">{getCategorySummary(activeCategory)}</p>
-            <div className="control-meta-group">
-              <span
-                className={`meta-pill restaurant-source-pill restaurant-source-${restaurantCatalog.status}`}
-              >
-                {restaurantCatalog.sourceLabel}
-              </span>
-              <span className="meta-pill">可抽 {restaurantCatalog.restaurants.length} 家</span>
-            </div>
-          </div>
+          <p className="status-copy">
+            {getCategorySummary(activeCategory, restaurantCatalog.restaurants.length)}
+          </p>
 
           <button
             className="start-button"
@@ -107,89 +81,47 @@ export default function App() {
             disabled={isAnimating || restaurantCatalog.restaurants.length === 0}
           >
             {isAnimating
-              ? '命運正在編織結果...'
+              ? '遠征占卜中...'
               : restaurantCatalog.restaurants.length === 0
                 ? '目前沒有可用據點'
                 : '開啟今日遠征'}
           </button>
 
           <section
-            className={
-              phase === 'idle'
-                ? 'altar-panel altar-panel-idle'
-                : `altar-panel altar-panel-${phase}`
-            }
+            className={`altar-panel altar-panel-${phase}`}
             aria-live="polite"
-            style={{ backgroundImage: `url(${altarBackdropUrl})` }}
           >
-            <div className="altar-overlay" />
             <div className="altar-content">
-              {round ? (
-                <>
-                  <DestinyCardView
-                    backdropUrl={snapshot.activeScene.imageUrl}
-                    card={round.destinyCard}
-                    isRevealing={phase === 'revealing'}
-                    meta={[rerollCopy.hint, `場景 ${snapshot.activeScene.variantLabel}`]}
-                    phaseLabel={getPhaseLabel(phase)}
-                  />
-
-                  <div className="slot-stage">
-                    <p className="slot-label">{getSlotLabel(phase)}</p>
-                    <div
-                      className={
-                        phase === 'spinning'
-                          ? 'slot-window slot-window-spinning'
-                          : 'slot-window'
-                      }
-                    >
-                      <span className="slot-name">
-                        {phase === 'revealing' ? '命運正在降臨' : displayedName}
-                      </span>
-                    </div>
-                  </div>
-
-                  {phase === 'result' ? (
-                    <div className="result-actions">
-                      <p className="result-summary">{getRoundSummary(round)}</p>
-                      <div className="reroll-status">
-                        <span className="reroll-counter">{rerollsRemaining}</span>
-                        <span>{rerollCopy.hint}</span>
-                      </div>
-                      <div className="action-row">
-                        <a
-                          className="map-link"
-                          href={round.destination.mapUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          出發去吃
-                        </a>
-                        {showReroll ? (
-                          <button
-                            className="reroll-button"
-                            type="button"
-                            disabled={!canReroll}
-                            onClick={reroll}
-                          >
-                            {rerollCopy.label}
-                          </button>
-                        ) : null}
-                      </div>
-                    </div>
-                  ) : null}
-                </>
-              ) : (
-                <div className="idle-state">
-                  <p className="phase-badge">台北市預報已接通</p>
-                  <h2>背景是場景，中央才是命運祭壇。</h2>
-                  <p className="card-description">
-                    先選餐別，再按開始。其餘畫面讓背景自己說故事，不再把場景蓋住。
-                  </p>
-                </div>
-              )}
+              <DestinyCardView
+                backdropUrl={snapshot.activeScene.imageUrl}
+                cardBack={round?.cardBack ?? currentCardBack}
+                categoryLabel={categoryLabel}
+                destinationName={round?.destination.name}
+                phase={phase}
+              />
             </div>
           </section>
+
+          {phase === 'result' && round ? (
+            <div className="altar-actions">
+              <a
+                className="map-link"
+                href={round.destination.mapUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                出發去吃
+              </a>
+              <button
+                className="reroll-button"
+                type="button"
+                disabled={!canReroll}
+                onClick={reroll}
+              >
+                {rerollCopy.label}
+              </button>
+            </div>
+          ) : null}
         </section>
       </div>
     </main>

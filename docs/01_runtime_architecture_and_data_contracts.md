@@ -13,6 +13,7 @@ The MVP should be a static-friendly frontend app:
 
 - `src/app/`: app shell and top-level state flow
 - `src/features/weather/`: official CWA county forecast loading, normalization, and scene mapping
+- `src/features/card-backs/`: weighted back deck definitions and rarity styling metadata
 - `src/features/restaurants/types.ts`: restaurant domain types
 - `src/features/restaurants/data.ts`: fallback snapshot and sheet-source configuration
 - `src/features/restaurants/google-sheet-loader.ts`: published-sheet CSV parsing and normalization
@@ -33,7 +34,7 @@ MVP state should track:
 
 - active category
 - available restaurants
-- restaurant catalog source status
+- current weighted card back
 - current destiny card
 - selected destination
 - reroll availability
@@ -102,10 +103,11 @@ This keeps randomness fun without causing dead-end rounds.
 
 The current implementation uses:
 
-- `startExpedition(category, restaurants)` to draw a destiny card and destination together
+- `startExpedition(category, restaurants, cardBack)` to bind one weighted card back to each round
 - `useExpedition(category, restaurants)` to manage `idle -> revealing -> spinning -> result`
 - one guaranteed reroll every round
 - one optional bonus reroll if the expedition first reveals `宿命重骰`
+- weighted card-back selection on initial page load and every reroll
 - runtime Google Sheet data as the primary restaurant source
 - local fallback JSON under `data/restaurants.json`
 - `data/restaurant-sheet-sources.json` as the single editable list of sheet URLs
