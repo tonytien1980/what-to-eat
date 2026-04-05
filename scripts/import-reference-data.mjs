@@ -1,33 +1,70 @@
-import { writeFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 
-const sourceSheets = [
-  {
-    category: 'lunch',
-    url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTL40EHlvYd4fJTVAbp7Hbf8aKb81T24y5zZDKp3z8Yok0GcNgEz06nduGlDE-pB8boYt2LOvdbSXfF/pub?gid=0&single=true&output=csv',
-  },
-  {
-    category: 'dinner',
-    url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTL40EHlvYd4fJTVAbp7Hbf8aKb81T24y5zZDKp3z8Yok0GcNgEz06nduGlDE-pB8boYt2LOvdbSXfF/pub?gid=1781385445&single=true&output=csv',
-  },
-  {
-    category: 'drinks',
-    url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTL40EHlvYd4fJTVAbp7Hbf8aKb81T24y5zZDKp3z8Yok0GcNgEz06nduGlDE-pB8boYt2LOvdbSXfF/pub?gid=1971131852&single=true&output=csv',
-  },
-  {
-    category: 'sweets',
-    url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTL40EHlvYd4fJTVAbp7Hbf8aKb81T24y5zZDKp3z8Yok0GcNgEz06nduGlDE-pB8boYt2LOvdbSXfF/pub?gid=1512236499&single=true&output=csv',
-  },
-];
+const sourceSheets = JSON.parse(
+  await readFile(new URL('../data/restaurant-sheet-sources.json', import.meta.url), 'utf8'),
+);
 
 function parseCsv(text) {
-  const rows = text.split(/\r?\n/).filter(Boolean);
-  return rows.slice(1).map((row) => {
-    const firstComma = row.indexOf(',');
-    return {
-      name: row.slice(0, firstComma).trim(),
-      mapUrl: row.slice(firstComma + 1).trim(),
-    };
-  });
+  const rows = [];
+  let row = [];
+  let cell = '';
+  let index = 0;
+  let isQuoted = false;
+
+  while (index < text.length) {
+    const char = text[index];
+    const next = text[index + 1];
+
+    if (char === '"') {
+      if (isQuoted && next === '"') {
+        cell += '"';
+        index += 2;
+        continue;
+      }
+
+      isQuoted = !isQuoted;
+      index += 1;
+      continue;
+    }
+
+    if (!isQuoted && char === ',') {
+      row.push(cell.trim());
+      cell = '';
+      index += 1;
+      continue;
+    }
+
+    if (!isQuoted && (char === '\n' || char === '\r')) {
+      if (char === '\r' && next === '\n') {
+        index += 1;
+      }
+
+      row.push(cell.trim());
+      if (row.some((value) => value.length > 0)) {
+        rows.push(row);
+      }
+
+      row = [];
+      cell = '';
+      index += 1;
+      continue;
+    }
+
+    cell += char;
+    index += 1;
+  }
+
+  if (cell.length > 0 || row.length > 0) {
+    row.push(cell.trim());
+    if (row.some((value) => value.length > 0)) {
+      rows.push(row);
+    }
+  }
+
+  return rows.slice(1).map(([name = '', mapUrl = '']) => ({
+    name,
+    mapUrl,
+  }));
 }
 
 function slugify(input) {

@@ -1,7 +1,10 @@
 import restaurantData from '../../../data/restaurants.json';
-import type { Category, RestaurantRecord } from './types';
+import restaurantSheetSourceData from '../../../data/restaurant-sheet-sources.json';
+import type { Category, RestaurantRecord, RestaurantSheetSource } from './types';
 
 export const restaurants = restaurantData as RestaurantRecord[];
+export const restaurantSheetSources =
+  restaurantSheetSourceData as RestaurantSheetSource[];
 
 export const categories: { id: Category; label: string }[] = [
   { id: 'lunch', label: '午餐' },

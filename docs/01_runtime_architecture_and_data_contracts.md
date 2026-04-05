@@ -5,7 +5,7 @@
 The MVP should be a static-friendly frontend app:
 
 - client-side React application
-- file-based content for restaurant data
+- Google Sheet runtime fetch for restaurant data
 - no server or database in the first release
 - deployable to GitHub Pages or similar static hosting
 
@@ -14,13 +14,17 @@ The MVP should be a static-friendly frontend app:
 - `src/app/`: app shell and top-level state flow
 - `src/features/weather/`: official CWA county forecast loading, normalization, and scene mapping
 - `src/features/restaurants/types.ts`: restaurant domain types
-- `src/features/restaurants/`: restaurant data loading and filtering
+- `src/features/restaurants/data.ts`: fallback snapshot and sheet-source configuration
+- `src/features/restaurants/google-sheet-loader.ts`: published-sheet CSV parsing and normalization
+- `src/features/restaurants/use-restaurant-catalog.ts`: runtime catalog loading and fallback state
+- `src/features/restaurants/`: restaurant filtering
 - `src/features/destiny/types.ts`: destiny card domain types
 - `src/features/destiny/`: destiny card definitions and draw logic
 - `src/features/spin/`: slot-machine reveal flow
 - `src/features/result/`: expedition result presentation
 - `src/components/`: shared UI components
-- `data/restaurants.json`: editable restaurant source data
+- `data/restaurants.json`: bundled fallback restaurant snapshot
+- `data/restaurant-sheet-sources.json`: published Google Sheet source list
 - `images/`: local image assets committed with the repo
 
 ## State Model
@@ -29,6 +33,7 @@ MVP state should track:
 
 - active category
 - available restaurants
+- restaurant catalog source status
 - current destiny card
 - selected destination
 - reroll availability
@@ -50,6 +55,20 @@ Each restaurant record should support future filterable randomness:
   "isEnabled": true
 }
 ```
+
+## Restaurant Catalog Result Contract
+
+```json
+{
+  "restaurants": [],
+  "status": "live",
+  "sourceLabel": "Google Sheet 即時資料"
+}
+```
+
+- `live`: runtime data fetched successfully from the published sheets
+- `fallback`: runtime fetch failed, using bundled snapshot
+- `loading`: app has fallback data ready and is still trying to refresh from Google Sheet
 
 ## Destiny Card Contract
 
@@ -83,12 +102,14 @@ This keeps randomness fun without causing dead-end rounds.
 
 The current implementation uses:
 
-- `startExpedition(category)` to draw a destiny card and destination together
-- `useExpedition(category)` to manage `idle -> revealing -> spinning -> result`
+- `startExpedition(category, restaurants)` to draw a destiny card and destination together
+- `useExpedition(category, restaurants)` to manage `idle -> revealing -> spinning -> result`
 - one guaranteed reroll every round
 - one optional bonus reroll if the expedition first reveals `宿命重骰`
-- local JSON data under `data/restaurants.json`
-- `npm run data:import` to refresh the local snapshot from the public reference sheets
+- runtime Google Sheet data as the primary restaurant source
+- local fallback JSON under `data/restaurants.json`
+- `data/restaurant-sheet-sources.json` as the single editable list of sheet URLs
+- `npm run data:import` to refresh the fallback snapshot from the current published sheets
 - `npm run build:pages` now builds with a relative asset base for GitHub Pages hosting
 - `https://www.cwa.gov.tw/Data/js/TableData_36hr_County_C.js` as the browser-loaded official forecast source
 - city code `63` as the default Taipei weather source

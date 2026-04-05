@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { drawDestinyCard } from '../destiny/draw';
 import type { DestinyCard } from '../destiny/types';
-import { restaurants } from '../restaurants/data';
 import {
   getDestinationPool,
   pickRandomRestaurant,
@@ -20,10 +19,16 @@ export type ExpeditionPhase = 'idle' | 'revealing' | 'spinning' | 'result';
 
 export function startExpedition(
   category: Category,
+  restaurants: RestaurantRecord[],
   randomSource: () => number = Math.random,
 ): ExpeditionRound {
   const destinyCard = drawDestinyCard(randomSource());
   const pool = getDestinationPool(restaurants, category, destinyCard);
+
+  if (pool.length === 0) {
+    throw new Error(`No restaurants available for ${category}`);
+  }
+
   const destination = pickRandomRestaurant(pool, randomSource());
 
   return {
@@ -43,7 +48,10 @@ function prefersReducedMotion() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
-export function useExpedition(category: Category) {
+export function useExpedition(
+  category: Category,
+  restaurants: RestaurantRecord[],
+) {
   const [phase, setPhase] = useState<ExpeditionPhase>('idle');
   const [round, setRound] = useState<ExpeditionRound | null>(null);
   const [displayedName, setDisplayedName] = useState('');
@@ -98,7 +106,11 @@ export function useExpedition(category: Category) {
   }
 
   function start() {
-    const firstRound = startExpedition(category);
+    if (restaurants.length === 0) {
+      return;
+    }
+
+    const firstRound = startExpedition(category, restaurants);
     const initialRerolls = firstRound.canReroll ? 2 : 1;
 
     setBonusRerollGranted(firstRound.canReroll);
@@ -107,11 +119,11 @@ export function useExpedition(category: Category) {
   }
 
   function reroll() {
-    if (!round || rerollsRemaining <= 0) {
+    if (!round || rerollsRemaining <= 0 || restaurants.length === 0) {
       return;
     }
 
-    const nextRound = startExpedition(category);
+    const nextRound = startExpedition(category, restaurants);
     const shouldGrantBonus = nextRound.canReroll && !bonusRerollGranted;
     const nextRemaining = Math.max(rerollsRemaining - 1, 0) + (shouldGrantBonus ? 1 : 0);
 

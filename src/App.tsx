@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { DestinyCardView } from './components/destiny-card-view';
-import { categories, restaurants } from './features/restaurants/data';
+import { categories } from './features/restaurants/data';
 import {
   getCategorySummary,
   getPhaseLabel,
@@ -8,6 +8,7 @@ import {
   getRoundSummary,
   getSlotLabel,
 } from './features/result/result-copy';
+import { useRestaurantCatalog } from './features/restaurants/use-restaurant-catalog';
 import { useExpedition } from './features/spin/useExpedition';
 import { getAltarSceneAsset } from './features/weather/cwa-county';
 import { useTaipeiWeather } from './features/weather/useTaipeiWeather';
@@ -16,6 +17,7 @@ import './styles.css';
 
 export default function App() {
   const [activeCategory, setActiveCategory] = useState<Category>('lunch');
+  const restaurantCatalog = useRestaurantCatalog();
   const {
     phase,
     round,
@@ -26,7 +28,7 @@ export default function App() {
     isAnimating,
     showReroll,
     canReroll,
-  } = useExpedition(activeCategory);
+  } = useExpedition(activeCategory, restaurantCatalog.restaurants);
   const { snapshot, status } = useTaipeiWeather();
   const rerollCopy = getRerollCopy(rerollsRemaining);
   const altarBackdropUrl = getAltarSceneAsset();
@@ -88,16 +90,27 @@ export default function App() {
 
           <div className="control-row">
             <p className="status-copy">{getCategorySummary(activeCategory)}</p>
-            <span className="meta-pill">可抽 {restaurants.length} 家</span>
+            <div className="control-meta-group">
+              <span
+                className={`meta-pill restaurant-source-pill restaurant-source-${restaurantCatalog.status}`}
+              >
+                {restaurantCatalog.sourceLabel}
+              </span>
+              <span className="meta-pill">可抽 {restaurantCatalog.restaurants.length} 家</span>
+            </div>
           </div>
 
           <button
             className="start-button"
             type="button"
             onClick={start}
-            disabled={isAnimating}
+            disabled={isAnimating || restaurantCatalog.restaurants.length === 0}
           >
-            {isAnimating ? '命運正在編織結果...' : '開啟今日遠征'}
+            {isAnimating
+              ? '命運正在編織結果...'
+              : restaurantCatalog.restaurants.length === 0
+                ? '目前沒有可用據點'
+                : '開啟今日遠征'}
           </button>
 
           <section

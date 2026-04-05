@@ -8,6 +8,7 @@ First release targets a no-login, same-screen MVP:
 
 - Taipei weather driven by the official CWA 36-hour county forecast
 - weather-selected fantasy scene backgrounds
+- Google Sheet runtime restaurant loading
 - category switcher for lunch, dinner, drinks, and sweets
 - one-tap "today's expedition" flow
 - staged destiny-card reveal
@@ -45,6 +46,7 @@ npm run build:pages
 - `docs/superpowers/specs/`: approved design specs
 - `docs/superpowers/plans/`: implementation plans
 - `data/`: editable restaurant content
+- `data/restaurant-sheet-sources.json`: published Google Sheet source list
 - `images/`: project artwork assets used by the game-like UI
 - `src/`: frontend app source
 - `public/`: static assets
@@ -55,10 +57,12 @@ The repository now includes:
 
 - fantasy expedition app shell
 - full imported restaurant snapshot from the reference public sheets
+- runtime Google Sheet loading with bundled fallback snapshot
 - Taipei weather scene selection via official CWA county forecast data
 - destiny card filtering with fallback behavior
 - staged expedition reveal flow
 - one guaranteed reroll every round
 - bonus reroll when luck grants `宿命重骰`
 - illustrated destiny cards with game-style presentation
+- single source list for published restaurant sheets
 - fantasy tarot card back, accent-tinted frames, and flip-style reveal

@@ -10,4 +10,5 @@ test('renders expedition board title and start button', () => {
   expect(
     screen.getByRole('button', { name: '開啟今日遠征' }),
   ).toBeInTheDocument();
+  expect(screen.getByText('本地快照備援')).toBeInTheDocument();
 });

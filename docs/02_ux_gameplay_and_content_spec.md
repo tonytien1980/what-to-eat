@@ -23,6 +23,7 @@ Should include:
 
 - title and short fantasy tagline
 - Taipei weather as first-class information
+- restaurant data source status
 - visible full-scene background, not faded into the back
 - category selector
 - one primary CTA to start the expedition
@@ -89,6 +90,7 @@ Should include:
 - 主畫面整體要偏向奇幻桌遊 / 派對遊戲，而不是舊式 RPG 官網
 - 場景背景要清楚可見，面板只能局部遮罩，不可整片洗白
 - 天氣資訊、場景名稱、預報時間都要直接看得到
+- 餐廳資料目前是即時試算表還是本地備援，要在首頁看得出來
 
 ## Success Criteria
 

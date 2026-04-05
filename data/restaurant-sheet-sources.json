@@ -1,0 +1,18 @@
+[
+  {
+    "category": "lunch",
+    "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTL40EHlvYd4fJTVAbp7Hbf8aKb81T24y5zZDKp3z8Yok0GcNgEz06nduGlDE-pB8boYt2LOvdbSXfF/pub?gid=0&single=true&output=csv"
+  },
+  {
+    "category": "dinner",
+    "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTL40EHlvYd4fJTVAbp7Hbf8aKb81T24y5zZDKp3z8Yok0GcNgEz06nduGlDE-pB8boYt2LOvdbSXfF/pub?gid=1781385445&single=true&output=csv"
+  },
+  {
+    "category": "drinks",
+    "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTL40EHlvYd4fJTVAbp7Hbf8aKb81T24y5zZDKp3z8Yok0GcNgEz06nduGlDE-pB8boYt2LOvdbSXfF/pub?gid=1971131852&single=true&output=csv"
+  },
+  {
+    "category": "sweets",
+    "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTL40EHlvYd4fJTVAbp7Hbf8aKb81T24y5zZDKp3z8Yok0GcNgEz06nduGlDE-pB8boYt2LOvdbSXfF/pub?gid=1512236499&single=true&output=csv"
+  }
+]

@@ -3,6 +3,8 @@
 ## MVP Functional Checks
 
 - category switch changes the candidate pool
+- runtime restaurant catalog loads from Google Sheet when available
+- runtime restaurant catalog falls back to bundled snapshot when sheet loading fails
 - destiny card is drawn before each expedition
 - destiny card back is shown before the face card content appears
 - spin result always belongs to the active category
@@ -24,6 +26,7 @@
 - tarot card reveal still resolves correctly on desktop and mobile
 - reduced-motion users still get a valid quick reveal
 - imported reference snapshot remains available locally after build
+- sheet source list and fallback snapshot stay aligned after `npm run data:import`
 
 ## Verification Commands
 

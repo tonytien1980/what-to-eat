@@ -13,3 +13,14 @@ export interface RestaurantRecord {
   distanceLevel: DistanceLevel;
   isEnabled: boolean;
 }
+
+export interface RestaurantSheetSource {
+  category: Category;
+  url: string;
+}
+
+export interface RestaurantCatalogResult {
+  restaurants: RestaurantRecord[];
+  sourceLabel: string;
+  status: 'loading' | 'live' | 'fallback';
+}
