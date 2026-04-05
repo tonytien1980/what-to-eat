@@ -13,6 +13,20 @@ First release targets a no-login, same-screen MVP:
 - direct Google Maps launch
 - lightweight content and docs sync inside this repo
 
+## Getting Started
+
+```bash
+npm install
+npm run dev
+```
+
+## Verification
+
+```bash
+npm test
+npm run build
+```
+
 ## Repo Layout
 
 - `docs/`: active product and engineering docs
@@ -24,4 +38,10 @@ First release targets a no-login, same-screen MVP:
 
 ## Status
 
-The repository is being bootstrapped for the first MVP implementation.
+The repository now includes:
+
+- fantasy expedition app shell
+- category-based restaurant pools
+- destiny card filtering with fallback behavior
+- expedition result reveal
+- one-time reroll when the round grants reroll power

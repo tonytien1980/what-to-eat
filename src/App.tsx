@@ -8,8 +8,19 @@ import './styles.css';
 export default function App() {
   const [activeCategory, setActiveCategory] = useState<Category>('lunch');
   const [round, setRound] = useState<ExpeditionRound | null>(null);
+  const [hasRerolled, setHasRerolled] = useState(false);
 
   const handleStart = () => {
+    setHasRerolled(false);
+    setRound(startExpedition(activeCategory));
+  };
+
+  const handleReroll = () => {
+    if (!round || hasRerolled) {
+      return;
+    }
+
+    setHasRerolled(true);
     setRound(startExpedition(activeCategory));
   };
 
@@ -56,6 +67,16 @@ export default function App() {
             >
               出發去吃
             </a>
+            {round.canReroll || hasRerolled ? (
+              <button
+                className="reroll-button"
+                type="button"
+                disabled={hasRerolled || !round.canReroll}
+                onClick={handleReroll}
+              >
+                逆天改命
+              </button>
+            ) : null}
           </section>
         ) : null}
       </section>

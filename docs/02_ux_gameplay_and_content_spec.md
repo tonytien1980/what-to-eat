@@ -62,6 +62,12 @@ Should include:
 - 慶典之日: festive presentation
 - 宿命重骰: grants one reroll
 
+## Reroll Rule
+
+- `逆天改命` 不是每局都可用
+- 只有抽到 `宿命重骰` 時才開放一次
+- 使用後按鈕保留但禁用，明確表示本局容錯已耗盡
+
 ## Success Criteria
 
 - first interaction starts within 30 seconds

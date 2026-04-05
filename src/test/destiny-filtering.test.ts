@@ -1,5 +1,5 @@
-import restaurants from '../../data/restaurants.json';
 import { destinyCards } from '../features/destiny/cards';
+import { restaurants } from '../features/restaurants/data';
 import { getDestinationPool } from '../features/restaurants/selectors';
 
 test('falls back to category pool when card filter removes every candidate', () => {

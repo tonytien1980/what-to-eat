@@ -26,6 +26,11 @@ The active commands will be updated alongside implementation, but the MVP must m
 - production build verification
 - lint or typecheck verification if configured
 
+Current commands:
+
+- `npm test`
+- `npm run build`
+
 ## Release Rule
 
 Do not stage, commit, or push changes that alter:

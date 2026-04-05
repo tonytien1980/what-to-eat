@@ -12,7 +12,9 @@ The MVP should be a static-friendly frontend app:
 ## Core Modules
 
 - `src/app/`: app shell and top-level state flow
+- `src/features/restaurants/types.ts`: restaurant domain types
 - `src/features/restaurants/`: restaurant data loading and filtering
+- `src/features/destiny/types.ts`: destiny card domain types
 - `src/features/destiny/`: destiny card definitions and draw logic
 - `src/features/spin/`: slot-machine reveal flow
 - `src/features/result/`: expedition result presentation
@@ -26,9 +28,9 @@ MVP state should track:
 - active category
 - available restaurants
 - current destiny card
-- current expedition status
 - selected destination
 - reroll availability
+- reroll-consumed status
 
 ## Restaurant Contract
 
@@ -74,3 +76,11 @@ Filtering should follow this order:
 4. fallback to category-only pool if filter result is empty
 
 This keeps randomness fun without causing dead-end rounds.
+
+## Current Runtime Note
+
+The current implementation uses:
+
+- `startExpedition(category)` to draw a destiny card and destination together
+- a single reroll path only when the drawn card grants reroll power
+- local JSON data under `data/restaurants.json`

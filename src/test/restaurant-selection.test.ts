@@ -1,4 +1,4 @@
-import restaurants from '../../data/restaurants.json';
+import { restaurants } from '../features/restaurants/data';
 import { getCandidatePool } from '../features/restaurants/selectors';
 
 test('filters active category and enabled restaurants', () => {
