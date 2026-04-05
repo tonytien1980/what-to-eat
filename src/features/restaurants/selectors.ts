@@ -51,6 +51,9 @@ export function getDestinationPool(
   return filteredPool.length > 0 ? filteredPool : basePool;
 }
 
-export function pickRandomRestaurant(restaurants: RestaurantRecord[]) {
-  return restaurants[Math.floor(Math.random() * restaurants.length)];
+export function pickRandomRestaurant(
+  restaurants: RestaurantRecord[],
+  randomValue = Math.random(),
+) {
+  return restaurants[Math.floor(randomValue * restaurants.length)];
 }
