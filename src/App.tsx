@@ -109,11 +109,13 @@ export default function App() {
               activeCategory === null
             }
           >
-            {isAnimating
-              ? '遠征占卜中...'
-              : restaurantCatalog.restaurants.length === 0
-                ? '目前沒有可用據點'
-                : startButtonLabel}
+            <span className="start-button-label">
+              {isAnimating
+                ? '遠征占卜中...'
+                : restaurantCatalog.restaurants.length === 0
+                  ? '目前沒有可用據點'
+                  : startButtonLabel}
+            </span>
           </button>
 
           <section

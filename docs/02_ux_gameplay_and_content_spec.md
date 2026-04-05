@@ -30,6 +30,7 @@ Should include:
 - fantasy-styled category selector using `images/notice/`
 - no category selected on first load
 - one primary CTA to start the expedition using `images/scrolls/`
+- scroll CTA copy should align to the visible parchment window, not the raw image bounds
 - one currently selected card back visible before the run begins
 
 ### 2. 命運揭示與拉霸
