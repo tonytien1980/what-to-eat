@@ -12,6 +12,7 @@ The MVP should be a static-friendly frontend app:
 ## Core Modules
 
 - `src/app/`: app shell and top-level state flow
+- `src/assets/game-art.ts`: imported local artwork references
 - `src/features/restaurants/types.ts`: restaurant domain types
 - `src/features/restaurants/`: restaurant data loading and filtering
 - `src/features/destiny/types.ts`: destiny card domain types
@@ -20,6 +21,7 @@ The MVP should be a static-friendly frontend app:
 - `src/features/result/`: expedition result presentation
 - `src/components/`: shared UI components
 - `data/restaurants.json`: editable restaurant source data
+- `images/`: local image assets committed with the repo
 
 ## State Model
 

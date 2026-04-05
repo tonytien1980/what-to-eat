@@ -42,6 +42,7 @@ npm run build:pages
 - `docs/superpowers/specs/`: approved design specs
 - `docs/superpowers/plans/`: implementation plans
 - `data/`: editable restaurant content
+- `images/`: project artwork assets used by the game-like UI
 - `src/`: frontend app source
 - `public/`: static assets
 

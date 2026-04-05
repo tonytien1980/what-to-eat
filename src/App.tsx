@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { gameArt } from './assets/game-art';
 import { DestinyCardView } from './components/destiny-card-view';
 import { categories, restaurants } from './features/restaurants/data';
 import {
@@ -29,6 +30,12 @@ export default function App() {
 
   return (
     <main className="app-shell">
+      <img
+        alt=""
+        aria-hidden="true"
+        className="world-backdrop"
+        src={gameArt.forestRuinsBackground}
+      />
       <section className="quest-board" aria-label="今日遠征告示牌">
         <div className="board-layout">
           <section className="board-intro">
@@ -41,6 +48,16 @@ export default function App() {
               <span className="meta-pill">同螢幕直接玩</span>
               <span className="meta-pill">90 秒內決定</span>
               <span className="meta-pill">現在有 {restaurants.length} 家可抽</span>
+            </div>
+            <div className="hero-stage">
+              <div className="hero-copy">
+                <p className="hero-kicker">今日冒險者</p>
+                <h2>把糾結交給命運，把選擇交給這一局。</h2>
+                <p>
+                  命運卡先出手，候選據點再縮圈，最後你只要決定要不要再喝一瓶改命藥劑。
+                </p>
+              </div>
+              <img alt="" className="hero-art" src={gameArt.mageKeyArt} />
             </div>
             <div className="category-tabs" role="tablist" aria-label="遠征類型">
               {categories.map((category) => (
@@ -107,6 +124,10 @@ export default function App() {
                     <p className="result-subcopy">
                       不想吃這家也沒關係，下面直接再抽，不用重開整局。
                     </p>
+                    <div className="reroll-status">
+                      <img alt="" className="reroll-icon" src={gameArt.healingPotionIcon} />
+                      <span>{rerollCopy.hint}</span>
+                    </div>
                     <div className="action-row">
                       <a
                         className="map-link"
