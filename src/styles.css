@@ -210,7 +210,7 @@ a {
 .start-button-label {
   position: absolute;
   left: 50%;
-  top: 53%;
+  top: 50.5%;
   width: min(56%, 12ch);
   text-align: center;
   transform: translate(-50%, -50%);
@@ -738,7 +738,7 @@ a {
   }
 
   .start-button-label {
-    top: 54%;
+    top: 51%;
     width: min(58%, 11ch);
   }
 
