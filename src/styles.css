@@ -118,18 +118,18 @@ a {
 }
 
 .category-tabs {
-  width: min(100%, 476px);
+  width: min(100%, 500px);
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
+  gap: 6px;
 }
 
 .category-pill {
   position: relative;
   width: 100%;
-  min-height: 58px;
-  padding: 10px 10px 13px;
+  aspect-ratio: 2 / 1;
+  padding: 0 10px 2px;
   border: 0;
   display: inline-flex;
   align-items: center;
@@ -137,10 +137,10 @@ a {
   background-color: transparent;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 198% auto;
+  background-size: 108% 108%;
   color: #4d2f16;
   cursor: pointer;
-  font-size: clamp(0.88rem, 2vw, 1.02rem);
+  font-size: clamp(0.92rem, 2vw, 1.04rem);
   font-weight: 900;
   letter-spacing: 0.04em;
   line-height: 1;
@@ -181,18 +181,19 @@ a {
   overflow: hidden;
   width: min(100%, 472px);
   justify-self: center;
-  min-height: 102px;
-  padding: 14px 52px 12px;
+  aspect-ratio: 3 / 1;
+  min-height: 0;
+  padding: 0 44px;
   border: 0;
   display: inline-flex;
-  align-items: flex-start;
+  align-items: stretch;
   justify-content: center;
   background-color: transparent;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 112% auto;
+  background-size: 100% 100%;
   color: #3a2512;
-  font-size: clamp(1.22rem, 3.6vw, 1.46rem);
+  font-size: clamp(1.24rem, 3.6vw, 1.5rem);
   font-weight: 900;
   letter-spacing: 0.05em;
   line-height: 1.05;
@@ -207,10 +208,12 @@ a {
 }
 
 .start-button-label {
-  display: block;
-  width: min(74%, 16ch);
+  position: absolute;
+  left: 50%;
+  top: 57%;
+  width: min(60%, 13ch);
   text-align: center;
-  transform: translateY(20px);
+  transform: translate(-50%, -50%);
 }
 
 .start-button:hover:not(:disabled) {
@@ -719,28 +722,26 @@ a {
   }
 
   .category-tabs {
-    width: min(100%, 392px);
-    gap: 8px;
+    width: 100%;
+    margin-inline: 0;
+    gap: 4px;
   }
 
   .category-pill {
-    min-height: 54px;
-    padding: 9px 4px 12px;
-    background-size: 206% auto;
-    font-size: 0.86rem;
+    padding: 0 4px 1px;
+    background-size: 110% 110%;
+    font-size: 0.82rem;
   }
 
   .start-button {
     width: min(100%, 396px);
-    min-height: 96px;
-    padding: 12px 38px 10px;
-    background-size: 116% auto;
-    font-size: 1.16rem;
+    padding: 0 34px;
+    font-size: 1.08rem;
   }
 
   .start-button-label {
-    width: min(78%, 14ch);
-    transform: translateY(18px);
+    top: 58%;
+    width: min(62%, 12ch);
   }
 
   .action-row {
