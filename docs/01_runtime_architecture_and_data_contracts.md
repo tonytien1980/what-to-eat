@@ -87,3 +87,4 @@ The current implementation uses:
 - one optional bonus reroll if the expedition first reveals `宿命重骰`
 - local JSON data under `data/restaurants.json`
 - `npm run data:import` to refresh the local snapshot from the public reference sheets
+- `npm run build:pages` now builds with a relative asset base for GitHub Pages hosting

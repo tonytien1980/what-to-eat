@@ -28,7 +28,13 @@ npm run dev
 ```bash
 npm test
 npm run build
+npm run build:pages
 ```
+
+## GitHub Pages
+
+- pushes to `codex/initial-mvp` now trigger automatic GitHub Pages deployment
+- the workflow uses `npm run build:pages` with a relative asset base so the site works under the Pages subpath
 
 ## Repo Layout
 

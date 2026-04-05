@@ -33,6 +33,12 @@ Current commands:
 
 - `npm test`
 - `npm run build`
+- `npm run build:pages`
+
+Deployment:
+
+- pushing `codex/initial-mvp` should trigger `.github/workflows/deploy-pages.yml`
+- GitHub Pages should publish the `dist/` artifact from the workflow
 
 ## Release Rule
 
