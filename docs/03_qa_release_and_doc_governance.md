@@ -73,6 +73,7 @@
 - Google Sheet runtime 主資料來源在 location-aware 模式下仍可運作
 - Google Sheet 失敗時 fallback snapshot 仍可維持 location-aware safe fallback
 - Phase 1 不會偷偷啟用 geolocation / IP fallback
+- owner sheet 使用 `shop` / `maplink` / `city` / `district` 時，runtime loader 與 `npm run data:import` 都必須正常
 
 ## Quality Checks
 

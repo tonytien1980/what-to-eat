@@ -19,12 +19,12 @@ test('loads restaurants from published Google Sheet sources at runtime', async (
   const fetcher = vi
     .fn()
     .mockResolvedValueOnce(
-      new Response('店名,地圖連結\n"招牌, 牛肉麵",https://maps.app.goo.gl/1\n', {
+      new Response('shop,maplink\n"招牌, 牛肉麵",https://maps.app.goo.gl/1\n', {
         status: 200,
       }),
     )
     .mockResolvedValueOnce(
-      new Response('店名,地圖連結\n迷客夏,https://maps.app.goo.gl/2\n', {
+      new Response('shop,maplink\n迷客夏,https://maps.app.goo.gl/2\n', {
         status: 200,
       }),
     );
@@ -68,7 +68,7 @@ test('falls back to bundled snapshot when Google Sheet loading fails', async () 
 test('parses quoted rows from published Google Sheet csv', () => {
   expect(
     parsePublishedSheetCsv(
-      '店名,地圖連結\n"招牌, 牛肉麵",https://maps.app.goo.gl/demo\n',
+      'shop,maplink\n"招牌, 牛肉麵",https://maps.app.goo.gl/demo\n',
     ),
   ).toEqual([
     {
@@ -83,7 +83,7 @@ test('parses quoted rows from published Google Sheet csv', () => {
 test('parses optional city and district columns from published Google Sheet csv', () => {
   expect(
     parsePublishedSheetCsv(
-      '店名,地圖連結,城市,地區\n招牌牛肉麵,https://maps.app.goo.gl/demo,臺北市,中山區\n',
+      'shop,maplink,city,district\n招牌牛肉麵,https://maps.app.goo.gl/demo,臺北市,中山區\n',
     ),
   ).toEqual([
     {
@@ -97,7 +97,7 @@ test('parses optional city and district columns from published Google Sheet csv'
 
 test('defaults location columns when published Google Sheet rows still use the old two-column format', async () => {
   const fetcher = vi.fn().mockResolvedValue(
-    new Response('店名,地圖連結\n招牌牛肉麵,https://maps.app.goo.gl/demo\n', {
+    new Response('shop,maplink\n招牌牛肉麵,https://maps.app.goo.gl/demo\n', {
       status: 200,
     }),
   );
@@ -112,4 +112,19 @@ test('defaults location columns when published Google Sheet rows still use the o
     city: '臺北市',
     district: '中山區',
   });
+});
+
+test('keeps backward compatibility with the older Chinese headers', () => {
+  expect(
+    parsePublishedSheetCsv(
+      '店名,地圖連結,城市,地區\n招牌牛肉麵,https://maps.app.goo.gl/demo,臺北市,中山區\n',
+    ),
+  ).toEqual([
+    {
+      name: '招牌牛肉麵',
+      mapUrl: 'https://maps.app.goo.gl/demo',
+      city: '臺北市',
+      district: '中山區',
+    },
+  ]);
 });

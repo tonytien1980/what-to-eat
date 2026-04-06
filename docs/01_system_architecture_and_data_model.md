@@ -123,6 +123,18 @@ MVP 採用靜態友善前端架構：
 - `npm run data:import` 的角色是刷新 fallback snapshot，不是主資料流程
 - runtime data source state 屬於正式產品 contract，但是否直接露出在首頁 UI，必須由 `02_mvp_experience_and_gameplay_spec.md` 決定
 
+目前 owner sheet 的欄位 contract 為：
+
+- `shop`
+- `maplink`
+- `city`
+- `district`
+
+相容原則：
+
+- runtime loader 與 `npm run data:import` 應優先支援上述英文欄位
+- 為了避免轉換期間斷線，仍可相容舊版中文欄位 `店名` / `地圖連結` / `城市` / `地區`
+
 ## 目前核心模組對照
 
 - `src/app/` 或目前 app shell：頂層流程與狀態

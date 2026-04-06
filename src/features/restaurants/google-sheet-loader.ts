@@ -79,10 +79,10 @@ export function parsePublishedSheetCsv(text: string): SheetRow[] {
   const [headerRow = [], ...dataRows] = rows;
   const normalizedHeaders = headerRow.map((header) => header.trim().toLowerCase());
   const nameIndex = normalizedHeaders.findIndex((header) =>
-    ['店名', 'name'].includes(header),
+    ['店名', 'name', 'shop'].includes(header),
   );
   const mapUrlIndex = normalizedHeaders.findIndex((header) =>
-    ['地圖連結', 'mapurl', 'map_url'].includes(header),
+    ['地圖連結', 'mapurl', 'map_url', 'maplink'].includes(header),
   );
   const cityIndex = normalizedHeaders.findIndex((header) =>
     ['城市', 'city'].includes(header),
