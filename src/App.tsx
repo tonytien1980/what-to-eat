@@ -2,8 +2,11 @@ import { useState } from 'react';
 import type { CSSProperties } from 'react';
 import { uiOrnaments } from './assets/ui-ornaments';
 import { DestinyCardView } from './components/destiny-card-view';
+import { LocationSheet } from './components/location-sheet';
+import { LocationStatus } from './components/location-status';
+import { useLocationPreference } from './features/location/use-location-preference';
 import { categories } from './features/restaurants/data';
-import { getCandidatePool } from './features/restaurants/selectors';
+import { getLocationAwareCandidatePool } from './features/restaurants/selectors';
 import {
   getCategoryLabel,
   getCategorySummary,
@@ -19,6 +22,7 @@ import './styles.css';
 export default function App() {
   const [activeCategory, setActiveCategory] = useState<Category | null>(null);
   const restaurantCatalog = useRestaurantCatalog();
+  const locationPreference = useLocationPreference(restaurantCatalog.restaurants);
   const {
     phase,
     round,
@@ -28,12 +32,20 @@ export default function App() {
     reroll,
     canReroll,
     isAnimating,
-  } = useExpedition(activeCategory, restaurantCatalog.restaurants);
+  } = useExpedition(
+    activeCategory,
+    restaurantCatalog.restaurants,
+    locationPreference.currentLocation,
+  );
   const { snapshot } = useTaipeiWeather();
   const rerollCopy = getRerollCopy(rerollsRemaining);
   const categoryLabel = activeCategory ? getCategoryLabel(activeCategory) : '';
   const activeCategoryCount = activeCategory
-    ? getCandidatePool(restaurantCatalog.restaurants, activeCategory).length
+    ? getLocationAwareCandidatePool(
+        restaurantCatalog.restaurants,
+        activeCategory,
+        locationPreference.currentLocation,
+      ).length
     : 0;
   const weatherSceneLine = `${snapshot.cityName} · ${snapshot.activeScene.sceneLabel} · ${snapshot.activeScene.variantLabel}`;
   const weatherPrimaryLine =
@@ -67,6 +79,25 @@ export default function App() {
               <p className="weather-line weather-line-soft">{weatherSecondaryLine}</p>
             </div>
           </div>
+
+          <LocationStatus
+            locationLabel={locationPreference.currentLocationLabel}
+            triggerLabel={locationPreference.locationTriggerLabel}
+            onOpen={locationPreference.openChooser}
+          />
+
+          <LocationSheet
+            isOpen={locationPreference.isChooserOpen}
+            cityGroups={locationPreference.locationGroups}
+            districtOptions={locationPreference.districtOptions}
+            draftCity={locationPreference.draftCity}
+            draftDistrict={locationPreference.draftDistrict}
+            onCityChange={locationPreference.updateDraftCity}
+            onDistrictChange={locationPreference.updateDraftDistrict}
+            onSkipDistrict={locationPreference.skipDistrict}
+            onClose={locationPreference.closeChooser}
+            onSave={locationPreference.saveDraft}
+          />
 
           <div className="category-tabs" role="tablist" aria-label="遠征類型">
             {categories.map((category) => (

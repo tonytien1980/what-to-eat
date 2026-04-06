@@ -74,6 +74,42 @@ test('parses quoted rows from published Google Sheet csv', () => {
     {
       name: '招牌, 牛肉麵',
       mapUrl: 'https://maps.app.goo.gl/demo',
+      city: null,
+      district: null,
     },
   ]);
+});
+
+test('parses optional city and district columns from published Google Sheet csv', () => {
+  expect(
+    parsePublishedSheetCsv(
+      '店名,地圖連結,城市,地區\n招牌牛肉麵,https://maps.app.goo.gl/demo,臺北市,中山區\n',
+    ),
+  ).toEqual([
+    {
+      name: '招牌牛肉麵',
+      mapUrl: 'https://maps.app.goo.gl/demo',
+      city: '臺北市',
+      district: '中山區',
+    },
+  ]);
+});
+
+test('defaults location columns when published Google Sheet rows still use the old two-column format', async () => {
+  const fetcher = vi.fn().mockResolvedValue(
+    new Response('店名,地圖連結\n招牌牛肉麵,https://maps.app.goo.gl/demo\n', {
+      status: 200,
+    }),
+  );
+
+  const result = await resolveRestaurantCatalog({
+    fallbackRestaurants,
+    fetcher,
+    sources: [sources[0]],
+  });
+
+  expect(result.restaurants[0]).toMatchObject({
+    city: '臺北市',
+    district: '中山區',
+  });
 });

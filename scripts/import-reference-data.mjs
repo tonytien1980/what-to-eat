@@ -3,6 +3,8 @@ import { readFile, writeFile } from 'node:fs/promises';
 const sourceSheets = JSON.parse(
   await readFile(new URL('../data/restaurant-sheet-sources.json', import.meta.url), 'utf8'),
 );
+const DEFAULT_LOCATION_CITY = '臺北市';
+const DEFAULT_LOCATION_DISTRICT = '中山區';
 
 function parseCsv(text) {
   const rows = [];
@@ -61,10 +63,29 @@ function parseCsv(text) {
     }
   }
 
-  return rows.slice(1).map(([name = '', mapUrl = '']) => ({
-    name,
-    mapUrl,
-  }));
+  const [headerRow = [], ...dataRows] = rows;
+  const normalizedHeaders = headerRow.map((header) => header.trim().toLowerCase());
+  const nameIndex = normalizedHeaders.findIndex((header) =>
+    ['店名', 'name'].includes(header),
+  );
+  const mapUrlIndex = normalizedHeaders.findIndex((header) =>
+    ['地圖連結', 'mapurl', 'map_url'].includes(header),
+  );
+  const cityIndex = normalizedHeaders.findIndex((header) =>
+    ['城市', 'city'].includes(header),
+  );
+  const districtIndex = normalizedHeaders.findIndex((header) =>
+    ['地區', 'district'].includes(header),
+  );
+
+  return dataRows
+    .map((dataRow) => ({
+      name: dataRow[nameIndex] ?? dataRow[0] ?? '',
+      mapUrl: dataRow[mapUrlIndex] ?? dataRow[1] ?? '',
+      city: dataRow[cityIndex]?.trim() || null,
+      district: dataRow[districtIndex]?.trim() || null,
+    }))
+    .filter((row) => row.name && row.mapUrl);
 }
 
 function slugify(input) {
@@ -166,6 +187,8 @@ async function loadSourceSheet(category, url) {
     tags: inferTags(row.name, category),
     priceLevel: inferPriceLevel(row.name, category),
     distanceLevel: inferDistanceLevel(`${category}-${row.name}`),
+    city: row.city ?? DEFAULT_LOCATION_CITY,
+    district: row.district ?? DEFAULT_LOCATION_DISTRICT,
     isEnabled: true,
   }));
 }

@@ -11,6 +11,8 @@ export interface RestaurantRecord {
   tags: string[];
   priceLevel: PriceLevel;
   distanceLevel: DistanceLevel;
+  city: string | null;
+  district: string | null;
   isEnabled: boolean;
 }
 

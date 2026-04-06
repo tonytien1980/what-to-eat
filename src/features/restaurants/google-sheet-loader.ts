@@ -1,10 +1,16 @@
 import type { Category, RestaurantCatalogResult, RestaurantRecord, RestaurantSheetSource } from './types';
+import {
+  DEFAULT_LOCATION_CITY,
+  DEFAULT_LOCATION_DISTRICT,
+} from '../location/constants';
 
 type Fetcher = typeof fetch;
 
 interface SheetRow {
   name: string;
   mapUrl: string;
+  city: string | null;
+  district: string | null;
 }
 
 interface ResolveRestaurantCatalogOptions {
@@ -70,11 +76,27 @@ export function parsePublishedSheetCsv(text: string): SheetRow[] {
     }
   }
 
-  return rows
-    .slice(1)
-    .map(([name = '', mapUrl = '']) => ({
-      name,
-      mapUrl,
+  const [headerRow = [], ...dataRows] = rows;
+  const normalizedHeaders = headerRow.map((header) => header.trim().toLowerCase());
+  const nameIndex = normalizedHeaders.findIndex((header) =>
+    ['店名', 'name'].includes(header),
+  );
+  const mapUrlIndex = normalizedHeaders.findIndex((header) =>
+    ['地圖連結', 'mapurl', 'map_url'].includes(header),
+  );
+  const cityIndex = normalizedHeaders.findIndex((header) =>
+    ['城市', 'city'].includes(header),
+  );
+  const districtIndex = normalizedHeaders.findIndex((header) =>
+    ['地區', 'district'].includes(header),
+  );
+
+  return dataRows
+    .map((dataRow) => ({
+      name: dataRow[nameIndex] ?? dataRow[0] ?? '',
+      mapUrl: dataRow[mapUrlIndex] ?? dataRow[1] ?? '',
+      city: dataRow[cityIndex]?.trim() || null,
+      district: dataRow[districtIndex]?.trim() || null,
     }))
     .filter((row) => row.name && row.mapUrl);
 }
@@ -181,6 +203,8 @@ async function loadSourceSheet(
     tags: inferTags(row.name, source.category),
     priceLevel: inferPriceLevel(row.name, source.category),
     distanceLevel: inferDistanceLevel(`${source.category}-${row.name}`),
+    city: row.city ?? DEFAULT_LOCATION_CITY,
+    district: row.district ?? DEFAULT_LOCATION_DISTRICT,
     isEnabled: true,
   }));
 }

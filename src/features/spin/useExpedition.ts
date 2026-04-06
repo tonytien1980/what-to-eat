@@ -3,6 +3,7 @@ import { pickWeightedCardBack } from '../card-backs/deck';
 import type { CardBackRecord } from '../card-backs/deck';
 import { drawDestinyCard } from '../destiny/draw';
 import type { DestinyCard } from '../destiny/types';
+import type { LocationPreference } from '../location/types';
 import {
   getDestinationPool,
   pickRandomRestaurant,
@@ -24,10 +25,11 @@ export function startExpedition(
   category: Category,
   restaurants: RestaurantRecord[],
   cardBack: CardBackRecord,
+  location: Pick<LocationPreference, 'city' | 'district'> | null = null,
   randomSource: () => number = Math.random,
 ): ExpeditionRound {
   const destinyCard = drawDestinyCard(randomSource());
-  const pool = getDestinationPool(restaurants, category, destinyCard);
+  const pool = getDestinationPool(restaurants, category, destinyCard, location);
 
   if (pool.length === 0) {
     throw new Error(`No restaurants available for ${category}`);
@@ -56,6 +58,7 @@ function prefersReducedMotion() {
 export function useExpedition(
   category: Category | null,
   restaurants: RestaurantRecord[],
+  location: Pick<LocationPreference, 'city' | 'district'> | null = null,
 ) {
   const [phase, setPhase] = useState<ExpeditionPhase>('idle');
   const [currentCardBack, setCurrentCardBack] = useState<CardBackRecord>(() =>
@@ -108,6 +111,7 @@ export function useExpedition(
       category,
       restaurants,
       currentCardBack,
+      location,
     );
     const initialRerolls = firstRound.canReroll ? 2 : 1;
 
@@ -128,6 +132,7 @@ export function useExpedition(
       category,
       restaurants,
       nextCardBack,
+      location,
     );
     const shouldGrantBonus = nextRound.canReroll && !bonusRerollGranted;
     const nextRemaining = Math.max(rerollsRemaining - 1, 0) + (shouldGrantBonus ? 1 : 0);
@@ -148,7 +153,7 @@ export function useExpedition(
     setRound(null);
     setRerollsRemaining(0);
     setBonusRerollGranted(false);
-  }, [category]);
+  }, [category, location?.city, location?.district]);
 
   return {
     phase,

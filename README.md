@@ -11,6 +11,9 @@ First release targets a no-login, same-screen MVP:
 - Google Sheet runtime restaurant loading
 - category switcher for lunch, dinner, drinks, and sweets
 - no preselected category on first load
+- phase-1 location-aware restaurant routing with `city / district`
+- Zhongshan default location anchor with local remembered override
+- lightweight `更改位置` sheet without a blocking setup gate
 - one-tap "today's expedition" flow
 - weighted card-back draw on load and reroll
 - tall playing-card reveal with cloud-clearing animation
@@ -61,6 +64,7 @@ The repository now includes:
 - runtime sheet sources switched to the owner's published Google Sheet
 - runtime Google Sheet loading with bundled fallback snapshot
 - Taipei weather scene selection via official CWA county forecast data
+- location-aware candidate pool using `district -> city -> fallback`
 - destiny card filtering with fallback behavior
 - simplified altar header with fixed two-line title
 - transparent altar stage so the card stands on the scene instead of a dark panel

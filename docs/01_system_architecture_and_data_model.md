@@ -1,0 +1,651 @@
+# 01 System Architecture And Data Model
+
+## 文件角色
+
+本文件定義：
+
+- 產品的長期系統骨架
+- 目前已啟用版本與長期骨架的映射
+- 核心資料模型
+- 內容治理與命名規則
+- 能力啟用順序
+
+本文件是架構與資料層 SSOT。若與 `00_product_principles_and_scope.md` 衝突，以 `00` 為準。
+
+## 架構總原則
+
+- 前台極輕
+- 底層完整
+- 抽象優先
+- 模組分層
+- 先留接口，不先堆功能
+- 不把未來合作與分析邏輯直接寫死在目前主流程
+
+## 系統分層架構
+
+### 1. Core Decision Engine
+
+負責：
+
+- 定義單次決策流程
+- 控制抽選 / 推薦產出
+- 管理重抽規則
+- 維持核心節奏與公平感
+
+### 2. Content Layer
+
+負責：
+
+- 管理可被抽中的內容項
+- 組織不同內容池
+- 維持內容資料一致性
+
+### 3. Scenario Layer
+
+負責：
+
+- 定義不同使用場景
+- 決定不同場景下可用的內容池、文案與條件修飾
+
+### 4. Theme Layer
+
+負責：
+
+- 視覺皮膚
+- 文案語氣
+- 演出方式
+- 結果呈現模板
+
+### 5. Promotion / Commerce Layer
+
+負責：
+
+- 承載合作內容
+- 控制商業內容可見位置與標記方式
+- 不干擾核心決策規則
+
+### 6. Analytics Layer
+
+負責：
+
+- 記錄 session
+- 記錄結果接受與重抽
+- 記錄場景與主題表現
+
+## 目前啟用狀態
+
+### 目前主體
+
+- 目前正式啟用的是 Layer 1 核心體驗
+- 並只啟用少量支撐 Layer 1 的 Layer 0 基礎骨架
+
+### 已存在的 Layer 0 基礎
+
+- 穩定 id
+- 模組分檔
+- 可替換資料來源
+- 主題資產配置
+- 輕量 modifier 邏輯
+- 靜態站可部署架構
+
+### 尚未成為正式 runtime 模組的部分
+
+- 顯式 `Pack` 物件
+- 顯式 `Scenario` orchestrator
+- Promotion layer
+- Session analytics event stream
+
+## 抽象模型與目前 MVP 的映射
+
+- `Choice Item` -> `RestaurantRecord`
+- `Pack` -> 尚未成為一級 runtime 物件；目前由 category 候選池、Google Sheet 來源與 fallback snapshot 最小化承接
+- `Scenario` -> 目前只有一個共享的單頁「吃什麼」決策場景
+- `Theme` -> `今天吃什麼：命運遠征` 的奇幻遠征包裝、天氣場景、卡背與卡面視覺
+- `Modifier` -> 系統自帶的天氣情境與 `destiny card` 過濾 / 重抽規則
+- `Session` -> `useExpedition` 內的單輪記憶體狀態
+- `Promotion Unit` -> 預留，MVP 未啟用
+
+## 目前 runtime approach
+
+MVP 採用靜態友善前端架構：
+
+- client-side React 應用
+- Google Sheet runtime fetch 作為主要資料來源
+- 無 server
+- 無 database
+- 可部署到 GitHub Pages 或其他 static hosting
+
+### 已啟用的資料產品化基線
+
+- `data/restaurant-sheet-sources.json` 是公開試算表來源設定檔
+- 瀏覽器端直接 fetch published CSV 並轉成 runtime records
+- `data/restaurants.json` 保留為 fallback snapshot
+- `npm run data:import` 的角色是刷新 fallback snapshot，不是主資料流程
+- runtime data source state 屬於正式產品 contract，但是否直接露出在首頁 UI，必須由 `02_mvp_experience_and_gameplay_spec.md` 決定
+
+## 目前核心模組對照
+
+- `src/app/` 或目前 app shell：頂層流程與狀態
+- `src/features/weather/`：中央氣象署中山區資料、標準化與場景映射
+- `src/features/restaurants/`：資料載入、型別、過濾與隨機選取
+- `src/features/destiny/`：命運卡型別、定義與抽牌邏輯
+- `src/features/card-backs/`：卡背權重與稀有度資料
+- `src/features/spin/`：揭示流程狀態機
+- `src/features/result/`：結果文案與操作文案
+- `src/components/`：共用 UI 元件
+- `data/restaurants.json`：本地 fallback 快照
+- `data/restaurant-sheet-sources.json`：Google Sheet 來源清單
+- `images/`：主題資產
+
+## 目前狀態模型
+
+MVP 目前追蹤：
+
+- `activeCategory`
+- `availableRestaurants`
+- `currentLocation`
+- `isLocationChooserOpen`
+- `draftCity`
+- `draftDistrict`
+- `currentCardBack`
+- `currentFaceTemplate`
+- `currentDestinyCard`
+- `selectedDestination`
+- `rerollsRemaining`
+- `bonusRerollGranted`
+- `phase`
+
+## 已啟用的 location-aware Phase 1 與後續 Phase 2
+
+location-aware 方向已進入 Phase 1，但目前仍不是完整 detect-first runtime；geolocation / IP fallback 仍保留到後續階段。
+
+### 目標
+
+把固定區域的版本升級成 location-aware 產品，同時維持：
+
+- no-login
+- same-screen
+- low-friction
+- static-friendly frontend
+
+### Location Resolution Strategy
+
+長期正式策略固定為：
+
+`detect-first, confirm-lightly, remember-locally`
+
+完整 detect-first 版本的偵測優先序固定為：
+
+1. local saved location
+2. browser geolocation
+3. IP-based city guess
+4. no location
+
+### Phase 1 Runtime Rules
+
+- 若有 saved location，first paint 直接使用
+- 若沒有 saved location，先使用 `臺北市中山區` 預設錨點
+- 使用者可透過輕量 chooser 覆蓋預設錨點
+- Phase 1 不啟用 browser geolocation
+- Phase 1 不啟用 IP-based city guess
+
+### Location Trust Rules
+
+- `manual`：highest trust
+- `geolocation`：high trust
+- `ip-city`：medium trust
+- `unknown`：no trust
+
+完整 detect-first 版本對應處理：
+
+- high trust：直接使用，不打斷流程
+- medium trust：可先使用，但要明確提供確認 / 修正入口
+- no trust：開啟輕量 chooser
+
+### Current Location State Shape
+
+```json
+{
+  "city": "臺北市",
+  "district": "中山區",
+  "source": "default",
+  "promptState": "accepted",
+  "savedAt": null
+}
+```
+
+建議欄位：
+
+- `city`
+- `district`
+- `source`
+- `promptState`
+- `savedAt`
+
+### Refresh Rules
+
+- 若有 saved location，first paint 直接使用
+- 若沒有 saved location，first paint 直接使用中山區預設錨點
+- 若 geolocation 曾被拒絕，不可每次 refresh 重新詢問
+- manual edit 會覆蓋 auto-detected value
+
+### Phasing
+
+#### Phase 1
+
+已啟用：
+
+- `city` / `district` 資料欄位
+- local saved location
+- `臺北市中山區` phase-1 default anchor
+- lightweight location display
+- lightweight manual correction UI
+- `district -> city -> fallback` 過濾順序
+
+仍不要做：
+
+- browser geolocation
+- IP geolocation
+
+#### Phase 2
+
+再加：
+
+- browser geolocation
+- denial memory
+- optional IP city fallback
+
+## 內容系統原則
+
+### 內容是為決策服務，不是為資訊完整服務
+
+內容資料的目的應是：
+
+- 讓使用者可以接受結果
+- 讓結果有基本可信度
+- 讓後續行動容易接上
+
+而不是：
+
+- 收齊所有資料欄位
+- 做成完整目錄
+- 做成深度比較工具
+
+### Pack 是產品級單位，不只是資料集合
+
+Pack 代表一組在特定情境下可成立、可被玩、可被接受的內容組合。
+
+### Scenario 決定語境，Theme 決定包裝
+
+- `Scenario` 解決「現在是什麼情境」
+- `Theme` 解決「這個情境用什麼語氣與世界觀表現」
+
+### Modifier 只能輕量影響
+
+- 數量少
+- 容易理解
+- 不增加操作成本
+- 優先由系統自動帶入，而不是讓使用者填表
+
+## 長期核心資料物件
+
+### Choice Item
+
+最小可被抽中的內容單位。
+
+建議欄位：
+
+- `id`
+- `type`
+- `name`
+- `shortDescription`
+- `primaryTags`
+- `secondaryTags`
+- `locationLabel`
+- `city`
+- `district`
+- `actionLinks`
+- `availabilityMeta`
+- `packMembership`
+- `scenarioFit`
+- `modifierAffinity`
+- `promotionStatus`
+- `status`
+
+最低可用標準：
+
+- 名稱
+- 類型
+- 一句描述
+- 至少一個有效 action
+- 至少屬於一個 Pack
+
+### Pack
+
+特定情境下能成立的內容池。
+
+建議欄位：
+
+- `packId`
+- `packName`
+- `packType`
+- `primaryContentType`
+- `supportedScenarios`
+- `supportedThemes`
+- `supportedModifiers`
+- `regionScope`
+- `curationPrinciple`
+- `inclusionRules`
+- `exclusionRules`
+- `promotionPolicy`
+- `status`
+
+健康標準：
+
+- 邊界清楚
+- 語境成立
+- 可接受性高於完整性
+- action link 有效
+- 沒有過度商業偏向
+
+### Scenario
+
+正在被解的決策題目。
+
+建議欄位：
+
+- `scenarioId`
+- `scenarioName`
+- `scenarioGoal`
+- `primaryPackCandidates`
+- `allowedContentTypes`
+- `recommendedThemes`
+- `allowedModifiers`
+- `defaultCtaCopy`
+- `resultActionTemplate`
+- `status`
+
+命名原則：
+
+- 以人話命名
+- 反映決策題目
+- 不用企劃腔當正式名稱
+
+### Theme
+
+產品包裝層。
+
+建議欄位：
+
+- `themeId`
+- `themeName`
+- `toneOfVoice`
+- `visualDirection`
+- `entryCopySet`
+- `decisionAnimationStyle`
+- `resultCardTemplate`
+- `ctaCopySet`
+- `compatibleScenarios`
+- `themeConstraints`
+- `status`
+
+限制：
+
+- 可改變視覺、文案、演出與 CTA 文案
+- 不可改變核心流程、決策速度與決策目標
+
+### Modifier
+
+對單輪決策做輕量修飾。
+
+建議欄位：
+
+- `modifierId`
+- `modifierName`
+- `modifierGroup`
+- `modifierEffectType`
+- `applicableScenarios`
+- `eligibleContentTypes`
+- `effectScope`
+- `uiLabel`
+- `defaultVisibility`
+- `status`
+
+建議類型：
+
+- 天氣型
+- 時段型
+- 心情型
+- 條件型
+
+### Session
+
+一次從開始到接受 / 離開的決策流程。
+
+建議欄位：
+
+- `id`
+- `startedAt`
+- `scenarioId`
+- `themeId`
+- `packId`
+- `selectedType`
+- `appliedModifiers`
+- `resultItemId`
+- `rerollCount`
+- `accepted`
+- `downstreamAction`
+- `sourceContext`
+
+### Promotion Unit
+
+可被掛載進系統的合作型內容單元。
+
+建議欄位：
+
+- `id`
+- `promotionType`
+- `displayLabel`
+- `targetScope`
+- `constraints`
+- `visibilityRule`
+- `trackingRule`
+- `status`
+
+## 目前 MVP 資料契約
+
+### RestaurantRecord
+
+目前第一個 `Choice Item` 實作的 contract：
+
+```json
+{
+  "id": "beef-noodle-01",
+  "name": "老街牛肉麵",
+  "category": "lunch",
+  "city": "臺北市",
+  "district": "中山區",
+  "mapUrl": "https://maps.app.goo.gl/example",
+  "tags": ["noodle", "hot", "soup"],
+  "priceLevel": "medium",
+  "distanceLevel": "near",
+  "isEnabled": true
+}
+```
+
+### RestaurantCatalogResult
+
+```json
+{
+  "restaurants": [],
+  "status": "live",
+  "sourceLabel": "Google Sheet 即時資料"
+}
+```
+
+`status` 說明：
+
+- `live`：成功抓到即時 Google Sheet
+- `fallback`：抓取失敗，改用本地快照
+- `loading`：已有 fallback，同時仍在刷新即時資料
+
+補充說明：
+
+- `sourceLabel` 屬於正式 runtime metadata
+- 是否將 `sourceLabel` 直接露出在首頁，屬於 UX 決策，不預設要求為第一級首頁資訊
+
+### DestinyCard
+
+目前第一個 hidden modifier contract：
+
+```json
+{
+  "id": "swift-wind",
+  "name": "疾風祝福",
+  "type": "filter",
+  "description": "只從近距離據點中抽取今日遠征地。",
+  "filter": {
+    "distanceLevel": ["near"]
+  },
+  "allowReroll": false
+}
+```
+
+## 目前選取規則
+
+目前過濾順序固定為：
+
+1. category
+2. enabled flag
+3. location filter：`district -> city -> fallback`
+4. destiny-card filter
+5. 若 destiny-card filter 為空，回退到 location-resolved pool
+
+這個規則不可改成死路回合。
+
+## Location-Aware Filtering Rules
+
+目前 location-aware 模式已啟用，正式原則為：
+
+1. category
+2. enabled flag
+3. location filter：`district -> city -> fallback`
+4. destiny-card filter
+5. 若結果為空，回退到 location-resolved pool
+
+換句話說，正式產品原則是：
+
+`district -> city -> safe fallback`
+
+補充：
+
+- Phase 1 的 weather runtime 仍固定使用中山區天氣
+- 餐廳 location-aware 與 weather runtime 暫時解耦
+- 等 Phase 2 再決定是否把 weather 跟隨手動位置一起切換
+
+## 啟用藍圖
+
+### Layer 0：Foundation Layer
+
+目標：建好可擴充骨架，但不要求全部顯示。
+
+最低要求：
+
+- 核心決策骨架
+- 穩定資料模型
+- 模組邊界
+- Theme 配置能力
+- Scenario 對應能力
+- Promotion 掛載點
+- Session / analytics 基礎
+
+### Layer 1：Core Experience Layer
+
+目前正式啟用層。
+
+啟用內容：
+
+- 單一主核心場景
+- 單一主題包
+- 單一主要內容池組合
+- 單次決策流程
+- 基本結果頁
+- 極簡再抽一次
+- 最小必要行動
+
+### Layer 2：Scenario Expansion Layer
+
+建議順序：
+
+1. 午餐
+2. 飲料 / 下午茶
+3. 晚餐
+4. 聚餐
+5. 約會去哪
+6. 商圈探索
+
+### Layer 3：Theme And Social Amplification Layer
+
+可開內容：
+
+- 多主題包
+- 結果分享點
+- 截圖友善結果呈現
+- 公司內部版 / 節慶版
+
+### Layer 4：Commerce Attachment Layer
+
+前提：
+
+- 已有真實使用
+- 已有重複打開
+- 已有固定情境
+- 已有結果後續行為
+
+## 命名規則
+
+### Pack
+
+建議格式：
+
+`[地區或範圍] + [場景] + [內容型別] + 包`
+
+例如：
+
+- 板橋午餐餐廳包
+- 公司周邊下午茶包
+- 信義區約會地點包
+
+### Scenario
+
+以使用者人話命名，例如：
+
+- 今天午餐
+- 下午茶一下
+- 今晚吃什麼
+- 兩個人去哪裡
+
+### Theme
+
+反映包裝氣質，例如：
+
+- 奇幻遠征
+- 都市命運
+- 午夜探險
+
+### Modifier
+
+短、直覺、像使用者會說的話，例如：
+
+- 雨天
+- 想近一點
+- 想喝甜的
+
+## 技術實作注意事項
+
+- 所有核心物件要有穩定 id
+- 配置與內容盡可能分離
+- 不把業務規則散落在 UI 細節中
+- 不把合作邏輯直接塞進 decision engine
+- analytics 以事件化方式設計
+- 不因為底層已準備好，就把前台能力一次全打開

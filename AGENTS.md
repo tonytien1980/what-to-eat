@@ -20,12 +20,19 @@ The product should feel playful, fast, and low-friction:
 
 ## Source Of Truth
 
-Active docs live in `docs/`:
+Active docs live in `docs/` and are consolidated into 4 formal SSOT files:
 
-- `docs/00_product_definition_and_current_state.md`
-- `docs/01_runtime_architecture_and_data_contracts.md`
-- `docs/02_ux_gameplay_and_content_spec.md`
-- `docs/03_qa_and_release_checklist.md`
+- `docs/00_product_principles_and_scope.md`
+- `docs/01_system_architecture_and_data_model.md`
+- `docs/02_mvp_experience_and_gameplay_spec.md`
+- `docs/03_qa_release_and_doc_governance.md`
+
+When docs overlap, use this precedence:
+
+1. `docs/00_product_principles_and_scope.md` for product principles, boundaries, scope, and non-negotiable rules.
+2. `docs/01_system_architecture_and_data_model.md` for target architecture, current runtime mapping, data model, and activation sequencing.
+3. `docs/02_mvp_experience_and_gameplay_spec.md` for shipped UX, gameplay, copy, and visual behavior.
+4. `docs/03_qa_release_and_doc_governance.md` for QA, release checks, verification commands, and doc-sync rules.
 
 Design and implementation workflow docs live in:
 
