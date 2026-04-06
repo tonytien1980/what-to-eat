@@ -86,6 +86,9 @@
 - disabled 或缺資料狀態可閱讀
 - 動畫不阻塞最終結果
 - charge-up、flip burst、settle pulse 在手機上仍可用
+- `common` 必須明顯弱於 `rare`，不可讀成同一種白光只差亮度
+- `rare / epic / legendary` 的 breathing 節奏與強度必須有分級
+- `hidden` 仍應維持與一般 rarity 不同的 scan / anomaly 感
 - tall reveal card 在 desktop 與 mobile 都能正常解析
 - 卡片正面與背面文字在 mobile 縮放後仍可閱讀
 - 透明祭壇舞台不應蓋掉背景場景

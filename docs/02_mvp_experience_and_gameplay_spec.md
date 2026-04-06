@@ -171,6 +171,15 @@ Reduced motion：
 - 若使用者偏好 reduced motion，應直接簡化為快速揭曉
 - 不可讓 reduced motion 使用者失去結果或操作能力
 
+### Rarity Motion Rules
+
+- `common` 不做常駐呼吸動畫，只保留卡框存在感與淡內光
+- `rare` 使用最輕的白光呼吸，慢、乾淨、幅度小
+- `epic` 使用更亮一階的暖金呼吸，需有能量聚散感
+- `legendary` 使用更厚、更集中的紫光呼吸，像神器脈動
+- `hidden` 以藍光掃描與異常流動為主，不與一般 rarity 共用同一組 pulse
+- `revealing` 階段仍可比 `result` 更亮，但 `result` 階段不能把 rarity 差異收掉
+
 ## 視覺規則
 
 - 卡片必須是直式撲克牌比例，不是正方卡
@@ -182,6 +191,15 @@ Reduced motion：
 - 場景背景必須清楚可見，面板只能局部遮罩
 - 主標固定兩行，不因螢幕大小跑版
 - 天氣與場景資訊壓成兩小行，避免 header 太滿
+
+### Rarity Glow Rules
+
+- `common` 應讀成「有材質的普通卡」，不是弱版 `rare`
+- `common` 主打象牙白卡框與細內光，外層 halo 應顯著弱於 `rare`
+- `rare` 才正式進入白光發光感
+- `epic` 使用暖金光，需明顯比 `rare` 更高貴
+- `legendary` 使用厚重紫光，存在感必須高於 `epic`
+- `hidden` 使用 logo 系藍光與異常感，辨識邏輯應和其他等級不同
 
 ### Mobile Density Rules
 

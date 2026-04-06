@@ -440,43 +440,43 @@ a {
 }
 
 .expedition-card-rarity-common {
-  --card-border-soft: rgba(245, 245, 245, 0.32);
-  --card-glow-primary: rgba(255, 255, 255, 0.42);
-  --card-glow-outer: rgba(255, 255, 255, 0.16);
-  --card-aura-core: rgba(255, 255, 255, 0.14);
-  --card-aura-halo: rgba(255, 255, 255, 0.08);
+  --card-border-soft: rgba(232, 225, 211, 0.5);
+  --card-glow-primary: rgba(255, 248, 230, 0.18);
+  --card-glow-outer: rgba(255, 248, 230, 0.06);
+  --card-aura-core: rgba(255, 248, 230, 0.06);
+  --card-aura-halo: rgba(255, 248, 230, 0.025);
 }
 
 .expedition-card-rarity-rare {
-  --card-border-soft: rgba(255, 255, 255, 0.58);
-  --card-glow-primary: rgba(255, 255, 255, 0.88);
-  --card-glow-outer: rgba(255, 255, 255, 0.34);
-  --card-aura-core: rgba(255, 255, 255, 0.24);
-  --card-aura-halo: rgba(255, 255, 255, 0.12);
+  --card-border-soft: rgba(255, 255, 255, 0.72);
+  --card-glow-primary: rgba(255, 255, 255, 0.9);
+  --card-glow-outer: rgba(255, 255, 255, 0.38);
+  --card-aura-core: rgba(255, 255, 255, 0.28);
+  --card-aura-halo: rgba(255, 255, 255, 0.14);
 }
 
 .expedition-card-rarity-epic {
-  --card-border-soft: rgba(245, 205, 112, 0.56);
-  --card-glow-primary: rgba(245, 205, 112, 0.9);
-  --card-glow-outer: rgba(245, 205, 112, 0.42);
-  --card-aura-core: rgba(245, 205, 112, 0.26);
-  --card-aura-halo: rgba(245, 205, 112, 0.14);
+  --card-border-soft: rgba(245, 205, 112, 0.62);
+  --card-glow-primary: rgba(245, 205, 112, 0.94);
+  --card-glow-outer: rgba(245, 205, 112, 0.48);
+  --card-aura-core: rgba(245, 205, 112, 0.32);
+  --card-aura-halo: rgba(245, 205, 112, 0.18);
 }
 
 .expedition-card-rarity-legendary {
-  --card-border-soft: rgba(175, 132, 255, 0.64);
-  --card-glow-primary: rgba(175, 132, 255, 0.92);
-  --card-glow-outer: rgba(165, 118, 248, 0.48);
-  --card-aura-core: rgba(175, 132, 255, 0.28);
-  --card-aura-halo: rgba(165, 118, 248, 0.16);
+  --card-border-soft: rgba(175, 132, 255, 0.72);
+  --card-glow-primary: rgba(175, 132, 255, 0.98);
+  --card-glow-outer: rgba(165, 118, 248, 0.58);
+  --card-aura-core: rgba(175, 132, 255, 0.36);
+  --card-aura-halo: rgba(165, 118, 248, 0.22);
 }
 
 .expedition-card-rarity-hidden {
-  --card-border-soft: rgba(87, 174, 247, 0.66);
-  --card-glow-primary: rgba(87, 174, 247, 0.96);
-  --card-glow-outer: rgba(87, 174, 247, 0.52);
-  --card-aura-core: rgba(87, 174, 247, 0.28);
-  --card-aura-halo: rgba(87, 174, 247, 0.16);
+  --card-border-soft: rgba(87, 174, 247, 0.7);
+  --card-glow-primary: rgba(87, 174, 247, 0.98);
+  --card-glow-outer: rgba(87, 174, 247, 0.56);
+  --card-aura-core: rgba(87, 174, 247, 0.32);
+  --card-aura-halo: rgba(87, 174, 247, 0.18);
 }
 
 .expedition-card {
@@ -680,6 +680,17 @@ a {
   z-index: 2;
 }
 
+.expedition-card-rarity-common .expedition-card-frame::before {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 247, 232, 0.12),
+    0 0 10px rgba(255, 248, 230, 0.06);
+}
+
+.expedition-card-rarity-common .expedition-card-back-glow,
+.expedition-card-rarity-common .expedition-card-front-glow {
+  opacity: 0.34;
+}
+
 .action-row {
   display: flex;
   flex-wrap: wrap;
@@ -834,6 +845,97 @@ a {
   }
 }
 
+@keyframes rarity-aura-breath-rare {
+  from,
+  to {
+    opacity: 0.72;
+    transform: scale(0.985);
+  }
+
+  50% {
+    opacity: 0.92;
+    transform: scale(1.025);
+  }
+}
+
+@keyframes rarity-aura-breath-epic {
+  from,
+  to {
+    opacity: 0.76;
+    transform: scale(0.982);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes rarity-aura-breath-legendary {
+  from,
+  to {
+    opacity: 0.82;
+    transform: scale(0.978);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.055);
+  }
+}
+
+@keyframes rarity-glow-breath-rare {
+  from,
+  to {
+    opacity: 0.56;
+    transform: scale(0.992);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: scale(1.014);
+  }
+}
+
+@keyframes rarity-glow-breath-epic {
+  from,
+  to {
+    opacity: 0.62;
+    transform: scale(0.99);
+  }
+
+  50% {
+    opacity: 0.92;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes rarity-glow-breath-legendary {
+  from,
+  to {
+    opacity: 0.68;
+    transform: scale(0.988);
+  }
+
+  50% {
+    opacity: 0.98;
+    transform: scale(1.024);
+  }
+}
+
+@keyframes hidden-aura-drift {
+  from,
+  to {
+    opacity: 0.8;
+    transform: scale(0.986) rotate(0deg);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.032) rotate(0.6deg);
+  }
+}
+
 @keyframes expedition-burst {
   from {
     opacity: 0;
@@ -882,6 +984,41 @@ a {
 
 .expedition-card-stage-idle .expedition-card-back {
   animation: expedition-card-idle 2200ms ease-in-out infinite alternate;
+}
+
+.expedition-card-stage-idle.expedition-card-rarity-rare::before,
+.expedition-card-stage-result.expedition-card-rarity-rare::before {
+  animation: rarity-aura-breath-rare 3600ms ease-in-out infinite;
+}
+
+.expedition-card-stage-idle.expedition-card-rarity-epic::before,
+.expedition-card-stage-result.expedition-card-rarity-epic::before {
+  animation: rarity-aura-breath-epic 3200ms ease-in-out infinite;
+}
+
+.expedition-card-stage-idle.expedition-card-rarity-legendary::before,
+.expedition-card-stage-result.expedition-card-rarity-legendary::before {
+  animation: rarity-aura-breath-legendary 3000ms ease-in-out infinite;
+}
+
+.expedition-card-stage-idle.expedition-card-rarity-hidden::before,
+.expedition-card-stage-result.expedition-card-rarity-hidden::before {
+  animation: hidden-aura-drift 4200ms ease-in-out infinite;
+}
+
+.expedition-card-stage-idle.expedition-card-rarity-rare .expedition-card-back-glow,
+.expedition-card-stage-result.expedition-card-rarity-rare .expedition-card-front-glow {
+  animation: rarity-glow-breath-rare 3200ms ease-in-out infinite;
+}
+
+.expedition-card-stage-idle.expedition-card-rarity-epic .expedition-card-back-glow,
+.expedition-card-stage-result.expedition-card-rarity-epic .expedition-card-front-glow {
+  animation: rarity-glow-breath-epic 2800ms ease-in-out infinite;
+}
+
+.expedition-card-stage-idle.expedition-card-rarity-legendary .expedition-card-back-glow,
+.expedition-card-stage-result.expedition-card-rarity-legendary .expedition-card-front-glow {
+  animation: rarity-glow-breath-legendary 2600ms ease-in-out infinite;
 }
 
 .expedition-card-stage-revealing .expedition-card-back {
