@@ -81,11 +81,13 @@
 - mobile viewport 可用
 - 大標不溢出
 - 分類按鈕與卷軸 CTA 在圖資上仍可辨識
+- mobile 上 `先選遠征類型` 不可換行
 - 更換圖資後仍符合 safe-frame guide
 - disabled 或缺資料狀態可閱讀
 - 動畫不阻塞最終結果
 - charge-up、flip burst、settle pulse 在手機上仍可用
 - tall reveal card 在 desktop 與 mobile 都能正常解析
+- 卡片正面與背面文字在 mobile 縮放後仍可閱讀
 - 透明祭壇舞台不應蓋掉背景場景
 - reduced-motion 使用者仍能完成快速揭示
 - build 後本地 snapshot 仍可用
@@ -125,6 +127,7 @@ MVP 必須維持：
 - 功能實作期間不得直接 push 到 `main`
 - 驗證完成後再整理 git state
 - 保持 local git state 清楚、可理解
+- 本地驗證暫存如 `.playwright-cli/` 與 `output/playwright/` 不應混入正式同步
 
 ## 歷史工作文件
 

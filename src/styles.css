@@ -951,26 +951,23 @@ a {
   .central-altar {
     width: 100%;
     min-height: calc(100vh - 24px);
-    padding: 14px;
-    gap: 14px;
-  }
-
-  .title-block h1 {
-    font-size: clamp(2.5rem, 15vw, 4rem);
+    padding: 12px;
+    gap: 10px;
   }
 
   .hero-title {
+    font-size: clamp(2.15rem, 12.5vw, 3.4rem);
     gap: 16px;
   }
 
   .category-tabs {
     width: min(100%, 392px);
-    gap: 6px;
+    gap: 4px;
   }
 
   .location-status {
     width: min(100%, 396px);
-    padding: 10px 12px;
+    padding: 8px 10px;
     border-radius: 18px;
     flex-wrap: wrap;
     justify-content: center;
@@ -990,15 +987,21 @@ a {
     font-size: 0.75rem;
   }
 
+  .status-copy {
+    font-size: 0.84rem;
+  }
+
   .start-button {
-    width: min(100%, 396px);
+    width: min(100%, 384px);
     padding: 0 28px;
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   .start-button-label {
     top: 51%;
-    width: min(58%, 11ch);
+    width: min(60%, 12ch);
+    font-size: 0.92rem;
+    white-space: nowrap;
   }
 
   .action-row {
@@ -1008,7 +1011,32 @@ a {
 
   .expedition-card {
     width: 100%;
-    max-width: 360px;
+    max-width: 308px;
+  }
+
+  .expedition-card-back-copy,
+  .expedition-card-front-content {
+    padding: 28px 22px;
+  }
+
+  .expedition-card-back-title {
+    font-size: clamp(1.55rem, 6.2vw, 2rem);
+  }
+
+  .expedition-card-back-subcopy {
+    font-size: 0.82rem;
+  }
+
+  .expedition-card-kicker {
+    font-size: 0.78rem;
+  }
+
+  .expedition-card-front-content h2 {
+    font-size: clamp(1.75rem, 7.2vw, 2.35rem);
+  }
+
+  .expedition-card-subcopy {
+    font-size: 0.82rem;
   }
 
   .map-link,

@@ -653,6 +653,33 @@ Pack 代表一組在特定情境下可成立、可被玩、可被接受的內容
 - 想近一點
 - 想喝甜的
 
+### 背景試作資產
+
+背景試作圖不是正式 runtime asset，不可直接混入 `images/backgrounds/`。
+
+試作資產固定放在：
+
+`output/background-trials/<city>-<district>/`
+
+檔名固定用英文 kebab-case：
+
+`background-<city>-<district>-<weather>-<landmark>-<stage>-<version>.webp`
+
+例如：
+
+- `background-taipei-zhongshan-thunderstorm-xingtian-temple-trial-v3.webp`
+
+欄位原則：
+
+- `city`：城市英文 slug，例如 `taipei`
+- `district`：行政區英文 slug，例如 `zhongshan`
+- `weather`：天氣英文 slug，例如 `clear-cloudy` / `rain` / `thunderstorm`
+- `landmark`：地標英文 slug，例如 `xingtian-temple`
+- `stage`：`trial` 或 `final`
+- `version`：`v1`、`v2`、`v3`
+
+Playwright 預覽圖屬於本地驗證產物，固定放在 `output/playwright/`，不作為正式產品資產。
+
 ## 技術實作注意事項
 
 - 所有核心物件要有穩定 id
