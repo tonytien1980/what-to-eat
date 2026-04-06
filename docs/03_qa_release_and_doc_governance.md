@@ -82,6 +82,10 @@
 - 大標不溢出
 - 分類按鈕與卷軸 CTA 在圖資上仍可辨識
 - mobile 上 `先選遠征類型` 不可換行
+- 正式背景圖只保留 `webp`
+- trial / master / preview 圖不得混入正式 runtime 背景目錄
+- 正式背景單張目標大小應落在 `150 KB - 350 KB`
+- 正式背景單張不得超過 `500 KB`
 - 更換圖資後仍符合 safe-frame guide
 - disabled 或缺資料狀態可閱讀
 - 動畫不阻塞最終結果
@@ -92,6 +96,9 @@
 - tall reveal card 在 desktop 與 mobile 都能正常解析
 - 卡片正面與背面文字在 mobile 縮放後仍可閱讀
 - 透明祭壇舞台不應蓋掉背景場景
+- 中文 `city / district` 必須能經由背景 manifest 正確對到英文 slug 圖檔
+- 同區多景點時，只能從目前天氣有正式圖的景點池中抽圖
+- district 級背景缺圖時，fallback 順序必須回退到 district 保底或既有共享奇幻背景
 - reduced-motion 使用者仍能完成快速揭示
 - build 後本地 snapshot 仍可用
 - `npm run data:import` 後 sheet source 與 fallback snapshot 維持一致

@@ -680,6 +680,137 @@ Pack 代表一組在特定情境下可成立、可被玩、可被接受的內容
 
 Playwright 預覽圖屬於本地驗證產物，固定放在 `output/playwright/`，不作為正式產品資產。
 
+### 背景正式資產規格
+
+正式背景圖只保留 web 交付版本，不保留中間實驗格式。
+
+正式規則：
+
+- runtime 背景正式格式固定為 `webp`
+- `png` 只允許作為本地中間實驗檔，不進正式 runtime
+- trial 圖可先用較大的暫存檔，但正式上線圖必須另做 web 最適化
+- 背景生成的預設畫布固定為 `1536x1024`
+- 正式 runtime 背景目標大小為 `150 KB - 350 KB`
+- 正式 runtime 背景硬上限為 `500 KB`
+
+品質分層：
+
+- `trial`：`low`
+- `final background`：`medium`
+- `high` 只保留給少數宣傳級主視覺，不是背景圖預設
+
+### 背景 manifest 與中英對應規則
+
+使用者可見資料與資料層欄位維持中文，不要求把產品層地名改成英文。
+
+正式策略：
+
+- UI 顯示：中文
+- 資料欄位：中文內容值
+- 圖檔檔名：英文 slug
+- runtime 對應：由背景 manifest 負責，不可在 runtime 直接硬猜拼音
+
+也就是：
+
+- `臺北市` 不直接在 runtime 拼成 `taipei`
+- `中山區` 不直接在 runtime 拼成 `zhongshan`
+- `行天宮` 不直接在 runtime 拼成 `xingtian-temple`
+
+而是由 manifest 明確對應：
+
+```json
+{
+  "臺北市": {
+    "中山區": {
+      "citySlug": "taipei",
+      "districtSlug": "zhongshan",
+      "landmarks": {
+        "xingtian-temple": {
+          "labelZh": "行天宮"
+        }
+      }
+    }
+  }
+}
+```
+
+天氣狀態則直接沿用既有英文 variant key：
+
+- `clear_cloudy`
+- `overcast`
+- `rain`
+- `heavy_rain`
+- `thunderstorm`
+- `dense_fog`
+- `freezing_fog`
+- `snow`
+
+背景檔名與中文資料層之間的唯一正式橋接層，就是 manifest。
+
+### 背景選圖流程
+
+背景選圖不可只靠檔名推算，應固定依以下順序：
+
+1. 先讀取目前位置的中文 `city / district`
+2. 再讀取目前天氣對應的英文 `variantKey`
+3. 以 `city / district` 查背景 manifest
+4. 取得該 district 在該 `variantKey` 下可用的地標池
+5. 從可用地標池中做隨機或加權隨機
+6. 回傳該圖檔的正式 runtime path
+
+### 同區多景點規則
+
+若一個行政區有多個景點，背景不是固定單圖，而是同區同天氣下的景點池。
+
+例如：
+
+- `臺北市 / 中山區 / thunderstorm`
+
+可對應：
+
+- `xingtian-temple`
+- `rongxing-garden`
+- `taipei-fine-arts-park`
+
+正式規則：
+
+- 只有「該天氣下有正式圖」的景點才能進入抽圖池
+- 預設先用均勻隨機
+- 若未來需要控制體感，可再加 `weight`
+
+建議結構：
+
+```json
+{
+  "臺北市": {
+    "中山區": {
+      "weatherPools": {
+        "thunderstorm": [
+          { "landmark": "xingtian-temple", "weight": 5 },
+          { "landmark": "rongxing-garden", "weight": 3 },
+          { "landmark": "taipei-fine-arts-park", "weight": 2 }
+        ]
+      }
+    }
+  }
+}
+```
+
+### 背景 fallback 順序
+
+背景選圖不能因缺圖而中斷首頁。
+
+正式 fallback 順序固定為：
+
+1. `city + district + weather` 的正式背景池
+2. 同 `city + district` 的保底背景
+3. 既有共享奇幻天氣背景 `images/backgrounds/manifest.json`
+
+也就是說：
+
+- district 級背景若尚未做滿，不得造成首頁空白
+- location-aware 背景庫仍未完整前，舊的共享奇幻背景是正式保底層
+
 ## 技術實作注意事項
 
 - 所有核心物件要有穩定 id
