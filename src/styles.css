@@ -360,6 +360,7 @@ a {
   top: 50.5%;
   width: min(56%, 12ch);
   text-align: center;
+  white-space: nowrap;
   transform: translate(-50%, -50%);
 }
 
@@ -1188,7 +1189,6 @@ a {
     top: 51%;
     width: min(60%, 12ch);
     font-size: 0.92rem;
-    white-space: nowrap;
   }
 
   .action-row {

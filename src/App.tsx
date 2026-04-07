@@ -89,7 +89,7 @@ export default function App() {
       : `降雨 ${snapshot.currentPeriod.pop}% · ${getComfortCopy(snapshot.currentPeriod.comfort)}`;
 
   const startButtonLabel =
-    activeCategory === null ? '你準備好了嗎？' : '決定今日命運';
+    activeCategory === null ? '準備好了嗎？' : '決定今日命運';
 
   return (
     <main className="app-shell">
@@ -159,7 +159,7 @@ export default function App() {
           <p className="status-copy">
             {activeCategory
               ? getCategorySummary(activeCategory, activeCategoryCount)
-              : '請先選擇冒險目的'}
+              : '請先選擇冒險方向'}
           </p>
 
           <button
