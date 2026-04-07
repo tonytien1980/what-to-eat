@@ -86,6 +86,8 @@
 - trial / master / preview 圖不得混入正式 runtime 背景目錄
 - 正式背景單張目標大小應落在 `150 KB - 350 KB`
 - 正式背景單張不得超過 `500 KB`
+- 已核准的 `trial-low` 升階到 `final-medium` 時，不可直接重新 `generate`
+- `final-medium` 必須能追溯到對應的 `lock-master` 與 `edit` 升階流程
 - 更換圖資後仍符合 safe-frame guide
 - disabled 或缺資料狀態可閱讀
 - 動畫不阻塞最終結果
@@ -99,6 +101,7 @@
 - 中文 `city / district` 必須能經由背景 manifest 正確對到英文 slug 圖檔
 - 同區多景點時，只能從目前天氣有正式圖的景點池中抽圖
 - district 級背景缺圖時，fallback 順序必須回退到 district 保底或既有共享奇幻背景
+- 同一地標的多天氣正式圖，不可在建築主體上出現明顯漂移
 - reduced-motion 使用者仍能完成快速揭示
 - build 後本地 snapshot 仍可用
 - `npm run data:import` 後 sheet source 與 fallback snapshot 維持一致

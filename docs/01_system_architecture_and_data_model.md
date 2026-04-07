@@ -699,6 +699,15 @@ Playwright 預覽圖屬於本地驗證產物，固定放在 `output/playwright/`
 - `final background`：`medium`
 - `high` 只保留給少數宣傳級主視覺，不是背景圖預設
 
+升階規則：
+
+- `trial-low` 的角色是確認地標、構圖、氣氛與裁切安全區
+- 一旦某張 `trial-low` 被接受，必須先明確指定它是 `lock-master`
+- `final-medium` 不可直接用同一 prompt 重新 `generate`
+- `final-medium` 必須以已核准的 `trial-low` / `lock-master` 為輸入，走 `edit` 升階
+- `edit` 指令必須明確要求：`keep architecture unchanged`、`keep composition unchanged`、`change only weather / detail / polish`
+- 正式流程應視為：`trial-low -> lock-master -> final-medium-edit -> runtime-webp`
+
 ### 背景 manifest 與中英對應規則
 
 使用者可見資料與資料層欄位維持中文，不要求把產品層地名改成英文。
