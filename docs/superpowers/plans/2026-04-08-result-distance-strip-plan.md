@@ -4,7 +4,7 @@
 
 **Goal:** 在翻牌結果下方新增按需定位的距離資訊列，並以現有 `lat / lng` 顯示遠征地與玩家的大約直線距離。
 
-**Architecture:** 保持現有 `city / district` location-aware 流程不變，新增一層 session-only 的 browser geolocation hook 來取得玩家座標，並在結果 UI 下方渲染輕量距離 strip。距離運算以純函式封裝，UI 只吃狀態與文案。
+**Architecture:** 保持現有 `city / district` location-aware 流程不變，新增 browser geolocation hook 與 localStorage 記憶層來取得並保存玩家座標，並在結果 UI 下方渲染輕量距離 strip。距離運算以純函式封裝，UI 只吃狀態與文案。
 
 **Tech Stack:** React, TypeScript, Vitest, Testing Library, browser geolocation API
 

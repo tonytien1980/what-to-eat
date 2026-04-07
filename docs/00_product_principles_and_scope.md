@@ -169,6 +169,7 @@
 - 上述 `geolocation / IP fallback` 指的是首頁 detect-first 流程
 - 結果階段允許玩家主動觸發 browser geolocation，用來顯示遠征地距離
 - 這個距離提示不能變成首頁 first paint 的阻塞式設定
+- 一旦玩家在距離提示中成功授權，網站應本地記住最近一次可用座標，避免 refresh 後再次要求
 
 ### 第一版非目標
 

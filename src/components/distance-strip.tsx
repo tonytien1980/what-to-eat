@@ -1,5 +1,5 @@
 interface DistanceStripProps {
-  status: 'idle' | 'requesting' | 'ready' | 'unsupported' | 'unavailable';
+  status: 'idle' | 'requesting' | 'ready' | 'unsupported' | 'denied' | 'unavailable';
   label: string;
   onRequest: () => void;
 }
@@ -11,7 +11,7 @@ export function DistanceStrip({
 }: DistanceStripProps) {
   return (
     <div className="distance-strip" aria-live="polite">
-      {status === 'idle' || status === 'unavailable' ? (
+      {status === 'idle' || status === 'denied' || status === 'unavailable' ? (
         <button
           className="distance-strip-trigger"
           type="button"
