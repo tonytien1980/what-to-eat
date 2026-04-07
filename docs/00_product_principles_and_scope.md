@@ -225,6 +225,7 @@
 - `images/backgrounds/shared/` 保留既有共享奇幻背景作為正式 fallback
 - 台北市中山區 / 行天宮六種正式天氣背景已納入正式背景庫
 - 台北市中山區 / 美麗華百樂園摩天輪六種正式天氣背景已納入正式背景庫
+- 台北市中山區 / 台北市立美術館六種正式天氣背景已納入正式背景庫
 - 同天候多場景輪替
 - RestaurantRecord 與 fallback snapshot 已擴充 `city` / `district`
 - location-aware 候選池已啟用

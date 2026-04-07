@@ -161,6 +161,14 @@ test('uses the live Zhongshan weather pool to randomize between shipped district
       district: '中山區',
     },
     period: thunderstormPeriod,
+    randomValue: 0.5,
+  });
+  const fineArtsPick = resolveBackgroundSelection({
+    location: {
+      city: '臺北市',
+      district: '中山區',
+    },
+    period: thunderstormPeriod,
     randomValue: 0.9,
   });
 
@@ -171,5 +179,9 @@ test('uses the live Zhongshan weather pool to randomize between shipped district
   expect(miramarPick.source).toBe('district');
   expect(miramarPick.assetPath).toBe(
     'taipei/zhongshan/background-taipei-zhongshan-thunderstorm-miramar-ferris-wheel.webp',
+  );
+  expect(fineArtsPick.source).toBe('district');
+  expect(fineArtsPick.assetPath).toBe(
+    'taipei/zhongshan/background-taipei-zhongshan-thunderstorm-taipei-fine-arts-museum.webp',
   );
 });

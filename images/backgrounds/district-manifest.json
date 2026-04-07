@@ -52,6 +52,18 @@
                 "thunderstorm": "taipei/zhongshan/background-taipei-zhongshan-thunderstorm-miramar-ferris-wheel.webp",
                 "dense_fog": "taipei/zhongshan/background-taipei-zhongshan-dense-fog-miramar-ferris-wheel.webp"
               }
+            },
+            "taipei-fine-arts-museum": {
+              "label_zh": "台北市立美術館",
+              "weight": 1,
+              "variants": {
+                "clear_cloudy": "taipei/zhongshan/background-taipei-zhongshan-clear-cloudy-taipei-fine-arts-museum.webp",
+                "overcast": "taipei/zhongshan/background-taipei-zhongshan-overcast-taipei-fine-arts-museum.webp",
+                "rain": "taipei/zhongshan/background-taipei-zhongshan-rain-taipei-fine-arts-museum.webp",
+                "heavy_rain": "taipei/zhongshan/background-taipei-zhongshan-heavy-rain-taipei-fine-arts-museum.webp",
+                "thunderstorm": "taipei/zhongshan/background-taipei-zhongshan-thunderstorm-taipei-fine-arts-museum.webp",
+                "dense_fog": "taipei/zhongshan/background-taipei-zhongshan-dense-fog-taipei-fine-arts-museum.webp"
+              }
             }
           },
           "weather_pools": {
@@ -63,6 +75,10 @@
               {
                 "landmark": "miramar-ferris-wheel",
                 "weight": 1
+              },
+              {
+                "landmark": "taipei-fine-arts-museum",
+                "weight": 1
               }
             ],
             "overcast": [
@@ -72,6 +88,10 @@
               },
               {
                 "landmark": "miramar-ferris-wheel",
+                "weight": 1
+              },
+              {
+                "landmark": "taipei-fine-arts-museum",
                 "weight": 1
               }
             ],
@@ -83,6 +103,10 @@
               {
                 "landmark": "miramar-ferris-wheel",
                 "weight": 1
+              },
+              {
+                "landmark": "taipei-fine-arts-museum",
+                "weight": 1
               }
             ],
             "heavy_rain": [
@@ -92,6 +116,10 @@
               },
               {
                 "landmark": "miramar-ferris-wheel",
+                "weight": 1
+              },
+              {
+                "landmark": "taipei-fine-arts-museum",
                 "weight": 1
               }
             ],
@@ -103,6 +131,10 @@
               {
                 "landmark": "miramar-ferris-wheel",
                 "weight": 1
+              },
+              {
+                "landmark": "taipei-fine-arts-museum",
+                "weight": 1
               }
             ],
             "dense_fog": [
@@ -112,6 +144,10 @@
               },
               {
                 "landmark": "miramar-ferris-wheel",
+                "weight": 1
+              },
+              {
+                "landmark": "taipei-fine-arts-museum",
                 "weight": 1
               }
             ]
