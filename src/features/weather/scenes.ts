@@ -1,4 +1,4 @@
-import rawManifest from '../../../images/backgrounds/manifest.json';
+import rawManifest from '../../../images/backgrounds/shared-manifest.json';
 import type {
   ActiveSceneSelection,
   CwaForecastPeriod,
@@ -6,7 +6,7 @@ import type {
   SceneVariantKey,
 } from './types';
 
-const backgroundModules = import.meta.glob('../../../images/backgrounds/**/*.webp', {
+const backgroundModules = import.meta.glob('../../../images/backgrounds/shared/**/*.webp', {
   eager: true,
   import: 'default',
 }) as Record<string, string>;
@@ -45,7 +45,7 @@ const timeLabelMap = {
 } as const;
 
 function resolveBackgroundFile(relativePath: string) {
-  return backgroundModules[`../../../images/backgrounds/${relativePath}`];
+  return backgroundModules[`../../../images/backgrounds/shared/${relativePath}`];
 }
 
 function normalizeRandomValue(randomValue: number) {
@@ -148,7 +148,7 @@ export function getSceneAsset(
   const assetCandidates = Object.entries(backgroundModules)
     .filter(([modulePath]) =>
       new RegExp(
-        `^\\.\\.\\/\\.\\.\\/\\.\\.\\/images/backgrounds/${sceneKey}/${targetBaseName.split('/').pop()!}(?:[-_][^/]+)?\\.webp$`,
+        `^\\.\\.\\/\\.\\.\\/\\.\\.\\/images/backgrounds/shared/${sceneKey}/${targetBaseName.split('/').pop()!}(?:[-_][^/]+)?\\.webp$`,
       ).test(modulePath),
     )
     .map(([, assetUrl]) => assetUrl)
@@ -184,9 +184,16 @@ export function resolveSceneSelection(
     variantKey,
     variantLabel: label,
     imageUrl: getSceneAsset(sceneKey, variantKey, randomValue),
+    assetPath: `shared/${
+      variantKey !== 'default' && scene.variants[variantKey]
+        ? scene.variants[variantKey]!.file
+        : scene.default
+    }`,
   };
 }
 
 export function getAltarSceneAsset() {
   return getSceneAsset('crystal_cavern', 'default');
 }
+
+export const resolveSharedSceneSelection = resolveSceneSelection;

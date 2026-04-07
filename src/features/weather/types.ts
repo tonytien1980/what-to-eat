@@ -34,6 +34,7 @@ export interface ActiveSceneSelection {
   variantKey: SceneVariantKey;
   variantLabel: string;
   imageUrl: string;
+  assetPath?: string;
 }
 
 export interface TaipeiWeatherSnapshot {

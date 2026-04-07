@@ -96,6 +96,8 @@
 - 兩行壓縮後的天氣資訊
 - 清楚可見的全場景背景
 - 同天候下可於多張相容背景之間輪替
+- 若目前行政區在 `images/backgrounds/<city>/<district>/` 有正式圖，背景優先從同區同天氣的可用景點池中抽一張
+- 若目前行政區尚無正式圖，背景回退到 `images/backgrounds/shared/` 的共享奇幻場景
 - 使用 `images/notice/` 的奇幻分類按鈕
 - 首次載入預設不選任何類型
 - 使用 `images/scrolls/` 的單一主 CTA
@@ -271,6 +273,13 @@ final 第一批固定天氣：
 - `heavy-rain`
 - `thunderstorm`
 - `dense-fog`
+
+### 背景 runtime 規則
+
+- 正式背景 runtime 路徑固定為 `images/backgrounds/<city>/<district>/`
+- `scene-line` 以「目前遠征地 + 當前背景地標 + 天氣狀態」組成
+- 同一行政區若同一種天氣下有多張正式景點圖，應從該天氣可用景點池中隨機抽取
+- 未命中 district 級正式圖時，回退到 `images/backgrounds/shared/` 的共享奇幻背景
 
 ### Rarity Glow Rules
 

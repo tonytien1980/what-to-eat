@@ -665,9 +665,17 @@ Pack 代表一組在特定情境下可成立、可被玩、可被接受的內容
 
 `output/background-finals/<city>-<district>/`
 
-最終給網站使用的 web 最適化版本固定放在：
+給網站匯入前的 web 最適化導出固定放在：
 
 `output/background-runtime/<city>-<district>/`
+
+正式網站 runtime 背景固定放在：
+
+`images/backgrounds/<city>/<district>/`
+
+既有共享奇幻 fallback 固定放在：
+
+`images/backgrounds/shared/<scene>/`
 
 檔名固定用英文 kebab-case。
 
@@ -692,6 +700,23 @@ final 與 runtime 的 canonical 檔名：
 - `landmark`：地標英文 slug，例如 `xingtian-temple`
 - `trial` 才帶版本，例如 `v1`、`v2`、`v5`
 - `final` 與 `runtime` 不帶版本尾巴，檔名固定為 canonical 名稱
+
+正式資料夾結構範例：
+
+```text
+images/
+  backgrounds/
+    shared/
+      forest_ruins/
+      floating_isles/
+      desert_oasis/
+      crystal_cavern/
+    taipei/
+      zhongshan/
+        background-taipei-zhongshan-clear-cloudy-xingtian-temple.webp
+        background-taipei-zhongshan-overcast-xingtian-temple.webp
+        ...
+```
 
 Playwright 預覽圖屬於本地驗證產物，固定放在 `output/playwright/`，不作為正式產品資產。
 
@@ -723,8 +748,9 @@ Playwright 預覽圖屬於本地驗證產物，固定放在 `output/playwright/`
 - `edit` 指令必須明確要求：`keep architecture unchanged`、`keep composition unchanged`、`change only weather / detail / polish`
 - 正式流程應視為：`trial-low -> lock-master -> final-medium-edit -> runtime-webp`
 - `final-medium` 的輸出目錄是 `output/background-finals/<city>-<district>/`
-- `runtime-webp` 的輸出目錄是 `output/background-runtime/<city>-<district>/`
-- `final-medium` 與 `runtime-webp` 的檔名都固定使用 canonical 名稱，不帶版本尾巴
+- `runtime-webp` 的導出目錄是 `output/background-runtime/<city>-<district>/`
+- 正式網站讀取目錄是 `images/backgrounds/<city>/<district>/`
+- `final-medium` 與正式 `runtime-webp` 的檔名都固定使用 canonical 名稱，不帶版本尾巴
 
 ### 背景 manifest 與中英對應規則
 
@@ -773,6 +799,14 @@ Playwright 預覽圖屬於本地驗證產物，固定放在 `output/playwright/`
 - `snow`
 
 背景檔名與中文資料層之間的唯一正式橋接層，就是 manifest。
+
+目前正式使用兩份 manifest：
+
+- `images/backgrounds/district-manifest.json`
+  - 管理中文 `city / district` 到英文 slug 背景路徑的對應
+  - 管理 district 級 `weather_pools`
+- `images/backgrounds/shared-manifest.json`
+  - 管理共享奇幻 fallback 背景與 CWA Wx variant 對應
 
 ### 背景選圖流程
 
@@ -830,8 +864,7 @@ Playwright 預覽圖屬於本地驗證產物，固定放在 `output/playwright/`
 正式 fallback 順序固定為：
 
 1. `city + district + weather` 的正式背景池
-2. 同 `city + district` 的保底背景
-3. 既有共享奇幻天氣背景 `images/backgrounds/manifest.json`
+2. 既有共享奇幻天氣背景 `images/backgrounds/shared-manifest.json`
 
 也就是說：
 

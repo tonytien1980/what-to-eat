@@ -84,6 +84,8 @@
 - mobile 上 `先選遠征類型` 不可換行
 - 正式背景圖只保留 `webp`
 - trial / master / preview 圖不得混入正式 runtime 背景目錄
+- 正式網站讀取的 district 背景必須落在 `images/backgrounds/<city>/<district>/`
+- 共享 fallback 背景必須落在 `images/backgrounds/shared/`
 - 正式背景單張目標大小應落在 `150 KB - 350 KB`
 - 正式背景單張不得超過 `500 KB`
 - 已核准的 `trial-low` 升階到 `final-medium` 時，不可直接重新 `generate`
@@ -100,7 +102,7 @@
 - 透明祭壇舞台不應蓋掉背景場景
 - 中文 `city / district` 必須能經由背景 manifest 正確對到英文 slug 圖檔
 - 同區多景點時，只能從目前天氣有正式圖的景點池中抽圖
-- district 級背景缺圖時，fallback 順序必須回退到 district 保底或既有共享奇幻背景
+- district 級背景缺圖時，fallback 順序必須回退到 `images/backgrounds/shared/` 既有共享奇幻背景
 - 同一地標的多天氣正式圖，不可在建築主體上出現明顯漂移
 - reduced-motion 使用者仍能完成快速揭示
 - build 後本地 snapshot 仍可用

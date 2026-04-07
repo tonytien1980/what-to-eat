@@ -221,6 +221,9 @@
 - 全場景背景 + 極簡命運祭壇首頁
 - GitHub Pages 自動部署
 - 固定讀取中央氣象署台北市中山區資料
+- 背景圖 runtime 已改為 `images/backgrounds/<city>/<district>/` 的 location-aware 路徑
+- `images/backgrounds/shared/` 保留既有共享奇幻背景作為正式 fallback
+- 台北市中山區 / 行天宮六種正式天氣背景已納入正式背景庫
 - 同天候多場景輪替
 - RestaurantRecord 與 fallback snapshot 已擴充 `city` / `district`
 - location-aware 候選池已啟用

@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "base_path": "output/backgrounds",
-  "naming_convention": "<scene>/<variant>.webp",
+  "base_path": "images/backgrounds/shared",
+  "naming_convention": "shared/<scene>/<variant>.webp",
   "cwa_notes": {
     "clear_cloudy": "Mostly mapped from CWA Wx 1-5",
     "overcast": "Mostly mapped from CWA Wx 6-7",

@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { uiOrnaments } from './assets/ui-ornaments';
 import { DestinyCardView } from './components/destiny-card-view';
 import { LocationSheet } from './components/location-sheet';
 import { LocationStatus } from './components/location-status';
+import { resolveBackgroundSelection } from './features/backgrounds/selector';
 import { useLocationPreference } from './features/location/use-location-preference';
 import { categories } from './features/restaurants/data';
 import { getLocationAwareCandidatePool } from './features/restaurants/selectors';
@@ -19,8 +20,17 @@ import { useTaipeiWeather } from './features/weather/useTaipeiWeather';
 import type { Category } from './features/restaurants/types';
 import './styles.css';
 
+function createBackgroundSeed() {
+  if (typeof crypto !== 'undefined' && typeof crypto.getRandomValues === 'function') {
+    return crypto.getRandomValues(new Uint32Array(1))[0] / 4294967296;
+  }
+
+  return (Date.now() % 1000) / 1000;
+}
+
 export default function App() {
   const [activeCategory, setActiveCategory] = useState<Category | null>(null);
+  const [backgroundSeed] = useState(createBackgroundSeed);
   const restaurantCatalog = useRestaurantCatalog();
   const locationPreference = useLocationPreference(restaurantCatalog.restaurants);
   const {
@@ -38,6 +48,22 @@ export default function App() {
     locationPreference.currentLocation,
   );
   const { snapshot } = useTaipeiWeather();
+  const backgroundSelection = useMemo(
+    () =>
+      resolveBackgroundSelection({
+        location: locationPreference.currentLocation,
+        period: snapshot.currentPeriod,
+        randomValue: backgroundSeed,
+      }),
+    [
+      backgroundSeed,
+      locationPreference.currentLocation.city,
+      locationPreference.currentLocation.district,
+      snapshot.currentPeriod.wxCode,
+      snapshot.currentPeriod.highTemp,
+      snapshot.currentPeriod.lowTemp,
+    ],
+  );
   const rerollCopy = getRerollCopy(rerollsRemaining);
   const categoryLabel = activeCategory ? getCategoryLabel(activeCategory) : '';
   const activeCategoryCount = activeCategory
@@ -47,7 +73,7 @@ export default function App() {
         locationPreference.currentLocation,
       ).length
     : 0;
-  const weatherSceneLine = `${snapshot.cityName} · ${snapshot.activeScene.sceneLabel} · ${snapshot.activeScene.variantLabel}`;
+  const weatherSceneLine = `${locationPreference.currentLocationLabel} · ${backgroundSelection.sceneLabel} · ${backgroundSelection.variantLabel}`;
   const weatherPrimaryLine =
     snapshot.currentPeriod.currentTemp !== undefined
       ? `${snapshot.currentPeriod.weatherText} · 現在 ${snapshot.currentPeriod.currentTemp}°`
@@ -64,7 +90,7 @@ export default function App() {
     <main className="app-shell">
       <div
         className="scene-surface"
-        style={{ backgroundImage: `url(${snapshot.activeScene.imageUrl})` }}
+        style={{ backgroundImage: `url(${backgroundSelection.imageUrl})` }}
       >
         <div className="scene-vignette" />
         <section className="central-altar" aria-label="今日遠征告示牌">

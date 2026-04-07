@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "base_path": "images/backgrounds",
+  "runtime_structure": "<city>/<district>/background-<city>-<district>-<weather>-<landmark>.webp",
+  "variants": {
+    "clear_cloudy": {
+      "label_zh": "晴到多雲"
+    },
+    "overcast": {
+      "label_zh": "陰天"
+    },
+    "rain": {
+      "label_zh": "雨天"
+    },
+    "heavy_rain": {
+      "label_zh": "豪雨"
+    },
+    "thunderstorm": {
+      "label_zh": "雷雨"
+    },
+    "dense_fog": {
+      "label_zh": "濃霧"
+    }
+  },
+  "cities": {
+    "臺北市": {
+      "slug": "taipei",
+      "districts": {
+        "中山區": {
+          "slug": "zhongshan",
+          "landmarks": {
+            "xingtian-temple": {
+              "label_zh": "行天宮",
+              "weight": 1,
+              "variants": {
+                "clear_cloudy": "taipei/zhongshan/background-taipei-zhongshan-clear-cloudy-xingtian-temple.webp",
+                "overcast": "taipei/zhongshan/background-taipei-zhongshan-overcast-xingtian-temple.webp",
+                "rain": "taipei/zhongshan/background-taipei-zhongshan-rain-xingtian-temple.webp",
+                "heavy_rain": "taipei/zhongshan/background-taipei-zhongshan-heavy-rain-xingtian-temple.webp",
+                "thunderstorm": "taipei/zhongshan/background-taipei-zhongshan-thunderstorm-xingtian-temple.webp",
+                "dense_fog": "taipei/zhongshan/background-taipei-zhongshan-dense-fog-xingtian-temple.webp"
+              }
+            }
+          },
+          "weather_pools": {
+            "clear_cloudy": [
+              {
+                "landmark": "xingtian-temple",
+                "weight": 1
+              }
+            ],
+            "overcast": [
+              {
+                "landmark": "xingtian-temple",
+                "weight": 1
+              }
+            ],
+            "rain": [
+              {
+                "landmark": "xingtian-temple",
+                "weight": 1
+              }
+            ],
+            "heavy_rain": [
+              {
+                "landmark": "xingtian-temple",
+                "weight": 1
+              }
+            ],
+            "thunderstorm": [
+              {
+                "landmark": "xingtian-temple",
+                "weight": 1
+              }
+            ],
+            "dense_fog": [
+              {
+                "landmark": "xingtian-temple",
+                "weight": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
