@@ -54,7 +54,7 @@
 - 中山區天氣可載入並影響場景選擇
 - 若官方天氣資料失敗，fallback weather 仍可顯示
 - 重新整理頁面時，同天候可輪替到其他相容場景
-- 首頁需顯示 `預計冒險地 3 小時預報`
+- 首頁需顯示 `預計冒險地 3 小時天氣預報`
 
 ## Active Capability Checks: Location-Aware Phase 1
 

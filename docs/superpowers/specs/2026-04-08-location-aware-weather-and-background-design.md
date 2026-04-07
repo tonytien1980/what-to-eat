@@ -7,9 +7,9 @@
 ## Approved Behavior
 
 - 首頁天氣資料改為依 `currentLocation.city + currentLocation.district` 決定
-- 若該行政區有對應的 CWA 鄉鎮 3 小時預報 mapping，直接載入該區官方資料
+- 若該行政區有對應的 CWA 鄉鎮 3 小時天氣預報 mapping，直接載入該區官方資料
 - 若該行政區暫時沒有 CWA mapping，退回本地 fallback weather snapshot
-- 首頁僅顯示簡短來源標示 `3 小時預報`
+- 首頁僅顯示簡短來源標示 `3 小時天氣預報`
 - 不在 UI 上額外顯示 `中央氣象署` 或行政區來源說明
 
 ## Background Rules
@@ -23,7 +23,7 @@
 ### This round
 
 - location-aware weather lookup
-- UI 顯示 `3 小時預報`
+- UI 顯示 `3 小時天氣預報`
 - weather hook 跟 currentLocation 同步
 - docs / tests / deployment sync
 

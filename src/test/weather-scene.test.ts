@@ -184,6 +184,6 @@ test('builds a town weather snapshot from the resolved location instead of hard-
   );
 
   expect(snapshot.cityName).toBe('臺北市中山區');
-  expect(snapshot.sourceLabel).toBe('3 小時預報');
+  expect(snapshot.sourceLabel).toBe('3 小時天氣預報');
   expect(snapshot.currentPeriod.timeRange).toContain('中山區');
 });

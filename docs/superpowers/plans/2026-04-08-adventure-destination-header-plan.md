@@ -20,7 +20,7 @@
 Add assertions for:
 - `預計冒險地：臺北市中山區`
 - `更改預計冒險地`
-- `預計冒險地 3 小時預報`
+- `預計冒險地 3 小時天氣預報`
 
 - [ ] **Step 2: Assert the scene line no longer includes the city/district prefix**
 
@@ -53,7 +53,7 @@ Use:
 - [ ] **Step 3: Change forecast label**
 
 Use:
-- `預計冒險地 3 小時預報`
+- `預計冒險地 3 小時天氣預報`
 
 - [ ] **Step 4: Update sheet copy**
 

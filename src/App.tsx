@@ -110,7 +110,7 @@ export default function App() {
               triggerLabel={locationPreference.locationTriggerLabel}
               onOpen={locationPreference.openChooser}
             />
-            <p className="forecast-source-line">預計冒險地 3 小時預報</p>
+            <p className="forecast-source-line">預計冒險地 3 小時天氣預報</p>
             <div className="weather-lines">
               <p className="weather-line">{weatherPrimaryLine}</p>
               <p className="weather-line weather-line-soft">{weatherSecondaryLine}</p>

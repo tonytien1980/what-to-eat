@@ -12,7 +12,7 @@
 
 ## Tasks
 
-1. Add tests for location-aware weather mapping, current official town-script shape support, and the new `3 小時預報` UI label.
+1. Add tests for location-aware weather mapping, current official town-script shape support, and the new `3 小時天氣預報` UI label.
 2. Extend the weather module with reusable `city/district -> countyCode/townId` mapping and location-aware snapshot builders.
 3. Update the weather hook and app shell so weather follows `currentLocation`.
 4. Keep background selection district-aware, with district assets first and shared assets as fallback.

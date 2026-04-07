@@ -111,7 +111,7 @@
 
 ### 第一版範圍
 
-- 目前遠征地對應的 3 小時預報驅動場景
+- 目前遠征地對應的 3 小時天氣預報驅動場景
 - 單頁告示牌首頁
 - 類型選擇
 - 開啟今日遠征
@@ -232,7 +232,7 @@
 - 圖檔驅動的分類按鈕與主 CTA
 - 全場景背景 + 極簡命運祭壇首頁
 - GitHub Pages 自動部署
-- 目前遠征地若有 CWA 鄉鎮 mapping，讀取該行政區 3 小時預報
+- 目前遠征地若有 CWA 鄉鎮 mapping，讀取該行政區 3 小時天氣預報
 - 背景圖 runtime 已改為 `images/backgrounds/<city>/<district>/` 的 location-aware 路徑
 - `images/backgrounds/shared/` 保留既有共享奇幻背景作為正式 fallback
 - owner sheet 與 fallback snapshot 已補齊正式 `lat / lng`

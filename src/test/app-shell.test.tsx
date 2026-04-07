@@ -11,7 +11,7 @@ test('renders expedition board title and start button', () => {
   expect(screen.getByText('今天吃什麼')).toBeInTheDocument();
   expect(screen.getByText('命運遠征')).toBeInTheDocument();
   expect(screen.getByText((content) => content.includes('預計冒險地：臺北市中山區'))).toBeInTheDocument();
-  expect(screen.getByText('預計冒險地 3 小時預報')).toBeInTheDocument();
+  expect(screen.getByText('預計冒險地 3 小時天氣預報')).toBeInTheDocument();
   expect(screen.getByRole('button', { name: '更改預計冒險地' })).toBeInTheDocument();
   expect(screen.getByRole('button', { name: '先選遠征類型' })).toBeInTheDocument();
   expect(screen.getByText('請先選擇遠征類型')).toBeInTheDocument();

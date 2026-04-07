@@ -278,7 +278,7 @@ export function buildTownDistrictWeatherSnapshot(
   return {
     cityName: townLocation.label,
     issuedTime: dataset.issuedTime,
-    sourceLabel: '3 小時預報',
+    sourceLabel: '3 小時天氣預報',
     currentPeriod,
     upcomingPeriods,
     activeScene: resolveSceneSelection(currentPeriod, activeSceneSeed),
@@ -497,7 +497,7 @@ export function createFallbackTaipeiWeatherSnapshot(
   return {
     cityName: label,
     issuedTime: '預設模式',
-    sourceLabel: '3 小時預報',
+    sourceLabel: '3 小時天氣預報',
     currentPeriod,
     upcomingPeriods,
     activeScene: resolveSceneSelection(currentPeriod, activeSceneSeed),
