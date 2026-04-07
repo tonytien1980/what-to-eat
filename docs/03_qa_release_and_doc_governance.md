@@ -53,6 +53,7 @@
 - 中山區天氣可載入並影響場景選擇
 - 若官方天氣資料失敗，fallback weather 仍可顯示
 - 重新整理頁面時，同天候可輪替到其他相容場景
+- 首頁需顯示 `3 小時預報`
 
 ## Active Capability Checks: Location-Aware Phase 1
 
@@ -72,6 +73,8 @@
 - location-aware 新欄位不破壞命運卡、重抽、地圖跳轉與 GitHub Pages
 - Google Sheet runtime 主資料來源在 location-aware 模式下仍可運作
 - Google Sheet 失敗時 fallback snapshot 仍可維持 location-aware safe fallback
+- 若目前遠征地有 CWA 鄉鎮 mapping，首頁 weather 必須跟著該行政區切換
+- 若目前遠征地無正式背景圖，背景必須回退到 shared，而不是卡死在前一個行政區
 - Phase 1 不會偷偷啟用 geolocation / IP fallback
 - owner sheet 使用 `shop` / `maplink` / `city` / `district` 時，runtime loader 與 `npm run data:import` 都必須正常
 

@@ -1,10 +1,12 @@
 import {
   buildTaipeiWeatherSnapshot,
+  buildTownDistrictWeatherSnapshot,
   buildZhongshanDistrictWeatherSnapshot,
   extractCwaCountyScriptData,
   extractCwaTownScriptData,
   mapWxCodeToVariant,
   pickSceneForPeriod,
+  resolveCwaTownLocation,
 } from '../features/weather/cwa-county';
 
 const sampleScript = `
@@ -126,4 +128,41 @@ test('supports the current official town script shape where Wx sits beside C and
   expect(snapshot.currentPeriod.wxCode).toBe(8);
   expect(snapshot.currentPeriod.weatherText).toBe('短暫陣雨');
   expect(snapshot.activeScene.variantKey).toBe('rain');
+});
+
+test('resolves a current expedition location into a CWA town mapping', () => {
+  expect(
+    resolveCwaTownLocation({
+      city: '臺北市',
+      district: '中山區',
+    }),
+  ).toMatchObject({
+    city: '臺北市',
+    district: '中山區',
+    countyCode: '63',
+    townId: '6300400',
+  });
+});
+
+test('builds a town weather snapshot from the resolved location instead of hard-coded Zhongshan labels', () => {
+  const dataset = extractCwaTownScriptData({
+    threeHourScript: officialShapeTownThreeHourScript,
+    gt24hrScript: sampleTownGtScript,
+  });
+
+  const snapshot = buildTownDistrictWeatherSnapshot(
+    dataset,
+    {
+      city: '臺北市',
+      district: '中山區',
+      countyCode: '63',
+      townId: '6300400',
+      label: '臺北市中山區',
+    },
+    0,
+  );
+
+  expect(snapshot.cityName).toBe('臺北市中山區');
+  expect(snapshot.sourceLabel).toBe('3 小時預報');
+  expect(snapshot.currentPeriod.timeRange).toContain('中山區');
 });

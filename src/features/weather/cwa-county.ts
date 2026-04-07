@@ -5,18 +5,33 @@ import {
   resolveSceneSelection,
 } from './scenes';
 import type { CwaForecastPeriod, TaipeiWeatherSnapshot } from './types';
+import type { LocationPreference } from '../location/types';
 
 export { mapWxCodeToVariant, pickSceneForPeriod, getAltarSceneAsset };
 
 export const CWA_COUNTY_SCRIPT_URL =
   'https://www.cwa.gov.tw/Data/js/TableData_36hr_County_C.js?';
-export const CWA_TOWN_3HR_SCRIPT_URL =
-  'https://www.cwa.gov.tw/Data/js/3hr/ChartData_3hr_T_63.js';
-export const CWA_TOWN_GT24HR_SCRIPT_URL =
-  'https://www.cwa.gov.tw/Data/js/GT/ChartData_GT24hr_T_63.js';
 
 const TAIPEI_CITY_CODE = '63';
 const ZHONGSHAN_TOWN_ID = '6300400';
+
+interface CwaTownLocation {
+  city: string;
+  countyCode: string;
+  district: string;
+  label: string;
+  townId: string;
+}
+
+const CWA_TOWN_LOCATIONS: CwaTownLocation[] = [
+  {
+    city: '臺北市',
+    countyCode: '63',
+    district: '中山區',
+    label: '臺北市中山區',
+    townId: ZHONGSHAN_TOWN_ID,
+  },
+];
 
 interface RawForecastPeriod {
   TimeRange: string;
@@ -73,7 +88,7 @@ declare global {
 }
 
 let countyScriptPromise: Promise<CwaCountyDataset> | null = null;
-let townScriptPromise: Promise<CwaTownDataset> | null = null;
+const townScriptPromises = new Map<string, Promise<CwaTownDataset>>();
 
 function toForecastPeriod(period: RawForecastPeriod): CwaForecastPeriod {
   return {
@@ -111,6 +126,41 @@ function deriveComfortFromFeelsLike(feelsLikeTemp: number) {
   }
 
   return '炎熱';
+}
+
+function normalizePlaceName(value: string | null | undefined) {
+  const trimmed = value?.trim();
+
+  if (!trimmed) {
+    return null;
+  }
+
+  return trimmed.replace(/^台/u, '臺');
+}
+
+function createTownScriptUrl(kind: '3hr' | 'gt24hr', countyCode: string) {
+  if (kind === '3hr') {
+    return `https://www.cwa.gov.tw/Data/js/3hr/ChartData_3hr_T_${countyCode}.js`;
+  }
+
+  return `https://www.cwa.gov.tw/Data/js/GT/ChartData_GT24hr_T_${countyCode}.js`;
+}
+
+export function resolveCwaTownLocation(
+  location: Pick<LocationPreference, 'city' | 'district'> | null,
+) {
+  const city = normalizePlaceName(location?.city);
+  const district = normalizePlaceName(location?.district);
+
+  if (!city || !district) {
+    return null;
+  }
+
+  return (
+    CWA_TOWN_LOCATIONS.find(
+      (entry) => entry.city === city && entry.district === district,
+    ) ?? null
+  );
 }
 
 export function extractCwaCountyScriptData(scriptText: string): CwaCountyDataset {
@@ -187,11 +237,29 @@ export function buildZhongshanDistrictWeatherSnapshot(
   dataset: CwaTownDataset,
   activeSceneSeed = 0,
 ): TaipeiWeatherSnapshot {
-  const threeHourRecord = dataset.threeHour[ZHONGSHAN_TOWN_ID];
-  const gt24hrRecord = dataset.gt24hr[ZHONGSHAN_TOWN_ID];
+  return buildTownDistrictWeatherSnapshot(
+    dataset,
+    {
+      city: '臺北市',
+      district: '中山區',
+      countyCode: TAIPEI_CITY_CODE,
+      label: '臺北市中山區',
+      townId: ZHONGSHAN_TOWN_ID,
+    },
+    activeSceneSeed,
+  );
+}
+
+export function buildTownDistrictWeatherSnapshot(
+  dataset: CwaTownDataset,
+  townLocation: CwaTownLocation,
+  activeSceneSeed = 0,
+): TaipeiWeatherSnapshot {
+  const threeHourRecord = dataset.threeHour[townLocation.townId];
+  const gt24hrRecord = dataset.gt24hr[townLocation.townId];
 
   if (!threeHourRecord || !gt24hrRecord) {
-    throw new Error('Official CWA town dataset did not include Zhongshan District data.');
+    throw new Error(`Official CWA town dataset did not include ${townLocation.label} data.`);
   }
 
   const weatherEntries =
@@ -215,7 +283,7 @@ export function buildZhongshanDistrictWeatherSnapshot(
     gt24hrRecord.C.AT[gt24hrRecord.C.AT.length - 1] ?? threeHourRecord.C.AT[0];
 
   const currentPeriod: CwaForecastPeriod = {
-    timeRange: stripHtmlTags('中山區未來 24 小時'),
+    timeRange: stripHtmlTags(`${townLocation.district}未來 24 小時`),
     type: '3hr',
     lowTemp: Math.min(...nextDayTemps),
     highTemp: Math.max(...nextDayTemps),
@@ -233,7 +301,7 @@ export function buildZhongshanDistrictWeatherSnapshot(
     const periodFeelsLike = threeHourRecord.C.AT[tempIndex];
 
     return {
-      timeRange: stripHtmlTags(`中山區 ${tempIndex + 1} 小時後`),
+      timeRange: stripHtmlTags(`${townLocation.district} ${tempIndex + 1} 小時後`),
       type: '3hr' as const,
       lowTemp: periodTemp,
       highTemp: periodTemp,
@@ -247,9 +315,9 @@ export function buildZhongshanDistrictWeatherSnapshot(
   });
 
   return {
-    cityName: '臺北市中山區',
+    cityName: townLocation.label,
     issuedTime: dataset.issuedTime,
-    sourceLabel: '中央氣象署中山區 3 小時鄉鎮預報',
+    sourceLabel: '3 小時預報',
     currentPeriod,
     upcomingPeriods,
     activeScene: resolveSceneSelection(currentPeriod, activeSceneSeed),
@@ -276,13 +344,18 @@ function readTownGlobalsFromWindow() {
   }
 
   return {
-    issuedTime: '官方中山區鄉鎮預報',
+    issuedTime: '官方鄉鎮預報',
     threeHour: window.TempArray_3hr,
     gt24hr: window.TempArray_GT24hr,
   };
 }
 
-function loadScriptOnce(selector: string, url: string, dataAttributeName: string) {
+function loadScriptOnce(
+  selector: string,
+  url: string,
+  dataAttributeName: string,
+  dataAttributeValue = 'true',
+) {
   return new Promise<void>((resolve, reject) => {
     const existingScript = document.querySelector<HTMLScriptElement>(selector);
 
@@ -304,7 +377,7 @@ function loadScriptOnce(selector: string, url: string, dataAttributeName: string
     const script = document.createElement('script');
     script.src = url;
     script.async = true;
-    script.setAttribute(dataAttributeName, 'true');
+    script.setAttribute(dataAttributeName, dataAttributeValue);
     script.dataset.loaded = 'false';
     script.onload = () => {
       script.dataset.loaded = 'true';
@@ -367,43 +440,61 @@ export function loadCwaCountyDataset(): Promise<CwaCountyDataset> {
   return countyScriptPromise;
 }
 
-export async function loadTaipeiWeatherSnapshot(activeSceneSeed = Math.random()) {
-  const dataset = await loadCwaTownDataset();
-  return buildZhongshanDistrictWeatherSnapshot(dataset, activeSceneSeed);
+export async function loadTaipeiWeatherSnapshot(
+  location: Pick<LocationPreference, 'city' | 'district'> | null,
+  activeSceneSeed = Math.random(),
+) {
+  const townLocation = resolveCwaTownLocation(location);
+
+  if (!townLocation) {
+    return createFallbackTaipeiWeatherSnapshot(location, activeSceneSeed);
+  }
+
+  const dataset = await loadCwaTownDataset(townLocation.countyCode);
+  return buildTownDistrictWeatherSnapshot(dataset, townLocation, activeSceneSeed);
 }
 
-export function loadCwaTownDataset(): Promise<CwaTownDataset> {
+export function loadCwaTownDataset(countyCode: string): Promise<CwaTownDataset> {
   if (typeof window === 'undefined' || typeof document === 'undefined') {
     return Promise.reject(new Error('CWA town loader requires a browser environment.'));
   }
 
-  if (window.TempArray_3hr && window.TempArray_GT24hr) {
-    return Promise.resolve(readTownGlobalsFromWindow());
+  if (townScriptPromises.has(countyCode)) {
+    return townScriptPromises.get(countyCode)!;
   }
 
-  if (townScriptPromise) {
-    return townScriptPromise;
-  }
-
-  townScriptPromise = Promise.all([
+  const nextPromise = Promise.all([
     loadScriptOnce(
-      'script[data-cwa-town-3hr-script="true"]',
-      CWA_TOWN_3HR_SCRIPT_URL,
+      `script[data-cwa-town-3hr-script="${countyCode}"]`,
+      createTownScriptUrl('3hr', countyCode),
       'data-cwa-town-3hr-script',
+      countyCode,
     ),
     loadScriptOnce(
-      'script[data-cwa-town-gt24hr-script="true"]',
-      CWA_TOWN_GT24HR_SCRIPT_URL,
+      `script[data-cwa-town-gt24hr-script="${countyCode}"]`,
+      createTownScriptUrl('gt24hr', countyCode),
       'data-cwa-town-gt24hr-script',
+      countyCode,
     ),
   ]).then(() => readTownGlobalsFromWindow());
 
-  return townScriptPromise;
+  townScriptPromises.set(countyCode, nextPromise);
+
+  return nextPromise;
 }
 
-export function createFallbackTaipeiWeatherSnapshot(activeSceneSeed = 0): TaipeiWeatherSnapshot {
+export function createFallbackTaipeiWeatherSnapshot(
+  location: Pick<LocationPreference, 'city' | 'district'> | null = {
+    city: '臺北市',
+    district: '中山區',
+  },
+  activeSceneSeed = 0,
+): TaipeiWeatherSnapshot {
+  const city = normalizePlaceName(location?.city) ?? '臺北市';
+  const district = normalizePlaceName(location?.district) ?? '中山區';
+  const label = `${city}${district ? district : ''}`;
   const currentPeriod: CwaForecastPeriod = {
-    timeRange: '中山區未來 24 小時',
+    timeRange: `${district}未來 24 小時`,
     type: '3hr',
     lowTemp: 20,
     highTemp: 27,
@@ -417,7 +508,7 @@ export function createFallbackTaipeiWeatherSnapshot(activeSceneSeed = 0): Taipei
 
   const upcomingPeriods: CwaForecastPeriod[] = [
     {
-      timeRange: '中山區 2 小時後',
+      timeRange: `${district} 2 小時後`,
       type: '3hr',
       lowTemp: 23,
       highTemp: 23,
@@ -429,7 +520,7 @@ export function createFallbackTaipeiWeatherSnapshot(activeSceneSeed = 0): Taipei
       feelsLikeTemp: 25,
     },
     {
-      timeRange: '中山區 3 小時後',
+      timeRange: `${district} 3 小時後`,
       type: '3hr',
       lowTemp: 24,
       highTemp: 24,
@@ -443,9 +534,9 @@ export function createFallbackTaipeiWeatherSnapshot(activeSceneSeed = 0): Taipei
   ];
 
   return {
-    cityName: '臺北市中山區',
+    cityName: label,
     issuedTime: '預設模式',
-    sourceLabel: '中央氣象署中山區 3 小時鄉鎮預報',
+    sourceLabel: '3 小時預報',
     currentPeriod,
     upcomingPeriods,
     activeScene: resolveSceneSelection(currentPeriod, activeSceneSeed),

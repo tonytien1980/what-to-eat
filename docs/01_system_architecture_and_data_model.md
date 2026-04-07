@@ -138,7 +138,7 @@ MVP 採用靜態友善前端架構：
 ## 目前核心模組對照
 
 - `src/app/` 或目前 app shell：頂層流程與狀態
-- `src/features/weather/`：中央氣象署中山區資料、標準化與場景映射
+- `src/features/weather/`：依目前遠征地解析 CWA 鄉鎮預報、標準化與場景映射
 - `src/features/restaurants/`：資料載入、型別、過濾與隨機選取
 - `src/features/destiny/`：命運卡型別、定義與抽牌邏輯
 - `src/features/card-backs/`：卡背權重與稀有度資料
@@ -198,6 +198,8 @@ location-aware 方向已進入 Phase 1，但目前仍不是完整 detect-first r
 - 若有 saved location，first paint 直接使用
 - 若沒有 saved location，先使用 `臺北市中山區` 預設錨點
 - 使用者可透過輕量 chooser 覆蓋預設錨點
+- 若目前遠征地有 CWA 鄉鎮 mapping，首頁天氣跟著該行政區
+- 若目前遠征地沒有 CWA mapping，天氣安全回退到本地 fallback snapshot
 - Phase 1 不啟用 browser geolocation
 - Phase 1 不啟用 IP-based city guess
 
@@ -551,9 +553,9 @@ Pack 代表一組在特定情境下可成立、可被玩、可被接受的內容
 
 補充：
 
-- Phase 1 的 weather runtime 仍固定使用中山區天氣
-- 餐廳 location-aware 與 weather runtime 暫時解耦
-- 等 Phase 2 再決定是否把 weather 跟隨手動位置一起切換
+- Phase 1 的 weather runtime 已可跟隨目前遠征地，但仍只涵蓋已有 CWA mapping 的行政區
+- district 級背景與 weather 會一起使用目前遠征地
+- 無 district 正式背景圖時，背景回退到 `images/backgrounds/shared/`
 
 ## 啟用藍圖
 

@@ -47,7 +47,7 @@ export default function App() {
     restaurantCatalog.restaurants,
     locationPreference.currentLocation,
   );
-  const { snapshot } = useTaipeiWeather();
+  const { snapshot } = useTaipeiWeather(locationPreference.currentLocation);
   const backgroundSelection = useMemo(
     () =>
       resolveBackgroundSelection({
@@ -100,6 +100,7 @@ export default function App() {
               <span className="hero-title-line">命運遠征</span>
             </h1>
             <p className="scene-line">{weatherSceneLine}</p>
+            <p className="forecast-source-line">{snapshot.sourceLabel}</p>
             <div className="weather-lines">
               <p className="weather-line">{weatherPrimaryLine}</p>
               <p className="weather-line weather-line-soft">{weatherSecondaryLine}</p>

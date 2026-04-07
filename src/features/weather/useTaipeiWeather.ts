@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react';
+import type { LocationPreference } from '../location/types';
 import {
   createFallbackTaipeiWeatherSnapshot,
-  fallbackTaipeiWeatherSnapshot,
   loadTaipeiWeatherSnapshot,
 } from './cwa-county';
 import type { TaipeiWeatherSnapshot } from './types';
 
-export function useTaipeiWeather() {
+export function useTaipeiWeather(
+  location: Pick<LocationPreference, 'city' | 'district'> | null,
+) {
   const [snapshot, setSnapshot] = useState<TaipeiWeatherSnapshot>(() =>
     import.meta.env.MODE === 'test'
-      ? fallbackTaipeiWeatherSnapshot
-      : createFallbackTaipeiWeatherSnapshot(Math.random()),
+      ? createFallbackTaipeiWeatherSnapshot(location)
+      : createFallbackTaipeiWeatherSnapshot(location, Math.random()),
   );
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>(
     import.meta.env.MODE === 'test' ? 'ready' : 'loading',
@@ -22,8 +24,10 @@ export function useTaipeiWeather() {
     }
 
     let isCancelled = false;
+    setStatus('loading');
+    setSnapshot(createFallbackTaipeiWeatherSnapshot(location, Math.random()));
 
-    loadTaipeiWeatherSnapshot(Math.random())
+    loadTaipeiWeatherSnapshot(location, Math.random())
       .then((nextSnapshot) => {
         if (isCancelled) {
           return;
@@ -43,7 +47,7 @@ export function useTaipeiWeather() {
     return () => {
       isCancelled = true;
     };
-  }, []);
+  }, [location?.city, location?.district]);
 
   return {
     snapshot,
