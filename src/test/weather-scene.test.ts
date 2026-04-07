@@ -6,8 +6,8 @@ import {
   extractCwaTownScriptData,
   mapWxCodeToVariant,
   pickSceneForPeriod,
-  resolveCwaTownLocation,
 } from '../features/weather/cwa-county';
+import { cwaTownLocations, resolveCwaTownLocation } from '../features/weather/town-locations';
 
 const sampleScript = `
 var IssuedTime_36hr = '04/05 11:00';
@@ -141,6 +141,27 @@ test('resolves a current expedition location into a CWA town mapping', () => {
     district: '中山區',
     countyCode: '63',
     townId: '6300400',
+  });
+});
+
+test('keeps CWA town mappings in the managed data table and normalizes 台/臺 variants', () => {
+  expect(
+    cwaTownLocations.find(
+      (entry) => entry.city === '臺北市' && entry.district === '中山區',
+    ),
+  ).toMatchObject({
+    countyCode: '63',
+    townId: '6300400',
+  });
+
+  expect(
+    resolveCwaTownLocation({
+      city: '台北市',
+      district: '中山區',
+    }),
+  ).toMatchObject({
+    city: '臺北市',
+    district: '中山區',
   });
 });
 

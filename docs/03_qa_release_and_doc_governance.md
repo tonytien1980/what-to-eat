@@ -75,6 +75,7 @@
 - Google Sheet 失敗時 fallback snapshot 仍可維持 location-aware safe fallback
 - 若目前遠征地有 CWA 鄉鎮 mapping，首頁 weather 必須跟著該行政區切換
 - 若目前遠征地無正式背景圖，背景必須回退到 shared，而不是卡死在前一個行政區
+- `data/cwa-town-locations.json` 必須能正確把 `city / district` 對到 `countyCode / townId`
 - Phase 1 不會偷偷啟用 geolocation / IP fallback
 - owner sheet 使用 `shop` / `maplink` / `city` / `district` 時，runtime loader 與 `npm run data:import` 都必須正常
 

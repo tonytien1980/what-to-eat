@@ -6,32 +6,20 @@ import {
 } from './scenes';
 import type { CwaForecastPeriod, TaipeiWeatherSnapshot } from './types';
 import type { LocationPreference } from '../location/types';
+import {
+  type CwaTownLocation,
+  normalizeTownPlaceName,
+  resolveCwaTownLocation,
+} from './town-locations';
 
 export { mapWxCodeToVariant, pickSceneForPeriod, getAltarSceneAsset };
+export { resolveCwaTownLocation } from './town-locations';
 
 export const CWA_COUNTY_SCRIPT_URL =
   'https://www.cwa.gov.tw/Data/js/TableData_36hr_County_C.js?';
 
 const TAIPEI_CITY_CODE = '63';
 const ZHONGSHAN_TOWN_ID = '6300400';
-
-interface CwaTownLocation {
-  city: string;
-  countyCode: string;
-  district: string;
-  label: string;
-  townId: string;
-}
-
-const CWA_TOWN_LOCATIONS: CwaTownLocation[] = [
-  {
-    city: '臺北市',
-    countyCode: '63',
-    district: '中山區',
-    label: '臺北市中山區',
-    townId: ZHONGSHAN_TOWN_ID,
-  },
-];
 
 interface RawForecastPeriod {
   TimeRange: string;
@@ -128,39 +116,12 @@ function deriveComfortFromFeelsLike(feelsLikeTemp: number) {
   return '炎熱';
 }
 
-function normalizePlaceName(value: string | null | undefined) {
-  const trimmed = value?.trim();
-
-  if (!trimmed) {
-    return null;
-  }
-
-  return trimmed.replace(/^台/u, '臺');
-}
-
 function createTownScriptUrl(kind: '3hr' | 'gt24hr', countyCode: string) {
   if (kind === '3hr') {
     return `https://www.cwa.gov.tw/Data/js/3hr/ChartData_3hr_T_${countyCode}.js`;
   }
 
   return `https://www.cwa.gov.tw/Data/js/GT/ChartData_GT24hr_T_${countyCode}.js`;
-}
-
-export function resolveCwaTownLocation(
-  location: Pick<LocationPreference, 'city' | 'district'> | null,
-) {
-  const city = normalizePlaceName(location?.city);
-  const district = normalizePlaceName(location?.district);
-
-  if (!city || !district) {
-    return null;
-  }
-
-  return (
-    CWA_TOWN_LOCATIONS.find(
-      (entry) => entry.city === city && entry.district === district,
-    ) ?? null
-  );
 }
 
 export function extractCwaCountyScriptData(scriptText: string): CwaCountyDataset {
@@ -490,8 +451,8 @@ export function createFallbackTaipeiWeatherSnapshot(
   },
   activeSceneSeed = 0,
 ): TaipeiWeatherSnapshot {
-  const city = normalizePlaceName(location?.city) ?? '臺北市';
-  const district = normalizePlaceName(location?.district) ?? '中山區';
+  const city = normalizeTownPlaceName(location?.city) ?? '臺北市';
+  const district = normalizeTownPlaceName(location?.district) ?? '中山區';
   const label = `${city}${district ? district : ''}`;
   const currentPeriod: CwaForecastPeriod = {
     timeRange: `${district}未來 24 小時`,

@@ -147,6 +147,7 @@ MVP 採用靜態友善前端架構：
 - `src/components/`：共用 UI 元件
 - `data/restaurants.json`：本地 fallback 快照
 - `data/restaurant-sheet-sources.json`：Google Sheet 來源清單
+- `data/cwa-town-locations.json`：正式的 `city / district -> countyCode / townId` weather mapping 管理表
 - `images/`：主題資產
 
 ## 目前狀態模型
@@ -554,6 +555,7 @@ Pack 代表一組在特定情境下可成立、可被玩、可被接受的內容
 補充：
 
 - Phase 1 的 weather runtime 已可跟隨目前遠征地，但仍只涵蓋已有 CWA mapping 的行政區
+- Phase 1 的 CWA mapping source of truth 為 `data/cwa-town-locations.json`
 - district 級背景與 weather 會一起使用目前遠征地
 - 無 district 正式背景圖時，背景回退到 `images/backgrounds/shared/`
 
