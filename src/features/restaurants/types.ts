@@ -8,6 +8,8 @@ export interface RestaurantRecord {
   name: string;
   category: Category;
   mapUrl: string;
+  lat?: number | null;
+  lng?: number | null;
   tags: string[];
   priceLevel: PriceLevel;
   distanceLevel: DistanceLevel;

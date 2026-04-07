@@ -77,7 +77,8 @@
 - 若目前遠征地無正式背景圖，背景必須回退到 shared，而不是卡死在前一個行政區
 - `data/cwa-town-locations.json` 必須能正確把 `city / district` 對到 `countyCode / townId`
 - Phase 1 不會偷偷啟用 geolocation / IP fallback
-- owner sheet 使用 `shop` / `maplink` / `city` / `district` 時，runtime loader 與 `npm run data:import` 都必須正常
+- owner sheet 使用 `shop` / `maplink` / `city` / `district` / `lat` / `lng` 時，runtime loader 與 `npm run data:import` 都必須正常
+- `lat` / `lng` 缺值時不能讓 loader crash，應安全落成 `null`
 
 ## Quality Checks
 

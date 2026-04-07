@@ -11,6 +11,8 @@ interface SheetRow {
   mapUrl: string;
   city: string | null;
   district: string | null;
+  lat: number | null;
+  lng: number | null;
 }
 
 interface ResolveRestaurantCatalogOptions {
@@ -78,25 +80,34 @@ export function parsePublishedSheetCsv(text: string): SheetRow[] {
 
   const [headerRow = [], ...dataRows] = rows;
   const normalizedHeaders = headerRow.map((header) => header.trim().toLowerCase());
-  const nameIndex = normalizedHeaders.findIndex((header) =>
-    ['店名', 'name', 'shop'].includes(header),
-  );
-  const mapUrlIndex = normalizedHeaders.findIndex((header) =>
-    ['地圖連結', 'mapurl', 'map_url', 'maplink'].includes(header),
-  );
-  const cityIndex = normalizedHeaders.findIndex((header) =>
-    ['城市', 'city'].includes(header),
-  );
-  const districtIndex = normalizedHeaders.findIndex((header) =>
-    ['地區', 'district'].includes(header),
-  );
+  const nameIndex = normalizedHeaders.indexOf('shop');
+  const mapUrlIndex = normalizedHeaders.indexOf('maplink');
+  const cityIndex = normalizedHeaders.indexOf('city');
+  const districtIndex = normalizedHeaders.indexOf('district');
+  const latIndex = normalizedHeaders.indexOf('lat');
+  const lngIndex = normalizedHeaders.indexOf('lng');
+
+  if (nameIndex === -1 || mapUrlIndex === -1) {
+    return [];
+  }
+
+  const parseOptionalNumber = (value?: string) => {
+    if (!value) {
+      return null;
+    }
+
+    const parsed = Number(value.trim());
+    return Number.isFinite(parsed) ? parsed : null;
+  };
 
   return dataRows
     .map((dataRow) => ({
-      name: dataRow[nameIndex] ?? dataRow[0] ?? '',
-      mapUrl: dataRow[mapUrlIndex] ?? dataRow[1] ?? '',
+      name: dataRow[nameIndex] ?? '',
+      mapUrl: dataRow[mapUrlIndex] ?? '',
       city: dataRow[cityIndex]?.trim() || null,
       district: dataRow[districtIndex]?.trim() || null,
+      lat: parseOptionalNumber(dataRow[latIndex]),
+      lng: parseOptionalNumber(dataRow[lngIndex]),
     }))
     .filter((row) => row.name && row.mapUrl);
 }
@@ -200,6 +211,8 @@ async function loadSourceSheet(
     name: row.name,
     category: source.category,
     mapUrl: row.mapUrl,
+    lat: row.lat,
+    lng: row.lng,
     tags: inferTags(row.name, source.category),
     priceLevel: inferPriceLevel(row.name, source.category),
     distanceLevel: inferDistanceLevel(`${source.category}-${row.name}`),

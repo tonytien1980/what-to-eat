@@ -4,6 +4,8 @@
     "name": "麥當勞",
     "category": "lunch",
     "mapUrl": "https://maps.app.goo.gl/GUjMWYKgEqaXipLD7",
+    "lat": 25.0516119,
+    "lng": 121.5432109,
     "tags": [
       "lunch",
       "meal",
@@ -20,6 +22,8 @@
     "name": "香港茶水攤",
     "category": "lunch",
     "mapUrl": "https://maps.app.goo.gl/ix3KJoMjm872P9c56",
+    "lat": 25.0516444,
+    "lng": 121.5434903,
     "tags": [
       "lunch",
       "meal",
@@ -37,6 +41,8 @@
     "name": "蘭芳麵食館",
     "category": "lunch",
     "mapUrl": "https://maps.app.goo.gl/4ZrEHVtwMV9avskk6",
+    "lat": 25.0500246,
+    "lng": 121.5423125,
     "tags": [
       "lunch",
       "meal",
@@ -54,6 +60,8 @@
     "name": "圓仔便當店",
     "category": "lunch",
     "mapUrl": "https://maps.app.goo.gl/Xwk7Apdv8KDfYEf87",
+    "lat": 25.0499344,
+    "lng": 121.5422134,
     "tags": [
       "lunch",
       "meal",
@@ -71,6 +79,8 @@
     "name": "瀞瀞東南亞食堂",
     "category": "lunch",
     "mapUrl": "https://maps.app.goo.gl/P1zzFpMh6g6bmjuB9",
+    "lat": 25.0497426,
+    "lng": 121.5421426,
     "tags": [
       "lunch",
       "meal",
@@ -87,6 +97,8 @@
     "name": "郭家擔仔麵",
     "category": "lunch",
     "mapUrl": "https://maps.app.goo.gl/jQfAAs4pJJ5W5AAA9",
+    "lat": 25.0494758,
+    "lng": 121.5421182,
     "tags": [
       "lunch",
       "meal",
@@ -104,6 +116,8 @@
     "name": "老巷口原味小食",
     "category": "lunch",
     "mapUrl": "https://maps.app.goo.gl/WVpeaULxzMSfM3757",
+    "lat": 25.0494369,
+    "lng": 121.5421098,
     "tags": [
       "lunch",
       "meal",
@@ -120,6 +134,8 @@
     "name": "又一村水餃‧麵食",
     "category": "lunch",
     "mapUrl": "https://maps.app.goo.gl/KJsquoERctNoFd6o8",
+    "lat": 25.0488389,
+    "lng": 121.5422626,
     "tags": [
       "lunch",
       "meal",
@@ -138,6 +154,8 @@
     "name": "PANDA-MAMA 麻辣干鍋",
     "category": "lunch",
     "mapUrl": "https://maps.app.goo.gl/dJuzD3XoLkwEpREC8",
+    "lat": 25.0484073,
+    "lng": 121.5417697,
     "tags": [
       "lunch",
       "meal",
@@ -155,6 +173,8 @@
     "name": "𡘙師傅便當",
     "category": "lunch",
     "mapUrl": "https://maps.app.goo.gl/eZyChrDv1mrhgwy49",
+    "lat": 25.0481782,
+    "lng": 121.5422469,
     "tags": [
       "lunch",
       "meal",
@@ -172,6 +192,8 @@
     "name": "口袋飽飽",
     "category": "lunch",
     "mapUrl": "https://maps.app.goo.gl/YHaMzvZn8WXtNXqv8",
+    "lat": 25.0477379,
+    "lng": 121.5416947,
     "tags": [
       "lunch",
       "meal",
@@ -188,6 +210,8 @@
     "name": "釜山拌食處",
     "category": "lunch",
     "mapUrl": "https://maps.app.goo.gl/v3v98FXGRN4pRggFA",
+    "lat": 25.0477138,
+    "lng": 121.5415881,
     "tags": [
       "lunch",
       "meal",
@@ -204,6 +228,8 @@
     "name": "洪記煎餅果子",
     "category": "lunch",
     "mapUrl": "https://maps.app.goo.gl/aYXTcx5Pk7BGKb4aA",
+    "lat": 25.047746,
+    "lng": 121.5415122,
     "tags": [
       "lunch",
       "meal",
@@ -220,6 +246,8 @@
     "name": "HBJ kitchen 舒肥健康餐",
     "category": "lunch",
     "mapUrl": "https://maps.app.goo.gl/K3ReiEvvaEehUDGX6",
+    "lat": 25.0477185,
+    "lng": 121.5414464,
     "tags": [
       "lunch",
       "meal",
@@ -236,6 +264,8 @@
     "name": "小資餐食",
     "category": "lunch",
     "mapUrl": "https://maps.app.goo.gl/3VQpt3VFuL5USjf38",
+    "lat": 25.0484,
+    "lng": 121.541784,
     "tags": [
       "lunch",
       "meal",
@@ -252,6 +282,8 @@
     "name": "豬腳城",
     "category": "lunch",
     "mapUrl": "https://maps.app.goo.gl/sKa5C9RpYSfMURxb9",
+    "lat": 25.0490127,
+    "lng": 121.5422743,
     "tags": [
       "lunch",
       "meal",
@@ -268,6 +300,8 @@
     "name": "汆食光",
     "category": "lunch",
     "mapUrl": "https://maps.app.goo.gl/XvX7wUpxeH2EZ18R8",
+    "lat": 25.0510875,
+    "lng": 121.5435293,
     "tags": [
       "lunch",
       "meal",
@@ -284,6 +318,8 @@
     "name": "金秀秀廚娘食堂",
     "category": "lunch",
     "mapUrl": "https://maps.app.goo.gl/4cCcTe5sS4gKMT6E6",
+    "lat": 25.0503465,
+    "lng": 121.5433232,
     "tags": [
       "lunch",
       "meal",
@@ -300,6 +336,8 @@
     "name": "陶然亭餐廳",
     "category": "lunch",
     "mapUrl": "https://maps.app.goo.gl/meptLbYuJDjdkLNHA",
+    "lat": 25.051202,
+    "lng": 121.543805,
     "tags": [
       "lunch",
       "meal",
@@ -316,6 +354,8 @@
     "name": "Pasta & Co.",
     "category": "lunch",
     "mapUrl": "https://maps.app.goo.gl/1FQPWUpKAecrTpxN9",
+    "lat": 25.0521288,
+    "lng": 121.5374717,
     "tags": [
       "lunch",
       "meal",
@@ -333,6 +373,8 @@
     "name": "鬥牛士經典牛排",
     "category": "lunch",
     "mapUrl": "https://maps.app.goo.gl/gsf5otKHoRERVLaY7",
+    "lat": 25.048396,
+    "lng": 121.54148,
     "tags": [
       "lunch",
       "meal",
@@ -349,6 +391,8 @@
     "name": "阿懋炒飯",
     "category": "lunch",
     "mapUrl": "https://maps.app.goo.gl/uqPwJyhy1565pdLu6",
+    "lat": 25.0498433,
+    "lng": 121.542133,
     "tags": [
       "lunch",
       "meal",
@@ -366,6 +410,8 @@
     "name": "有有1969",
     "category": "dinner",
     "mapUrl": "https://maps.app.goo.gl/eZZUMSyZyhLpSf4w5",
+    "lat": 25.0490296,
+    "lng": 121.542072,
     "tags": [
       "dinner",
       "meal",
@@ -382,6 +428,8 @@
     "name": "糀日和 Kouji Wafu Pasta",
     "category": "dinner",
     "mapUrl": "https://maps.app.goo.gl/Pv1MRzQxho4SWThj6",
+    "lat": 25.0510342,
+    "lng": 121.5405427,
     "tags": [
       "dinner",
       "meal",
@@ -399,6 +447,8 @@
     "name": "來來鵝肉活海鮮",
     "category": "dinner",
     "mapUrl": "https://maps.app.goo.gl/P53g7d3iwD2GYDk17",
+    "lat": 25.0491131,
+    "lng": 121.5422426,
     "tags": [
       "dinner",
       "meal",
@@ -415,6 +465,8 @@
     "name": "壽司郎",
     "category": "dinner",
     "mapUrl": "https://maps.app.goo.gl/MRwzppqNVD7cVQLn9",
+    "lat": 25.0485905,
+    "lng": 121.5333568,
     "tags": [
       "dinner",
       "meal",
@@ -431,6 +483,8 @@
     "name": "珍煮丹",
     "category": "drinks",
     "mapUrl": "https://maps.app.goo.gl/M9ncQLTQgWPS4d4H6",
+    "lat": 25.0479564,
+    "lng": 121.5422227,
     "tags": [
       "drinks",
       "drink",
@@ -448,6 +502,8 @@
     "name": "LIM TEH",
     "category": "drinks",
     "mapUrl": "https://maps.app.goo.gl/hcSqTP36LntYKEYHA",
+    "lat": 25.0478464,
+    "lng": 121.5422972,
     "tags": [
       "drinks",
       "drink",
@@ -465,6 +521,8 @@
     "name": "得正",
     "category": "drinks",
     "mapUrl": "https://maps.app.goo.gl/hqAheq1AWYmSYKmx8",
+    "lat": 25.0480199,
+    "lng": 121.5423839,
     "tags": [
       "drinks",
       "drink",
@@ -482,6 +540,8 @@
     "name": "迷客夏",
     "category": "drinks",
     "mapUrl": "https://maps.app.goo.gl/UMF8ncamgLbzCp4q9",
+    "lat": 25.0486068,
+    "lng": 121.5420395,
     "tags": [
       "drinks",
       "drink",
@@ -499,6 +559,8 @@
     "name": "烏弄",
     "category": "drinks",
     "mapUrl": "https://maps.app.goo.gl/AXujoHbj5DZqafj87",
+    "lat": 25.048691,
+    "lng": 121.5422744,
     "tags": [
       "drinks",
       "drink",
@@ -516,6 +578,8 @@
     "name": "五桐號",
     "category": "drinks",
     "mapUrl": "https://maps.app.goo.gl/djJyNEc8JrmXtNVd6",
+    "lat": 25.049128,
+    "lng": 121.5420566,
     "tags": [
       "drinks",
       "drink",
@@ -533,6 +597,8 @@
     "name": "可不可熟成紅茶",
     "category": "drinks",
     "mapUrl": "https://maps.app.goo.gl/mEPcdg4XSVhf6AsQ6",
+    "lat": 25.0493179,
+    "lng": 121.542243,
     "tags": [
       "drinks",
       "drink",
@@ -550,6 +616,8 @@
     "name": "小制作茶",
     "category": "drinks",
     "mapUrl": "https://maps.app.goo.gl/ov9PQJii6AxfY12U6",
+    "lat": 25.0500766,
+    "lng": 121.5415596,
     "tags": [
       "drinks",
       "drink",
@@ -567,6 +635,8 @@
     "name": "50嵐",
     "category": "drinks",
     "mapUrl": "https://maps.app.goo.gl/ftE5vk7sGodqMzfTA",
+    "lat": 25.0479328,
+    "lng": 121.542051,
     "tags": [
       "drinks",
       "drink",
@@ -584,6 +654,8 @@
     "name": "一手私藏世界紅茶",
     "category": "drinks",
     "mapUrl": "https://maps.app.goo.gl/vWc1hULw6Hdh168B9",
+    "lat": 25.047102,
+    "lng": 121.5416619,
     "tags": [
       "drinks",
       "drink",
@@ -601,6 +673,8 @@
     "name": "甘蔗媽媽",
     "category": "drinks",
     "mapUrl": "https://maps.app.goo.gl/YKB6zeKmK94jeB51A",
+    "lat": 25.04739,
+    "lng": 121.542052,
     "tags": [
       "drinks",
       "drink",
@@ -618,6 +692,8 @@
     "name": "小7",
     "category": "drinks",
     "mapUrl": "https://maps.app.goo.gl/xTETTFAYdCkHwb1cA",
+    "lat": 25.0511631,
+    "lng": 121.5405386,
     "tags": [
       "drinks",
       "drink",
@@ -635,6 +711,8 @@
     "name": "全家",
     "category": "drinks",
     "mapUrl": "https://maps.app.goo.gl/AgA4Adce4PCTM67P9",
+    "lat": 25.0513783,
+    "lng": 121.5405673,
     "tags": [
       "drinks",
       "drink",
@@ -652,6 +730,8 @@
     "name": "萊爾富",
     "category": "drinks",
     "mapUrl": "https://maps.app.goo.gl/uixpFr5oTdAztr8m7",
+    "lat": 25.0492916,
+    "lng": 121.5406085,
     "tags": [
       "drinks",
       "drink",
@@ -669,6 +749,8 @@
     "name": "北投紅茶",
     "category": "drinks",
     "mapUrl": "https://maps.app.goo.gl/8TFo5CLztrP5MfQv7",
+    "lat": 25.0496653,
+    "lng": 121.5421296,
     "tags": [
       "drinks",
       "drink",
@@ -686,6 +768,8 @@
     "name": "黑麻糬",
     "category": "sweets",
     "mapUrl": "https://maps.app.goo.gl/vh2cDn7vc21KqJn66",
+    "lat": 25.0496062,
+    "lng": 121.5421273,
     "tags": [
       "sweets",
       "dessert",
@@ -703,6 +787,8 @@
     "name": "CHIFFON手工蛋糕店",
     "category": "sweets",
     "mapUrl": "https://maps.app.goo.gl/MWohLyvmNur5jHbq5",
+    "lat": 25.050947,
+    "lng": 121.5405527,
     "tags": [
       "sweets",
       "dessert",
@@ -720,6 +806,8 @@
     "name": "客家自製湯圓",
     "category": "sweets",
     "mapUrl": "https://maps.app.goo.gl/Qgri6q8LWwaYeeEX6",
+    "lat": 25.0493409,
+    "lng": 121.5421145,
     "tags": [
       "sweets",
       "dessert",
@@ -737,6 +825,8 @@
     "name": "綠豆冰沙/仙草蜜_兩水茶舖",
     "category": "sweets",
     "mapUrl": "https://maps.app.goo.gl/Zi8Jsi8Xon3gpTtP8",
+    "lat": 25.047452,
+    "lng": 121.542033,
     "tags": [
       "sweets",
       "dessert",

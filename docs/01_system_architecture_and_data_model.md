@@ -129,11 +129,14 @@ MVP 採用靜態友善前端架構：
 - `maplink`
 - `city`
 - `district`
+- `lat`
+- `lng`
 
-相容原則：
+正式原則：
 
-- runtime loader 與 `npm run data:import` 應優先支援上述英文欄位
-- 為了避免轉換期間斷線，仍可相容舊版中文欄位 `店名` / `地圖連結` / `城市` / `地區`
+- runtime loader 與 `npm run data:import` 只接受上述英文欄位 contract
+- `lat` / `lng` 是正式位置欄位，用於後續距離顯示與 location-aware 能力
+- 若單筆列暫時缺少 `lat` / `lng`，runtime 可安全視為 `null`，但 owner sheet 應以補齊為目標
 
 ## 目前核心模組對照
 
@@ -481,6 +484,8 @@ Pack 代表一組在特定情境下可成立、可被玩、可被接受的內容
   "city": "臺北市",
   "district": "中山區",
   "mapUrl": "https://maps.app.goo.gl/example",
+  "lat": 25.0521,
+  "lng": 121.5438,
   "tags": ["noodle", "hot", "soup"],
   "priceLevel": "medium",
   "distanceLevel": "near",
