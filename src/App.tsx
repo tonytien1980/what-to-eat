@@ -2,9 +2,11 @@ import { useMemo, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { uiOrnaments } from './assets/ui-ornaments';
 import { DestinyCardView } from './components/destiny-card-view';
+import { DistanceStrip } from './components/distance-strip';
 import { LocationSheet } from './components/location-sheet';
 import { LocationStatus } from './components/location-status';
 import { resolveBackgroundSelection } from './features/backgrounds/selector';
+import { useDestinationDistance } from './features/location/use-destination-distance';
 import { useLocationPreference } from './features/location/use-location-preference';
 import { categories } from './features/restaurants/data';
 import { getLocationAwareCandidatePool } from './features/restaurants/selectors';
@@ -66,6 +68,9 @@ export default function App() {
   );
   const rerollCopy = getRerollCopy(rerollsRemaining);
   const categoryLabel = activeCategory ? getCategoryLabel(activeCategory) : '';
+  const destinationDistance = useDestinationDistance(
+    phase === 'result' ? round?.destination ?? null : null,
+  );
   const activeCategoryCount = activeCategory
     ? getLocationAwareCandidatePool(
         restaurantCatalog.restaurants,
@@ -197,23 +202,32 @@ export default function App() {
           </section>
 
           {phase === 'result' && round ? (
-            <div className="altar-actions">
-              <a
-                className="map-link"
-                href={round.destination.mapUrl}
-                target="_blank"
-                rel="noreferrer"
-              >
-                出發去吃
-              </a>
-              <button
-                className="reroll-button"
-                type="button"
-                disabled={!canReroll}
-                onClick={reroll}
-              >
-                {rerollCopy.label}
-              </button>
+            <div className="result-support">
+              {destinationDistance.status !== 'hidden' ? (
+                <DistanceStrip
+                  status={destinationDistance.status}
+                  label={destinationDistance.label}
+                  onRequest={destinationDistance.requestDistance}
+                />
+              ) : null}
+              <div className="altar-actions">
+                <a
+                  className="map-link"
+                  href={round.destination.mapUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  出發去吃
+                </a>
+                <button
+                  className="reroll-button"
+                  type="button"
+                  disabled={!canReroll}
+                  onClick={reroll}
+                >
+                  {rerollCopy.label}
+                </button>
+              </div>
             </div>
           ) : null}
         </section>

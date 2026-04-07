@@ -47,6 +47,7 @@
 - 結果一定屬於 active category
 - 若過濾後為空，會安全回退
 - 結果畫面顯示正確目的地名稱
+- 結果階段可顯示距離資訊列
 - `出發去吃` 會開啟正確 map URL
 - 每局至少有一條 reroll 路徑
 - 特殊 destiny rule 會正確加送 bonus reroll
@@ -79,6 +80,9 @@
 - Phase 1 不會偷偷啟用 geolocation / IP fallback
 - owner sheet 使用 `shop` / `maplink` / `city` / `district` / `lat` / `lng` 時，runtime loader 與 `npm run data:import` 都必須正常
 - `lat` / `lng` 缺值時不能讓 loader crash，應安全落成 `null`
+- 不可在首頁 first load 自動要求 geolocation
+- 玩家主動啟用定位後，結果區需顯示 `遠征地距離你約 ...`
+- 同一個 session 已取得玩家座標後，reroll 必須可直接重算距離
 
 ## Quality Checks
 
@@ -87,6 +91,7 @@
 - 大標不溢出
 - 分類按鈕與卷軸 CTA 在圖資上仍可辨識
 - mobile 上 `先選遠征類型` 不可換行
+- 距離資訊列在 mobile 上不得壓進卡片或按鈕
 - 正式可被程式抽選與正式同步的背景圖，只能位於 `images/backgrounds/`
 - `output/background-trials`、`output/background-finals`、`output/background-runtime` 都是本地工區，不得視為正式上線圖資來源
 - 正式背景圖只保留 `webp`

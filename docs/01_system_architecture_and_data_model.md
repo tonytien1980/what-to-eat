@@ -137,6 +137,7 @@ MVP 採用靜態友善前端架構：
 - runtime loader 與 `npm run data:import` 只接受上述英文欄位 contract
 - `lat` / `lng` 是正式位置欄位，用於後續距離顯示與 location-aware 能力
 - 若單筆列暫時缺少 `lat` / `lng`，runtime 可安全視為 `null`，但 owner sheet 應以補齊為目標
+- 結果階段的距離提示使用 browser geolocation 搭配 `lat` / `lng`
 
 ## 目前核心模組對照
 
@@ -167,6 +168,8 @@ MVP 目前追蹤：
 - `currentFaceTemplate`
 - `currentDestinyCard`
 - `selectedDestination`
+- `userCoordinates`
+- `destinationDistanceState`
 - `rerollsRemaining`
 - `bonusRerollGranted`
 - `phase`
@@ -206,6 +209,11 @@ location-aware 方向已進入 Phase 1，但目前仍不是完整 detect-first r
 - 若目前遠征地沒有 CWA mapping，天氣安全回退到本地 fallback snapshot
 - Phase 1 不啟用 browser geolocation
 - Phase 1 不啟用 IP-based city guess
+
+補充：
+
+- 以上限制只針對首頁 detect-first location flow
+- 結果階段的玩家主動觸發 geolocation，不屬於 first paint detect-first
 
 ### Location Trust Rules
 

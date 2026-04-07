@@ -118,6 +118,7 @@
 - 隨機命運卡
 - 命運揭示與翻牌演出
 - 揭曉今日遠征目的地
+- 結果階段的距離提示
 - 地圖跳轉
 - 一次保底重抽
 - 特殊命運卡額外加送一次重抽
@@ -162,6 +163,12 @@
 6. 若目前遠征地尚無正式背景圖，回退到共享背景
 7. 若目前遠征地有 CWA 鄉鎮 mapping，首頁天氣跟著該行政區走
 8. geolocation / IP fallback 留到下一階段
+
+補充說明：
+
+- 上述 `geolocation / IP fallback` 指的是首頁 detect-first 流程
+- 結果階段允許玩家主動觸發 browser geolocation，用來顯示遠征地距離
+- 這個距離提示不能變成首頁 first paint 的阻塞式設定
 
 ### 第一版非目標
 
@@ -226,6 +233,8 @@
 - 目前遠征地若有 CWA 鄉鎮 mapping，讀取該行政區 3 小時預報
 - 背景圖 runtime 已改為 `images/backgrounds/<city>/<district>/` 的 location-aware 路徑
 - `images/backgrounds/shared/` 保留既有共享奇幻背景作為正式 fallback
+- owner sheet 與 fallback snapshot 已補齊正式 `lat / lng`
+- 結果階段已支援玩家主動觸發定位，顯示遠征地直線距離
 - 台北市中山區 / 行天宮六種正式天氣背景已納入正式背景庫
 - 台北市中山區 / 美麗華百樂園摩天輪六種正式天氣背景已納入正式背景庫
 - 台北市中山區 / 台北市立美術館六種正式天氣背景已納入正式背景庫
