@@ -10,9 +10,9 @@ test('renders expedition board title and start button', () => {
 
   expect(screen.getByText('今天吃什麼')).toBeInTheDocument();
   expect(screen.getByText('命運遠征')).toBeInTheDocument();
-  expect(screen.getByText('目前遠征地：臺北市中山區')).toBeInTheDocument();
-  expect(screen.getByText('3 小時預報')).toBeInTheDocument();
-  expect(screen.getByRole('button', { name: '更改位置' })).toBeInTheDocument();
+  expect(screen.getByText((content) => content.includes('預計冒險地：臺北市中山區'))).toBeInTheDocument();
+  expect(screen.getByText('預計冒險地 3 小時預報')).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: '更改預計冒險地' })).toBeInTheDocument();
   expect(screen.getByRole('button', { name: '先選遠征類型' })).toBeInTheDocument();
   expect(screen.getByText('請先選擇遠征類型')).toBeInTheDocument();
   expect(screen.getByLabelText(/遠征卡背/)).toBeInTheDocument();
@@ -21,14 +21,17 @@ test('renders expedition board title and start button', () => {
     screen.queryByText('中央氣象署 36 小時縣市預報'),
   ).not.toBeInTheDocument();
   expect(screen.queryByText('Google Sheet 即時資料')).not.toBeInTheDocument();
+  expect(screen.queryByText(/^臺北市中山區 ·/)).not.toBeInTheDocument();
 });
 
 test('opens the lightweight location correction sheet', () => {
   render(<App />);
 
-  fireEvent.click(screen.getByRole('button', { name: '更改位置' }));
+  fireEvent.click(screen.getByRole('button', { name: '更改預計冒險地' }));
 
-  expect(screen.getByText('更改遠征地')).toBeInTheDocument();
+  expect(
+    screen.getByRole('heading', { name: '更改預計冒險地' }),
+  ).toBeInTheDocument();
   expect(screen.getByLabelText('城市')).toBeInTheDocument();
   expect(screen.getByLabelText('地區')).toBeInTheDocument();
   expect(screen.getByRole('button', { name: '略過地區' })).toBeInTheDocument();

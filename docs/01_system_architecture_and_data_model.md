@@ -144,6 +144,7 @@ MVP 採用靜態友善前端架構：
 
 - `src/app/` 或目前 app shell：頂層流程與狀態
 - `src/features/weather/`：依目前遠征地解析 CWA 鄉鎮預報、標準化與場景映射
+- 首頁 UI 對外文案使用 `預計冒險地`，但 runtime state 仍可沿用既有 `currentLocation`
 - `src/features/restaurants/`：資料載入、型別、過濾與隨機選取
 - `src/features/destiny/`：命運卡型別、定義與抽牌邏輯
 - `src/features/card-backs/`：卡背權重與稀有度資料

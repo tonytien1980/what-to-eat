@@ -54,7 +54,7 @@
 - 中山區天氣可載入並影響場景選擇
 - 若官方天氣資料失敗，fallback weather 仍可顯示
 - 重新整理頁面時，同天候可輪替到其他相容場景
-- 首頁需顯示 `3 小時預報`
+- 首頁需顯示 `預計冒險地 3 小時預報`
 
 ## Active Capability Checks: Location-Aware Phase 1
 
@@ -66,8 +66,9 @@
 - 若同時有 `city + district`，優先用 district pool
 - district 無結果時，正確回退到 city pool
 - city 也無結果時，正確回退到 category 的 enabled pool
-- `目前遠征地` 狀態在 UI 上可見
-- `更改位置` / `補上地區` 可用
+- `預計冒險地` 狀態在 UI 上可見
+- `更改預計冒險地` 可用
+- scene line 不可再顯示 `城市 / 行政區 · 景點 · 天氣` 三段混合資訊
 - manual correction 會覆蓋 auto-detected value
 - city dropdown 與 district dropdown 關聯正確
 - `略過地區` 能成立，且不造成死路

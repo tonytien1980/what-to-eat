@@ -11,7 +11,7 @@ export function LocationStatus({
 }: LocationStatusProps) {
   return (
     <div className="location-status">
-      <p className="location-status-copy">目前遠征地：{locationLabel}</p>
+      <p className="location-status-copy">預計冒險地：{locationLabel}</p>
       <button
         className="location-status-trigger"
         type="button"

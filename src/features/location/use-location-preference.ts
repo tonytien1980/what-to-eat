@@ -103,6 +103,6 @@ export function useLocationPreference(restaurants: RestaurantRecord[]) {
     updateDraftDistrict,
     skipDistrict,
     saveDraft,
-    locationTriggerLabel: currentLocation.district ? '更改位置' : '補上地區',
+    locationTriggerLabel: '更改預計冒險地',
   };
 }

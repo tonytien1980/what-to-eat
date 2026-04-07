@@ -30,11 +30,11 @@ export function LocationSheet({
   }
 
   return (
-    <section className="location-sheet" aria-label="更改遠征地">
+    <section className="location-sheet" aria-label="更改預計冒險地">
       <div className="location-sheet-head">
         <div>
-          <p className="location-sheet-kicker">遠征地設定</p>
-          <h2 className="location-sheet-title">更改遠征地</h2>
+          <p className="location-sheet-kicker">預計冒險地設定</p>
+          <h2 className="location-sheet-title">更改預計冒險地</h2>
         </div>
         <button
           className="location-sheet-close"

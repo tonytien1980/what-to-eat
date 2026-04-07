@@ -78,7 +78,7 @@ export default function App() {
         locationPreference.currentLocation,
       ).length
     : 0;
-  const weatherSceneLine = `${locationPreference.currentLocationLabel} · ${backgroundSelection.sceneLabel} · ${backgroundSelection.variantLabel}`;
+  const weatherSceneLine = `${backgroundSelection.sceneLabel} · ${backgroundSelection.variantLabel}`;
   const weatherPrimaryLine =
     snapshot.currentPeriod.currentTemp !== undefined
       ? `${snapshot.currentPeriod.weatherText} · 現在 ${snapshot.currentPeriod.currentTemp}°`
@@ -105,18 +105,17 @@ export default function App() {
               <span className="hero-title-line">命運遠征</span>
             </h1>
             <p className="scene-line">{weatherSceneLine}</p>
-            <p className="forecast-source-line">{snapshot.sourceLabel}</p>
+            <LocationStatus
+              locationLabel={locationPreference.currentLocationLabel}
+              triggerLabel={locationPreference.locationTriggerLabel}
+              onOpen={locationPreference.openChooser}
+            />
+            <p className="forecast-source-line">預計冒險地 3 小時預報</p>
             <div className="weather-lines">
               <p className="weather-line">{weatherPrimaryLine}</p>
               <p className="weather-line weather-line-soft">{weatherSecondaryLine}</p>
             </div>
           </div>
-
-          <LocationStatus
-            locationLabel={locationPreference.currentLocationLabel}
-            triggerLabel={locationPreference.locationTriggerLabel}
-            onOpen={locationPreference.openChooser}
-          />
 
           <LocationSheet
             isOpen={locationPreference.isChooserOpen}
