@@ -82,6 +82,8 @@
 - 大標不溢出
 - 分類按鈕與卷軸 CTA 在圖資上仍可辨識
 - mobile 上 `先選遠征類型` 不可換行
+- 正式可被程式抽選與正式同步的背景圖，只能位於 `images/backgrounds/`
+- `output/background-trials`、`output/background-finals`、`output/background-runtime` 都是本地工區，不得視為正式上線圖資來源
 - 正式背景圖只保留 `webp`
 - trial / master / preview 圖不得混入正式 runtime 背景目錄
 - 正式網站讀取的 district 背景必須落在 `images/backgrounds/<city>/<district>/`

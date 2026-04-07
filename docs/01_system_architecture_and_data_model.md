@@ -720,6 +720,11 @@ images/
 
 Playwright 預覽圖屬於本地驗證產物，固定放在 `output/playwright/`，不作為正式產品資產。
 
+補充規則：
+
+- `output/` 底下的 `trial / final / runtime` 都是本地工區，不是正式同步來源
+- 正式可被程式抽選與正式應同步的背景圖，一律以 `images/backgrounds/` 為準
+
 ### 背景正式資產規格
 
 正式背景圖只保留 web 交付版本，不保留中間實驗格式。

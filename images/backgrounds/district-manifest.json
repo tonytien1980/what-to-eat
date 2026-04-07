@@ -40,6 +40,18 @@
                 "thunderstorm": "taipei/zhongshan/background-taipei-zhongshan-thunderstorm-xingtian-temple.webp",
                 "dense_fog": "taipei/zhongshan/background-taipei-zhongshan-dense-fog-xingtian-temple.webp"
               }
+            },
+            "miramar-ferris-wheel": {
+              "label_zh": "美麗華百樂園摩天輪",
+              "weight": 1,
+              "variants": {
+                "clear_cloudy": "taipei/zhongshan/background-taipei-zhongshan-clear-cloudy-miramar-ferris-wheel.webp",
+                "overcast": "taipei/zhongshan/background-taipei-zhongshan-overcast-miramar-ferris-wheel.webp",
+                "rain": "taipei/zhongshan/background-taipei-zhongshan-rain-miramar-ferris-wheel.webp",
+                "heavy_rain": "taipei/zhongshan/background-taipei-zhongshan-heavy-rain-miramar-ferris-wheel.webp",
+                "thunderstorm": "taipei/zhongshan/background-taipei-zhongshan-thunderstorm-miramar-ferris-wheel.webp",
+                "dense_fog": "taipei/zhongshan/background-taipei-zhongshan-dense-fog-miramar-ferris-wheel.webp"
+              }
             }
           },
           "weather_pools": {
@@ -47,11 +59,19 @@
               {
                 "landmark": "xingtian-temple",
                 "weight": 1
+              },
+              {
+                "landmark": "miramar-ferris-wheel",
+                "weight": 1
               }
             ],
             "overcast": [
               {
                 "landmark": "xingtian-temple",
+                "weight": 1
+              },
+              {
+                "landmark": "miramar-ferris-wheel",
                 "weight": 1
               }
             ],
@@ -59,11 +79,19 @@
               {
                 "landmark": "xingtian-temple",
                 "weight": 1
+              },
+              {
+                "landmark": "miramar-ferris-wheel",
+                "weight": 1
               }
             ],
             "heavy_rain": [
               {
                 "landmark": "xingtian-temple",
+                "weight": 1
+              },
+              {
+                "landmark": "miramar-ferris-wheel",
                 "weight": 1
               }
             ],
@@ -71,11 +99,19 @@
               {
                 "landmark": "xingtian-temple",
                 "weight": 1
+              },
+              {
+                "landmark": "miramar-ferris-wheel",
+                "weight": 1
               }
             ],
             "dense_fog": [
               {
                 "landmark": "xingtian-temple",
+                "weight": 1
+              },
+              {
+                "landmark": "miramar-ferris-wheel",
                 "weight": 1
               }
             ]

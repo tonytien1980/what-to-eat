@@ -145,3 +145,31 @@ test('falls back to the shared fantasy background when district assets are unava
   expect(selection.assetPath).toBe('shared/forest_ruins/thunderstorm.webp');
   expect(selection.imageUrl).toBeTruthy();
 });
+
+test('uses the live Zhongshan weather pool to randomize between shipped district landmarks', () => {
+  const xingtianPick = resolveBackgroundSelection({
+    location: {
+      city: '臺北市',
+      district: '中山區',
+    },
+    period: thunderstormPeriod,
+    randomValue: 0.1,
+  });
+  const miramarPick = resolveBackgroundSelection({
+    location: {
+      city: '臺北市',
+      district: '中山區',
+    },
+    period: thunderstormPeriod,
+    randomValue: 0.9,
+  });
+
+  expect(xingtianPick.source).toBe('district');
+  expect(xingtianPick.assetPath).toBe(
+    'taipei/zhongshan/background-taipei-zhongshan-thunderstorm-xingtian-temple.webp',
+  );
+  expect(miramarPick.source).toBe('district');
+  expect(miramarPick.assetPath).toBe(
+    'taipei/zhongshan/background-taipei-zhongshan-thunderstorm-miramar-ferris-wheel.webp',
+  );
+});

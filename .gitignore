@@ -3,6 +3,9 @@ dist
 coverage
 .playwright-cli
 output/playwright
+output/background-trials
+output/background-finals
+output/background-runtime
 *.tsbuildinfo
 vite.config.js
 vite.config.d.ts
