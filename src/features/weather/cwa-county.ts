@@ -44,9 +44,9 @@ interface RawTownThreeHourRecord {
   C: {
     T: number[];
     AT: number[];
-    Wx: {
-      C: RawTownWxEntry[];
-    };
+  };
+  Wx?: {
+    C: RawTownWxEntry[];
   };
 }
 
@@ -194,9 +194,23 @@ export function buildZhongshanDistrictWeatherSnapshot(
     throw new Error('Official CWA town dataset did not include Zhongshan District data.');
   }
 
+  const weatherEntries =
+    threeHourRecord.Wx?.C ??
+    (threeHourRecord as RawTownThreeHourRecord & {
+      C: {
+        Wx?: {
+          C: RawTownWxEntry[];
+        };
+      };
+    }).C.Wx?.C;
+
+  if (!weatherEntries || weatherEntries.length === 0) {
+    throw new Error('Official CWA town dataset did not include Zhongshan District weather codes.');
+  }
+
   const nextDayTemps = threeHourRecord.C.T.slice(0, 24);
   const currentTemp = threeHourRecord.C.T[0];
-  const wxEntry = threeHourRecord.C.Wx.C[0];
+  const wxEntry = weatherEntries[0];
   const feelsLikeTemp =
     gt24hrRecord.C.AT[gt24hrRecord.C.AT.length - 1] ?? threeHourRecord.C.AT[0];
 
@@ -213,7 +227,7 @@ export function buildZhongshanDistrictWeatherSnapshot(
     feelsLikeTemp,
   };
 
-  const upcomingPeriods = threeHourRecord.C.Wx.C.slice(1, 4).map((entry, index) => {
+  const upcomingPeriods = weatherEntries.slice(1, 4).map((entry, index) => {
     const tempIndex = index + 1;
     const periodTemp = threeHourRecord.C.T[tempIndex];
     const periodFeelsLike = threeHourRecord.C.AT[tempIndex];

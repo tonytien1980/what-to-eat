@@ -24,8 +24,27 @@ var TempArray_3hr = {
   '6300400':{
     'C':{
       'T':[22,23],
-      'AT':[25,26],
-      'Wx':{'C':[['15','短暫陣雨或雷雨'],['07','陰']]}
+      'AT':[25,26]
+    },
+    'Wx':{'C':[['15','短暫陣雨或雷雨'],['07','陰']]}
+  }
+};`;
+
+const officialShapeTownThreeHourScript = `
+// Updated: 2026/04/08 00:11:02
+var Time_3hr = {'C':['01 04/08<br><span>(二)</span>','02 04/08<br><span>(二)</span>','03 04/08<br><span>(二)</span>']};
+var TempArray_3hr = {
+  '6300400':{
+    'C':{
+      'T':[21,21,21],
+      'AT':[22,22,22]
+    },
+    'F':{
+      'T':[70,70,70],
+      'AT':[72,72,72]
+    },
+    'Wx':{
+      'C':[['08','短暫陣雨'],['08','短暫陣雨'],['07','陰']]
     }
   }
 };`;
@@ -95,4 +114,16 @@ test('extracts Zhongshan district weather from official town scripts', () => {
   expect(snapshot.currentPeriod.currentTemp).toBe(22);
   expect(snapshot.currentPeriod.feelsLikeTemp).toBe(24);
   expect(snapshot.activeScene.variantKey).toBe('thunderstorm');
+});
+
+test('supports the current official town script shape where Wx sits beside C and F', () => {
+  const dataset = extractCwaTownScriptData({
+    threeHourScript: officialShapeTownThreeHourScript,
+    gt24hrScript: sampleTownGtScript,
+  });
+  const snapshot = buildZhongshanDistrictWeatherSnapshot(dataset);
+
+  expect(snapshot.currentPeriod.wxCode).toBe(8);
+  expect(snapshot.currentPeriod.weatherText).toBe('短暫陣雨');
+  expect(snapshot.activeScene.variantKey).toBe('rain');
 });
