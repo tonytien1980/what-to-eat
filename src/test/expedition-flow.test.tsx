@@ -22,7 +22,7 @@ test('starts an expedition and reveals a destination', async () => {
   render(<App />);
 
   fireEvent.click(screen.getByRole('button', { name: '午餐' }));
-  fireEvent.click(screen.getByRole('button', { name: '開啟今日遠征' }));
+  fireEvent.click(screen.getByRole('button', { name: '決定今日命運' }));
 
   expect(screen.getByLabelText(/遠征卡背/)).toBeInTheDocument();
   expect(screen.queryByText(/本日遠征目的地/)).not.toBeInTheDocument();
@@ -63,7 +63,7 @@ test('reveals a distance strip after a user grants geolocation', async () => {
   render(<App />);
 
   fireEvent.click(screen.getByRole('button', { name: '午餐' }));
-  fireEvent.click(screen.getByRole('button', { name: '開啟今日遠征' }));
+  fireEvent.click(screen.getByRole('button', { name: '決定今日命運' }));
 
   await screen.findByRole('link', { name: '出發去吃' }, { timeout: 5000 });
   fireEvent.click(screen.getByRole('button', { name: '啟用定位後可顯示遠征地距離' }));
@@ -85,7 +85,7 @@ test('does not request geolocation before the player opts in', async () => {
   render(<App />);
 
   fireEvent.click(screen.getByRole('button', { name: '午餐' }));
-  fireEvent.click(screen.getByRole('button', { name: '開啟今日遠征' }));
+  fireEvent.click(screen.getByRole('button', { name: '決定今日命運' }));
 
   await screen.findByRole('link', { name: '出發去吃' }, { timeout: 5000 });
 
@@ -111,7 +111,7 @@ test('uses saved distance coordinates after a refresh-like reload', async () => 
   render(<App />);
 
   fireEvent.click(screen.getByRole('button', { name: '午餐' }));
-  fireEvent.click(screen.getByRole('button', { name: '開啟今日遠征' }));
+  fireEvent.click(screen.getByRole('button', { name: '決定今日命運' }));
 
   await screen.findByRole('link', { name: '出發去吃' }, { timeout: 5000 });
 
@@ -140,7 +140,7 @@ test('shows browser-permission guidance instead of restart wording when geolocat
   render(<App />);
 
   fireEvent.click(screen.getByRole('button', { name: '午餐' }));
-  fireEvent.click(screen.getByRole('button', { name: '開啟今日遠征' }));
+  fireEvent.click(screen.getByRole('button', { name: '決定今日命運' }));
 
   await screen.findByRole('link', { name: '出發去吃' }, { timeout: 5000 });
   fireEvent.click(screen.getByRole('button', { name: '啟用定位後可顯示遠征地距離' }));
