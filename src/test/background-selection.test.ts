@@ -187,7 +187,7 @@ test('uses the live Zhongshan weather pool to randomize between shipped district
 });
 
 test('uses the live Songshan district background when a formal district asset exists', () => {
-  const selection = resolveBackgroundSelection({
+  const ciyouPick = resolveBackgroundSelection({
     location: {
       city: '臺北市',
       district: '松山區',
@@ -195,10 +195,22 @@ test('uses the live Songshan district background when a formal district asset ex
     period: thunderstormPeriod,
     randomValue: 0.2,
   });
+  const airportPick = resolveBackgroundSelection({
+    location: {
+      city: '臺北市',
+      district: '松山區',
+    },
+    period: thunderstormPeriod,
+    randomValue: 0.9,
+  });
 
-  expect(selection.source).toBe('district');
-  expect(selection.sceneLabel).toBe('松山慈祐宮');
-  expect(selection.assetPath).toBe(
+  expect(ciyouPick.source).toBe('district');
+  expect(ciyouPick.sceneLabel).toBe('松山慈祐宮');
+  expect(ciyouPick.assetPath).toBe(
     'taipei/songshan/background-taipei-songshan-thunderstorm-songshan-ciyou-temple.webp',
+  );
+  expect(airportPick.source).toBe('district');
+  expect(airportPick.assetPath).toBe(
+    'taipei/songshan/background-taipei-songshan-thunderstorm-songshan-airport.webp',
   );
 });
