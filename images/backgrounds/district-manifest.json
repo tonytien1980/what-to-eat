@@ -179,6 +179,18 @@
                 "thunderstorm": "taipei/songshan/background-taipei-songshan-thunderstorm-songshan-airport.webp",
                 "dense_fog": "taipei/songshan/background-taipei-songshan-dense-fog-songshan-airport.webp"
               }
+            },
+            "taipei-dome": {
+              "label_zh": "台北大巨蛋",
+              "weight": 1,
+              "variants": {
+                "clear_cloudy": "taipei/songshan/background-taipei-songshan-clear-cloudy-taipei-dome.webp",
+                "overcast": "taipei/songshan/background-taipei-songshan-overcast-taipei-dome.webp",
+                "rain": "taipei/songshan/background-taipei-songshan-rain-taipei-dome.webp",
+                "heavy_rain": "taipei/songshan/background-taipei-songshan-heavy-rain-taipei-dome.webp",
+                "thunderstorm": "taipei/songshan/background-taipei-songshan-thunderstorm-taipei-dome.webp",
+                "dense_fog": "taipei/songshan/background-taipei-songshan-dense-fog-taipei-dome.webp"
+              }
             }
           },
           "weather_pools": {
@@ -190,6 +202,10 @@
               {
                 "landmark": "songshan-airport",
                 "weight": 1
+              },
+              {
+                "landmark": "taipei-dome",
+                "weight": 1
               }
             ],
             "overcast": [
@@ -199,6 +215,10 @@
               },
               {
                 "landmark": "songshan-airport",
+                "weight": 1
+              },
+              {
+                "landmark": "taipei-dome",
                 "weight": 1
               }
             ],
@@ -210,6 +230,10 @@
               {
                 "landmark": "songshan-airport",
                 "weight": 1
+              },
+              {
+                "landmark": "taipei-dome",
+                "weight": 1
               }
             ],
             "heavy_rain": [
@@ -219,6 +243,10 @@
               },
               {
                 "landmark": "songshan-airport",
+                "weight": 1
+              },
+              {
+                "landmark": "taipei-dome",
                 "weight": 1
               }
             ],
@@ -230,6 +258,10 @@
               {
                 "landmark": "songshan-airport",
                 "weight": 1
+              },
+              {
+                "landmark": "taipei-dome",
+                "weight": 1
               }
             ],
             "dense_fog": [
@@ -239,6 +271,10 @@
               },
               {
                 "landmark": "songshan-airport",
+                "weight": 1
+              },
+              {
+                "landmark": "taipei-dome",
                 "weight": 1
               }
             ]

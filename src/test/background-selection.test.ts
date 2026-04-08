@@ -201,6 +201,14 @@ test('uses the live Songshan district background when a formal district asset ex
       district: '松山區',
     },
     period: thunderstormPeriod,
+    randomValue: 0.5,
+  });
+  const domePick = resolveBackgroundSelection({
+    location: {
+      city: '臺北市',
+      district: '松山區',
+    },
+    period: thunderstormPeriod,
     randomValue: 0.9,
   });
 
@@ -212,5 +220,9 @@ test('uses the live Songshan district background when a formal district asset ex
   expect(airportPick.source).toBe('district');
   expect(airportPick.assetPath).toBe(
     'taipei/songshan/background-taipei-songshan-thunderstorm-songshan-airport.webp',
+  );
+  expect(domePick.source).toBe('district');
+  expect(domePick.assetPath).toBe(
+    'taipei/songshan/background-taipei-songshan-thunderstorm-taipei-dome.webp',
   );
 });
