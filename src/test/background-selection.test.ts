@@ -226,3 +226,20 @@ test('uses the live Songshan district background when a formal district asset ex
     'taipei/songshan/background-taipei-songshan-thunderstorm-taipei-dome.webp',
   );
 });
+
+test('uses the live Beitou district background when a formal district asset exists', () => {
+  const selection = resolveBackgroundSelection({
+    location: {
+      city: '臺北市',
+      district: '北投區',
+    },
+    period: thunderstormPeriod,
+    randomValue: 0.2,
+  });
+
+  expect(selection.source).toBe('district');
+  expect(selection.sceneLabel).toBe('陽明山花鐘');
+  expect(selection.assetPath).toBe(
+    'taipei/beitou/background-taipei-beitou-thunderstorm-yangmingshan-flower-clock.webp',
+  );
+});

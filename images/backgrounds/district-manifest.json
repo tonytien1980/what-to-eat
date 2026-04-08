@@ -279,6 +279,61 @@
               }
             ]
           }
+        },
+        "北投區": {
+          "slug": "beitou",
+          "landmarks": {
+            "yangmingshan-flower-clock": {
+              "label_zh": "陽明山花鐘",
+              "weight": 1,
+              "variants": {
+                "clear_cloudy": "taipei/beitou/background-taipei-beitou-clear-cloudy-yangmingshan-flower-clock.webp",
+                "overcast": "taipei/beitou/background-taipei-beitou-overcast-yangmingshan-flower-clock.webp",
+                "rain": "taipei/beitou/background-taipei-beitou-rain-yangmingshan-flower-clock.webp",
+                "heavy_rain": "taipei/beitou/background-taipei-beitou-heavy-rain-yangmingshan-flower-clock.webp",
+                "thunderstorm": "taipei/beitou/background-taipei-beitou-thunderstorm-yangmingshan-flower-clock.webp",
+                "dense_fog": "taipei/beitou/background-taipei-beitou-dense-fog-yangmingshan-flower-clock.webp"
+              }
+            }
+          },
+          "weather_pools": {
+            "clear_cloudy": [
+              {
+                "landmark": "yangmingshan-flower-clock",
+                "weight": 1
+              }
+            ],
+            "overcast": [
+              {
+                "landmark": "yangmingshan-flower-clock",
+                "weight": 1
+              }
+            ],
+            "rain": [
+              {
+                "landmark": "yangmingshan-flower-clock",
+                "weight": 1
+              }
+            ],
+            "heavy_rain": [
+              {
+                "landmark": "yangmingshan-flower-clock",
+                "weight": 1
+              }
+            ],
+            "thunderstorm": [
+              {
+                "landmark": "yangmingshan-flower-clock",
+                "weight": 1
+              }
+            ],
+            "dense_fog": [
+              {
+                "landmark": "yangmingshan-flower-clock",
+                "weight": 1
+              }
+            ]
+          }
         }
       }
     }
