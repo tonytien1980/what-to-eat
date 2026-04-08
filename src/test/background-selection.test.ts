@@ -234,7 +234,7 @@ test('uses the live Beitou district background pool to randomize between shipped
       district: '北投區',
     },
     period: thunderstormPeriod,
-    randomValue: 0.2,
+    randomValue: 0.1,
   });
   const guanduPick = resolveBackgroundSelection({
     location: {
@@ -242,7 +242,15 @@ test('uses the live Beitou district background pool to randomize between shipped
       district: '北投區',
     },
     period: thunderstormPeriod,
-    randomValue: 0.8,
+    randomValue: 0.5,
+  });
+  const libraryPick = resolveBackgroundSelection({
+    location: {
+      city: '臺北市',
+      district: '北投區',
+    },
+    period: thunderstormPeriod,
+    randomValue: 0.9,
   });
 
   expect(flowerClockPick.source).toBe('district');
@@ -254,5 +262,10 @@ test('uses the live Beitou district background pool to randomize between shipped
   expect(guanduPick.sceneLabel).toBe('關渡宮');
   expect(guanduPick.assetPath).toBe(
     'taipei/beitou/background-taipei-beitou-thunderstorm-guandu-temple.webp',
+  );
+  expect(libraryPick.source).toBe('district');
+  expect(libraryPick.sceneLabel).toBe('臺北市立圖書館北投分館');
+  expect(libraryPick.assetPath).toBe(
+    'taipei/beitou/background-taipei-beitou-thunderstorm-taipei-public-library-beitou-branch.webp',
   );
 });

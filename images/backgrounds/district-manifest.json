@@ -306,6 +306,18 @@
                 "thunderstorm": "taipei/beitou/background-taipei-beitou-thunderstorm-guandu-temple.webp",
                 "dense_fog": "taipei/beitou/background-taipei-beitou-dense-fog-guandu-temple.webp"
               }
+            },
+            "taipei-public-library-beitou-branch": {
+              "label_zh": "臺北市立圖書館北投分館",
+              "weight": 1,
+              "variants": {
+                "clear_cloudy": "taipei/beitou/background-taipei-beitou-clear-cloudy-taipei-public-library-beitou-branch.webp",
+                "overcast": "taipei/beitou/background-taipei-beitou-overcast-taipei-public-library-beitou-branch.webp",
+                "rain": "taipei/beitou/background-taipei-beitou-rain-taipei-public-library-beitou-branch.webp",
+                "heavy_rain": "taipei/beitou/background-taipei-beitou-heavy-rain-taipei-public-library-beitou-branch.webp",
+                "thunderstorm": "taipei/beitou/background-taipei-beitou-thunderstorm-taipei-public-library-beitou-branch.webp",
+                "dense_fog": "taipei/beitou/background-taipei-beitou-dense-fog-taipei-public-library-beitou-branch.webp"
+              }
             }
           },
           "weather_pools": {
@@ -317,6 +329,10 @@
               {
                 "landmark": "guandu-temple",
                 "weight": 1
+              },
+              {
+                "landmark": "taipei-public-library-beitou-branch",
+                "weight": 1
               }
             ],
             "overcast": [
@@ -326,6 +342,10 @@
               },
               {
                 "landmark": "guandu-temple",
+                "weight": 1
+              },
+              {
+                "landmark": "taipei-public-library-beitou-branch",
                 "weight": 1
               }
             ],
@@ -337,6 +357,10 @@
               {
                 "landmark": "guandu-temple",
                 "weight": 1
+              },
+              {
+                "landmark": "taipei-public-library-beitou-branch",
+                "weight": 1
               }
             ],
             "heavy_rain": [
@@ -346,6 +370,10 @@
               },
               {
                 "landmark": "guandu-temple",
+                "weight": 1
+              },
+              {
+                "landmark": "taipei-public-library-beitou-branch",
                 "weight": 1
               }
             ],
@@ -357,6 +385,10 @@
               {
                 "landmark": "guandu-temple",
                 "weight": 1
+              },
+              {
+                "landmark": "taipei-public-library-beitou-branch",
+                "weight": 1
               }
             ],
             "dense_fog": [
@@ -366,6 +398,10 @@
               },
               {
                 "landmark": "guandu-temple",
+                "weight": 1
+              },
+              {
+                "landmark": "taipei-public-library-beitou-branch",
                 "weight": 1
               }
             ]
