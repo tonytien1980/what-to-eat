@@ -26,7 +26,10 @@ export function getRestaurantDistrict(
   return normalizePlaceName(restaurant.district) ?? DEFAULT_LOCATION_DISTRICT;
 }
 
-export function buildLocationOptionGroups(restaurants: RestaurantRecord[]) {
+export function buildLocationOptionGroups(
+  restaurants: RestaurantRecord[],
+  preservedLocations: Array<Pick<LocationPreference, 'city' | 'district'>> = [],
+) {
   const cityMap = new Map<string, Set<string>>();
 
   cityMap.set(DEFAULT_LOCATION_CITY, new Set([DEFAULT_LOCATION_DISTRICT]));
@@ -34,6 +37,23 @@ export function buildLocationOptionGroups(restaurants: RestaurantRecord[]) {
   for (const restaurant of restaurants) {
     const city = getRestaurantCity(restaurant);
     const district = getRestaurantDistrict(restaurant);
+
+    if (!cityMap.has(city)) {
+      cityMap.set(city, new Set());
+    }
+
+    if (district) {
+      cityMap.get(city)!.add(district);
+    }
+  }
+
+  for (const preservedLocation of preservedLocations) {
+    const city = normalizePlaceName(preservedLocation.city);
+    const district = normalizePlaceName(preservedLocation.district);
+
+    if (!city) {
+      continue;
+    }
 
     if (!cityMap.has(city)) {
       cityMap.set(city, new Set());

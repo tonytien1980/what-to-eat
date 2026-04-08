@@ -49,3 +49,25 @@ test('updates the visible candidate count when category changes', () => {
   fireEvent.click(screen.getByRole('button', { name: '飲料' }));
   expect(screen.getByText('飲料遠征 · 可抽 15 家')).toBeInTheDocument();
 });
+
+test('keeps an explicit district selection on refresh-like load and disables categories with zero candidates in that district', () => {
+  window.localStorage.setItem(
+    'what-to-eat:location-preference',
+    JSON.stringify({
+      city: '臺北市',
+      district: '松山區',
+      source: 'manual',
+      promptState: 'accepted',
+      savedAt: '2026-04-08T00:00:00.000Z',
+    }),
+  );
+
+  render(<App />);
+
+  expect(screen.getByText('預計冒險地：')).toBeInTheDocument();
+  expect(screen.getByText('臺北市松山區')).toBeInTheDocument();
+
+  fireEvent.click(screen.getByRole('button', { name: '晚餐' }));
+  expect(screen.getByText('晚餐遠征 · 可抽 0 家')).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: '目前沒有可用據點' })).toBeDisabled();
+});

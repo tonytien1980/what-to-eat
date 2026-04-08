@@ -32,12 +32,10 @@ export function getLocationAwareCandidatePool(
       (restaurant) => getRestaurantDistrict(restaurant) === location.district,
     );
 
-    if (districtPool.length > 0) {
-      return districtPool;
-    }
+    return districtPool;
   }
 
-  return cityPool.length > 0 ? cityPool : basePool;
+  return cityPool;
 }
 
 function matchesCardFilter(restaurant: RestaurantRecord, card: DestinyCard) {

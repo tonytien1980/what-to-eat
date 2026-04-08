@@ -16,7 +16,7 @@ test('filters active category and enabled restaurants', () => {
   expect(pool.every((item) => item.isEnabled)).toBe(true);
 });
 
-test('uses district first, then city, then full category fallback for location-aware pools', () => {
+test('uses district-strict filtering when a district is selected, and only falls back to city when district is omitted', () => {
   const sampleRestaurants = [
     {
       id: 'lunch-a',
@@ -67,6 +67,13 @@ test('uses district first, then city, then full category fallback for location-a
     getLocationAwareCandidatePool(sampleRestaurants, 'lunch', {
       city: '臺北市',
       district: '信義區',
+    }),
+  ).toEqual([]);
+
+  expect(
+    getLocationAwareCandidatePool(sampleRestaurants, 'lunch', {
+      city: '臺北市',
+      district: null,
     }).map((item) => item.id),
   ).toEqual(['lunch-a', 'lunch-b']);
 
@@ -74,6 +81,6 @@ test('uses district first, then city, then full category fallback for location-a
     getLocationAwareCandidatePool(sampleRestaurants, 'lunch', {
       city: '桃園市',
       district: '中壢區',
-    }).map((item) => item.id),
-  ).toEqual(['lunch-a', 'lunch-b', 'lunch-c']);
+    }),
+  ).toEqual([]);
 });

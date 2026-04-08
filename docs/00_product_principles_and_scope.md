@@ -158,7 +158,7 @@
 1. 若有本地記住的位置，first paint 直接使用
 2. 若還沒有本地位置，先沿用現有產品錨點 `臺北市中山區`
 3. 使用者可隨時以輕量介面更改城市 / 地區
-4. 餐廳候選池依 `district -> city -> fallback` 決定
+4. 餐廳候選池依 `district strict -> city strict -> no-location fallback` 決定
 5. 若目前遠征地有正式背景圖，背景優先使用該行政區圖資
 6. 若目前遠征地尚無正式背景圖，回退到共享背景
 7. 若目前遠征地有 CWA 鄉鎮 mapping，首頁天氣跟著該行政區走

@@ -13,12 +13,12 @@ import {
 } from './storage';
 
 export function useLocationPreference(restaurants: RestaurantRecord[]) {
-  const locationGroups = useMemo(
-    () => buildLocationOptionGroups(restaurants),
-    [restaurants],
-  );
   const [currentLocation, setCurrentLocation] = useState(() =>
     readSavedLocationPreference() ?? createDefaultLocationPreference(),
+  );
+  const locationGroups = useMemo(
+    () => buildLocationOptionGroups(restaurants, [currentLocation]),
+    [currentLocation, restaurants],
   );
   const [isChooserOpen, setIsChooserOpen] = useState(false);
   const [draftCity, setDraftCity] = useState(currentLocation.city);

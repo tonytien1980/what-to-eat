@@ -64,8 +64,10 @@
 - 若有 saved location，first paint 直接套用，不重開 chooser
 - refresh 不重開 chooser
 - 若同時有 `city + district`，優先用 district pool
-- district 無結果時，正確回退到 city pool
-- city 也無結果時，正確回退到 category 的 enabled pool
+- 若同時有 `city + district`，該 district 必須被保留，不可因 fallback snapshot 尚未同步就被洗成 `city-only`
+- district 無結果時，該類別應顯示 `可抽 0 家`，不得偷偷回退到 city pool
+- 只有在 `district` 留空時，才可使用 city pool
+- city 無結果時，CTA 應顯示 `目前沒有可用據點` 並保持禁用
 - `預計冒險地` 狀態在 UI 上可見
 - `更改預計冒險地` 可用
 - scene line 不可再顯示 `城市 / 行政區 · 景點 · 天氣` 三段混合資訊

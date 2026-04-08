@@ -270,7 +270,7 @@ location-aware 方向已進入 Phase 1，但目前仍不是完整 detect-first r
 - `臺北市中山區` phase-1 default anchor
 - lightweight location display
 - lightweight manual correction UI
-- `district -> city -> fallback` 過濾順序
+- `district strict -> city strict -> no-location fallback` 過濾順序
 
 仍不要做：
 
@@ -549,7 +549,7 @@ Pack 代表一組在特定情境下可成立、可被玩、可被接受的內容
 
 1. category
 2. enabled flag
-3. location filter：`district -> city -> fallback`
+3. location filter：`district strict -> city strict -> no-location fallback`
 4. destiny-card filter
 5. 若 destiny-card filter 為空，回退到 location-resolved pool
 
@@ -561,13 +561,19 @@ Pack 代表一組在特定情境下可成立、可被玩、可被接受的內容
 
 1. category
 2. enabled flag
-3. location filter：`district -> city -> fallback`
+3. location filter：`district strict -> city strict -> no-location fallback`
 4. destiny-card filter
 5. 若結果為空，回退到 location-resolved pool
 
 換句話說，正式產品原則是：
 
-`district -> city -> safe fallback`
+`district strict -> city strict -> safe fallback`
+
+細則：
+
+- 若使用者明確選了 `city + district`，只能使用該 district pool；該類別為空時結果就是 `0`
+- 若使用者只選了 `city`，只能使用該 city pool；該類別為空時結果就是 `0`
+- 只有在沒有 location state 的情況下，才允許回退到 category enabled pool
 
 補充：
 

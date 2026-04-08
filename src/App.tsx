@@ -174,13 +174,15 @@ export default function App() {
             disabled={
               isAnimating ||
               restaurantCatalog.restaurants.length === 0 ||
-              activeCategory === null
+              activeCategory === null ||
+              activeCategoryCount === 0
             }
           >
             <span className="start-button-label">
               {isAnimating
                 ? '遠征占卜中...'
-                : restaurantCatalog.restaurants.length === 0
+                : restaurantCatalog.restaurants.length === 0 ||
+                    (activeCategory !== null && activeCategoryCount === 0)
                   ? '目前沒有可用據點'
                   : startButtonLabel}
             </span>
