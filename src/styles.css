@@ -79,7 +79,7 @@ a {
 
 .title-block {
   display: grid;
-  gap: 8px;
+  gap: 7.5px;
   text-align: center;
 }
 
@@ -98,7 +98,7 @@ a {
 }
 
 .scene-line {
-  margin: 0;
+  margin: 1px 0 0;
   color: var(--header-meta-strong);
   font-family: 'Noto Sans TC', 'PingFang TC', sans-serif;
   font-size: 0.92rem;
