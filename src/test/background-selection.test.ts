@@ -185,3 +185,20 @@ test('uses the live Zhongshan weather pool to randomize between shipped district
     'taipei/zhongshan/background-taipei-zhongshan-thunderstorm-taipei-fine-arts-museum.webp',
   );
 });
+
+test('uses the live Songshan district background when a formal district asset exists', () => {
+  const selection = resolveBackgroundSelection({
+    location: {
+      city: '臺北市',
+      district: '松山區',
+    },
+    period: thunderstormPeriod,
+    randomValue: 0.2,
+  });
+
+  expect(selection.source).toBe('district');
+  expect(selection.sceneLabel).toBe('松山慈祐宮');
+  expect(selection.assetPath).toBe(
+    'taipei/songshan/background-taipei-songshan-thunderstorm-songshan-ciyou-temple.webp',
+  );
+});

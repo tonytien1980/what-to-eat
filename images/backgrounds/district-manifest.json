@@ -152,6 +152,61 @@
               }
             ]
           }
+        },
+        "松山區": {
+          "slug": "songshan",
+          "landmarks": {
+            "songshan-ciyou-temple": {
+              "label_zh": "松山慈祐宮",
+              "weight": 1,
+              "variants": {
+                "clear_cloudy": "taipei/songshan/background-taipei-songshan-clear-cloudy-songshan-ciyou-temple.webp",
+                "overcast": "taipei/songshan/background-taipei-songshan-overcast-songshan-ciyou-temple.webp",
+                "rain": "taipei/songshan/background-taipei-songshan-rain-songshan-ciyou-temple.webp",
+                "heavy_rain": "taipei/songshan/background-taipei-songshan-heavy-rain-songshan-ciyou-temple.webp",
+                "thunderstorm": "taipei/songshan/background-taipei-songshan-thunderstorm-songshan-ciyou-temple.webp",
+                "dense_fog": "taipei/songshan/background-taipei-songshan-dense-fog-songshan-ciyou-temple.webp"
+              }
+            }
+          },
+          "weather_pools": {
+            "clear_cloudy": [
+              {
+                "landmark": "songshan-ciyou-temple",
+                "weight": 1
+              }
+            ],
+            "overcast": [
+              {
+                "landmark": "songshan-ciyou-temple",
+                "weight": 1
+              }
+            ],
+            "rain": [
+              {
+                "landmark": "songshan-ciyou-temple",
+                "weight": 1
+              }
+            ],
+            "heavy_rain": [
+              {
+                "landmark": "songshan-ciyou-temple",
+                "weight": 1
+              }
+            ],
+            "thunderstorm": [
+              {
+                "landmark": "songshan-ciyou-temple",
+                "weight": 1
+              }
+            ],
+            "dense_fog": [
+              {
+                "landmark": "songshan-ciyou-temple",
+                "weight": 1
+              }
+            ]
+          }
         }
       }
     }
