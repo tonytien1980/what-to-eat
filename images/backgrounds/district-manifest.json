@@ -406,6 +406,61 @@
               }
             ]
           }
+        },
+        "士林區": {
+          "slug": "shilin",
+          "landmarks": {
+            "national-palace-museum": {
+              "label_zh": "國立故宮博物院",
+              "weight": 1,
+              "variants": {
+                "clear_cloudy": "taipei/shilin/background-taipei-shilin-clear-cloudy-national-palace-museum.webp",
+                "overcast": "taipei/shilin/background-taipei-shilin-overcast-national-palace-museum.webp",
+                "rain": "taipei/shilin/background-taipei-shilin-rain-national-palace-museum.webp",
+                "heavy_rain": "taipei/shilin/background-taipei-shilin-heavy-rain-national-palace-museum.webp",
+                "thunderstorm": "taipei/shilin/background-taipei-shilin-thunderstorm-national-palace-museum.webp",
+                "dense_fog": "taipei/shilin/background-taipei-shilin-dense-fog-national-palace-museum.webp"
+              }
+            }
+          },
+          "weather_pools": {
+            "clear_cloudy": [
+              {
+                "landmark": "national-palace-museum",
+                "weight": 1
+              }
+            ],
+            "overcast": [
+              {
+                "landmark": "national-palace-museum",
+                "weight": 1
+              }
+            ],
+            "rain": [
+              {
+                "landmark": "national-palace-museum",
+                "weight": 1
+              }
+            ],
+            "heavy_rain": [
+              {
+                "landmark": "national-palace-museum",
+                "weight": 1
+              }
+            ],
+            "thunderstorm": [
+              {
+                "landmark": "national-palace-museum",
+                "weight": 1
+              }
+            ],
+            "dense_fog": [
+              {
+                "landmark": "national-palace-museum",
+                "weight": 1
+              }
+            ]
+          }
         }
       }
     }

@@ -269,3 +269,20 @@ test('uses the live Beitou district background pool to randomize between shipped
     'taipei/beitou/background-taipei-beitou-thunderstorm-taipei-public-library-beitou-branch.webp',
   );
 });
+
+test('uses the live Shilin district background when a formal district asset exists', () => {
+  const selection = resolveBackgroundSelection({
+    location: {
+      city: '臺北市',
+      district: '士林區',
+    },
+    period: thunderstormPeriod,
+    randomValue: 0.2,
+  });
+
+  expect(selection.source).toBe('district');
+  expect(selection.sceneLabel).toBe('國立故宮博物院');
+  expect(selection.assetPath).toBe(
+    'taipei/shilin/background-taipei-shilin-thunderstorm-national-palace-museum.webp',
+  );
+});
