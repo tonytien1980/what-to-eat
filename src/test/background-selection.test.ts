@@ -227,8 +227,8 @@ test('uses the live Songshan district background when a formal district asset ex
   );
 });
 
-test('uses the live Beitou district background when a formal district asset exists', () => {
-  const selection = resolveBackgroundSelection({
+test('uses the live Beitou district background pool to randomize between shipped district landmarks', () => {
+  const flowerClockPick = resolveBackgroundSelection({
     location: {
       city: '臺北市',
       district: '北投區',
@@ -236,10 +236,23 @@ test('uses the live Beitou district background when a formal district asset exis
     period: thunderstormPeriod,
     randomValue: 0.2,
   });
+  const guanduPick = resolveBackgroundSelection({
+    location: {
+      city: '臺北市',
+      district: '北投區',
+    },
+    period: thunderstormPeriod,
+    randomValue: 0.8,
+  });
 
-  expect(selection.source).toBe('district');
-  expect(selection.sceneLabel).toBe('陽明山花鐘');
-  expect(selection.assetPath).toBe(
+  expect(flowerClockPick.source).toBe('district');
+  expect(flowerClockPick.sceneLabel).toBe('陽明山花鐘');
+  expect(flowerClockPick.assetPath).toBe(
     'taipei/beitou/background-taipei-beitou-thunderstorm-yangmingshan-flower-clock.webp',
+  );
+  expect(guanduPick.source).toBe('district');
+  expect(guanduPick.sceneLabel).toBe('關渡宮');
+  expect(guanduPick.assetPath).toBe(
+    'taipei/beitou/background-taipei-beitou-thunderstorm-guandu-temple.webp',
   );
 });

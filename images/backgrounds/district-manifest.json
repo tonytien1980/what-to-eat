@@ -294,6 +294,18 @@
                 "thunderstorm": "taipei/beitou/background-taipei-beitou-thunderstorm-yangmingshan-flower-clock.webp",
                 "dense_fog": "taipei/beitou/background-taipei-beitou-dense-fog-yangmingshan-flower-clock.webp"
               }
+            },
+            "guandu-temple": {
+              "label_zh": "關渡宮",
+              "weight": 1,
+              "variants": {
+                "clear_cloudy": "taipei/beitou/background-taipei-beitou-clear-cloudy-guandu-temple.webp",
+                "overcast": "taipei/beitou/background-taipei-beitou-overcast-guandu-temple.webp",
+                "rain": "taipei/beitou/background-taipei-beitou-rain-guandu-temple.webp",
+                "heavy_rain": "taipei/beitou/background-taipei-beitou-heavy-rain-guandu-temple.webp",
+                "thunderstorm": "taipei/beitou/background-taipei-beitou-thunderstorm-guandu-temple.webp",
+                "dense_fog": "taipei/beitou/background-taipei-beitou-dense-fog-guandu-temple.webp"
+              }
             }
           },
           "weather_pools": {
@@ -301,11 +313,19 @@
               {
                 "landmark": "yangmingshan-flower-clock",
                 "weight": 1
+              },
+              {
+                "landmark": "guandu-temple",
+                "weight": 1
               }
             ],
             "overcast": [
               {
                 "landmark": "yangmingshan-flower-clock",
+                "weight": 1
+              },
+              {
+                "landmark": "guandu-temple",
                 "weight": 1
               }
             ],
@@ -313,11 +333,19 @@
               {
                 "landmark": "yangmingshan-flower-clock",
                 "weight": 1
+              },
+              {
+                "landmark": "guandu-temple",
+                "weight": 1
               }
             ],
             "heavy_rain": [
               {
                 "landmark": "yangmingshan-flower-clock",
+                "weight": 1
+              },
+              {
+                "landmark": "guandu-temple",
                 "weight": 1
               }
             ],
@@ -325,11 +353,19 @@
               {
                 "landmark": "yangmingshan-flower-clock",
                 "weight": 1
+              },
+              {
+                "landmark": "guandu-temple",
+                "weight": 1
               }
             ],
             "dense_fog": [
               {
                 "landmark": "yangmingshan-flower-clock",
+                "weight": 1
+              },
+              {
+                "landmark": "guandu-temple",
                 "weight": 1
               }
             ]
