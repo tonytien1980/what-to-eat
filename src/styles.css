@@ -10,6 +10,11 @@
   --ink-strong: #f9f3ed;
   --ink-soft: rgba(249, 243, 237, 0.78);
   --line-soft: rgba(255, 239, 209, 0.14);
+  --header-meta-strong: rgba(249, 242, 233, 0.92);
+  --header-meta-soft: rgba(243, 234, 224, 0.8);
+  --header-meta-muted: rgba(238, 227, 214, 0.66);
+  --header-meta-accent: rgba(255, 229, 170, 0.88);
+  --header-meta-shadow: 0 4px 16px rgba(6, 9, 15, 0.2);
   --gold: #f1c56f;
   --ember: #ff8559;
   --jade: #61c4b1;
@@ -74,7 +79,7 @@ a {
 
 .title-block {
   display: grid;
-  gap: 10px;
+  gap: 8px;
   text-align: center;
 }
 
@@ -94,35 +99,43 @@ a {
 
 .scene-line {
   margin: 0;
-  color: rgba(255, 244, 224, 0.9);
-  font-size: 0.9rem;
+  color: var(--header-meta-strong);
+  font-family: 'Noto Sans TC', 'PingFang TC', sans-serif;
+  font-size: clamp(0.92rem, 2vw, 0.98rem);
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
+  text-shadow: var(--header-meta-shadow);
 }
 
 .forecast-source-line {
-  margin: -2px 0 0;
-  color: rgba(255, 236, 198, 0.72);
-  font-size: 0.78rem;
+  margin: 0;
+  color: var(--header-meta-accent);
+  font-family: 'Noto Sans TC', 'PingFang TC', sans-serif;
+  font-size: 0.8rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.06em;
+  text-shadow: var(--header-meta-shadow);
 }
 
 .weather-lines {
   display: grid;
-  gap: 4px;
+  gap: 3px;
 }
 
 .weather-line {
   margin: 0;
-  color: rgba(244, 235, 223, 0.88);
-  font-size: 0.95rem;
-  font-weight: 700;
+  color: var(--header-meta-soft);
+  font-family: 'Noto Sans TC', 'PingFang TC', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  text-shadow: var(--header-meta-shadow);
 }
 
 .weather-line-soft {
-  color: rgba(235, 227, 217, 0.72);
+  color: var(--header-meta-muted);
   font-size: 0.9rem;
+  font-weight: 700;
 }
 
 .location-status {
@@ -142,9 +155,20 @@ a {
 
 .location-status-copy {
   margin: 0;
-  color: rgba(249, 242, 233, 0.9);
+  color: var(--header-meta-strong);
+  font-family: 'Noto Sans TC', 'PingFang TC', sans-serif;
   font-size: 0.92rem;
   font-weight: 800;
+  letter-spacing: 0.02em;
+  text-shadow: var(--header-meta-shadow);
+}
+
+.location-status-label {
+  color: var(--header-meta-soft);
+}
+
+.location-status-value {
+  color: var(--header-meta-strong);
 }
 
 .location-status-trigger,
@@ -159,10 +183,12 @@ a {
 .location-status-trigger {
   padding: 0;
   background: transparent;
-  color: rgba(255, 225, 155, 0.92);
-  font-size: 0.86rem;
-  font-weight: 900;
-  letter-spacing: 0.04em;
+  color: var(--header-meta-accent);
+  font-family: 'Noto Sans TC', 'PingFang TC', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-shadow: var(--header-meta-shadow);
 }
 
 .location-sheet {
@@ -1159,6 +1185,15 @@ a {
     border-radius: 18px;
     flex-wrap: wrap;
     justify-content: center;
+  }
+
+  .scene-line,
+  .location-status-copy,
+  .location-status-trigger,
+  .forecast-source-line,
+  .weather-line,
+  .weather-line-soft {
+    text-wrap: balance;
   }
 
   .location-sheet {

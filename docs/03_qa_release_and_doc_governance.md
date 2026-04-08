@@ -95,6 +95,7 @@
 - 分類按鈕與卷軸 CTA 在圖資上仍可辨識
 - `準備好了嗎？` 不可在 desktop 或 mobile 換行
 - 距離資訊列在 mobile 上不得壓進卡片或按鈕
+- 景點 / 天氣摘要、預計冒險地列、預報標題與預報細節不可出現不同字族、互相打架的色階或失衡的字級
 - 正式可被程式抽選與正式同步的背景圖，只能位於 `images/backgrounds/`
 - `output/background-trials`、`output/background-finals`、`output/background-runtime` 都是本地工區，不得視為正式上線圖資來源
 - 正式背景圖只保留 `webp`
