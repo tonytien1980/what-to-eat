@@ -433,6 +433,18 @@
                 "thunderstorm": "taipei/shilin/background-taipei-shilin-thunderstorm-zhishanyan-huiji-temple.webp",
                 "dense_fog": "taipei/shilin/background-taipei-shilin-dense-fog-zhishanyan-huiji-temple.webp"
               }
+            },
+            "shilin-night-market": {
+              "label_zh": "士林夜市",
+              "weight": 1,
+              "variants": {
+                "clear_cloudy": "taipei/shilin/background-taipei-shilin-clear-cloudy-shilin-night-market.webp",
+                "overcast": "taipei/shilin/background-taipei-shilin-overcast-shilin-night-market.webp",
+                "rain": "taipei/shilin/background-taipei-shilin-rain-shilin-night-market.webp",
+                "heavy_rain": "taipei/shilin/background-taipei-shilin-heavy-rain-shilin-night-market.webp",
+                "thunderstorm": "taipei/shilin/background-taipei-shilin-thunderstorm-shilin-night-market.webp",
+                "dense_fog": "taipei/shilin/background-taipei-shilin-dense-fog-shilin-night-market.webp"
+              }
             }
           },
           "weather_pools": {
@@ -444,6 +456,10 @@
               {
                 "landmark": "zhishanyan-huiji-temple",
                 "weight": 1
+              },
+              {
+                "landmark": "shilin-night-market",
+                "weight": 1
               }
             ],
             "overcast": [
@@ -453,6 +469,10 @@
               },
               {
                 "landmark": "zhishanyan-huiji-temple",
+                "weight": 1
+              },
+              {
+                "landmark": "shilin-night-market",
                 "weight": 1
               }
             ],
@@ -464,6 +484,10 @@
               {
                 "landmark": "zhishanyan-huiji-temple",
                 "weight": 1
+              },
+              {
+                "landmark": "shilin-night-market",
+                "weight": 1
               }
             ],
             "heavy_rain": [
@@ -473,6 +497,10 @@
               },
               {
                 "landmark": "zhishanyan-huiji-temple",
+                "weight": 1
+              },
+              {
+                "landmark": "shilin-night-market",
                 "weight": 1
               }
             ],
@@ -484,6 +512,10 @@
               {
                 "landmark": "zhishanyan-huiji-temple",
                 "weight": 1
+              },
+              {
+                "landmark": "shilin-night-market",
+                "weight": 1
               }
             ],
             "dense_fog": [
@@ -493,6 +525,10 @@
               },
               {
                 "landmark": "zhishanyan-huiji-temple",
+                "weight": 1
+              },
+              {
+                "landmark": "shilin-night-market",
                 "weight": 1
               }
             ]

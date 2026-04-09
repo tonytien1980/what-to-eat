@@ -277,7 +277,7 @@ test('uses the live Shilin district background pool to randomize between shipped
       district: '士林區',
     },
     period: thunderstormPeriod,
-    randomValue: 0.2,
+    randomValue: 0.1,
   });
   const huijiPick = resolveBackgroundSelection({
     location: {
@@ -285,7 +285,15 @@ test('uses the live Shilin district background pool to randomize between shipped
       district: '士林區',
     },
     period: thunderstormPeriod,
-    randomValue: 0.8,
+    randomValue: 0.5,
+  });
+  const nightMarketPick = resolveBackgroundSelection({
+    location: {
+      city: '臺北市',
+      district: '士林區',
+    },
+    period: thunderstormPeriod,
+    randomValue: 0.9,
   });
 
   expect(palacePick.source).toBe('district');
@@ -297,5 +305,10 @@ test('uses the live Shilin district background pool to randomize between shipped
   expect(huijiPick.sceneLabel).toBe('芝山巖惠濟宮');
   expect(huijiPick.assetPath).toBe(
     'taipei/shilin/background-taipei-shilin-thunderstorm-zhishanyan-huiji-temple.webp',
+  );
+  expect(nightMarketPick.source).toBe('district');
+  expect(nightMarketPick.sceneLabel).toBe('士林夜市');
+  expect(nightMarketPick.assetPath).toBe(
+    'taipei/shilin/background-taipei-shilin-thunderstorm-shilin-night-market.webp',
   );
 });
