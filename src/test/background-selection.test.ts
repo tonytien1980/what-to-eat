@@ -270,8 +270,8 @@ test('uses the live Beitou district background pool to randomize between shipped
   );
 });
 
-test('uses the live Shilin district background when a formal district asset exists', () => {
-  const selection = resolveBackgroundSelection({
+test('uses the live Shilin district background pool to randomize between shipped district landmarks', () => {
+  const palacePick = resolveBackgroundSelection({
     location: {
       city: '臺北市',
       district: '士林區',
@@ -279,10 +279,23 @@ test('uses the live Shilin district background when a formal district asset exis
     period: thunderstormPeriod,
     randomValue: 0.2,
   });
+  const huijiPick = resolveBackgroundSelection({
+    location: {
+      city: '臺北市',
+      district: '士林區',
+    },
+    period: thunderstormPeriod,
+    randomValue: 0.8,
+  });
 
-  expect(selection.source).toBe('district');
-  expect(selection.sceneLabel).toBe('國立故宮博物院');
-  expect(selection.assetPath).toBe(
+  expect(palacePick.source).toBe('district');
+  expect(palacePick.sceneLabel).toBe('國立故宮博物院');
+  expect(palacePick.assetPath).toBe(
     'taipei/shilin/background-taipei-shilin-thunderstorm-national-palace-museum.webp',
+  );
+  expect(huijiPick.source).toBe('district');
+  expect(huijiPick.sceneLabel).toBe('芝山巖惠濟宮');
+  expect(huijiPick.assetPath).toBe(
+    'taipei/shilin/background-taipei-shilin-thunderstorm-zhishanyan-huiji-temple.webp',
   );
 });

@@ -421,6 +421,18 @@
                 "thunderstorm": "taipei/shilin/background-taipei-shilin-thunderstorm-national-palace-museum.webp",
                 "dense_fog": "taipei/shilin/background-taipei-shilin-dense-fog-national-palace-museum.webp"
               }
+            },
+            "zhishanyan-huiji-temple": {
+              "label_zh": "芝山巖惠濟宮",
+              "weight": 1,
+              "variants": {
+                "clear_cloudy": "taipei/shilin/background-taipei-shilin-clear-cloudy-zhishanyan-huiji-temple.webp",
+                "overcast": "taipei/shilin/background-taipei-shilin-overcast-zhishanyan-huiji-temple.webp",
+                "rain": "taipei/shilin/background-taipei-shilin-rain-zhishanyan-huiji-temple.webp",
+                "heavy_rain": "taipei/shilin/background-taipei-shilin-heavy-rain-zhishanyan-huiji-temple.webp",
+                "thunderstorm": "taipei/shilin/background-taipei-shilin-thunderstorm-zhishanyan-huiji-temple.webp",
+                "dense_fog": "taipei/shilin/background-taipei-shilin-dense-fog-zhishanyan-huiji-temple.webp"
+              }
             }
           },
           "weather_pools": {
@@ -428,11 +440,19 @@
               {
                 "landmark": "national-palace-museum",
                 "weight": 1
+              },
+              {
+                "landmark": "zhishanyan-huiji-temple",
+                "weight": 1
               }
             ],
             "overcast": [
               {
                 "landmark": "national-palace-museum",
+                "weight": 1
+              },
+              {
+                "landmark": "zhishanyan-huiji-temple",
                 "weight": 1
               }
             ],
@@ -440,11 +460,19 @@
               {
                 "landmark": "national-palace-museum",
                 "weight": 1
+              },
+              {
+                "landmark": "zhishanyan-huiji-temple",
+                "weight": 1
               }
             ],
             "heavy_rain": [
               {
                 "landmark": "national-palace-museum",
+                "weight": 1
+              },
+              {
+                "landmark": "zhishanyan-huiji-temple",
                 "weight": 1
               }
             ],
@@ -452,11 +480,19 @@
               {
                 "landmark": "national-palace-museum",
                 "weight": 1
+              },
+              {
+                "landmark": "zhishanyan-huiji-temple",
+                "weight": 1
               }
             ],
             "dense_fog": [
               {
                 "landmark": "national-palace-museum",
+                "weight": 1
+              },
+              {
+                "landmark": "zhishanyan-huiji-temple",
                 "weight": 1
               }
             ]
