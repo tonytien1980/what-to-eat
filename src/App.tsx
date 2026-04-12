@@ -18,6 +18,7 @@ import {
 } from './features/result/result-copy';
 import { useRestaurantCatalog } from './features/restaurants/use-restaurant-catalog';
 import { useExpedition } from './features/spin/useExpedition';
+import { useVersionUpdate } from './features/version/use-version-update';
 import { useTaipeiWeather } from './features/weather/useTaipeiWeather';
 import type { Category } from './features/restaurants/types';
 import './styles.css';
@@ -35,6 +36,7 @@ export default function App() {
   const [backgroundSeed] = useState(createBackgroundSeed);
   const restaurantCatalog = useRestaurantCatalog();
   const locationPreference = useLocationPreference(restaurantCatalog.restaurants);
+  const versionUpdate = useVersionUpdate();
   const {
     phase,
     round,
@@ -115,6 +117,15 @@ export default function App() {
               <p className="weather-line">{weatherPrimaryLine}</p>
               <p className="weather-line weather-line-soft">{weatherSecondaryLine}</p>
             </div>
+            {versionUpdate.hasUpdate ? (
+              <button
+                className="version-update-banner"
+                type="button"
+                onClick={versionUpdate.reloadToLatestVersion}
+              >
+                偵測到新版本，點此更新
+              </button>
+            ) : null}
           </div>
 
           <LocationSheet

@@ -55,6 +55,7 @@
 - 若官方天氣資料失敗，fallback weather 仍可顯示
 - 重新整理頁面時，同天候可輪替到其他相容場景
 - 首頁需顯示 `預計冒險地 3 小時天氣預報`
+- 若遠端版本 manifest 與目前 bundle 的 build id 不同，首頁需顯示 `偵測到新版本，點此更新`
 
 ## Active Capability Checks: Location-Aware Phase 1
 
@@ -79,6 +80,7 @@
 - Google Sheet 失敗時 fallback snapshot 仍可維持 location-aware safe fallback
 - 若目前遠征地有 CWA 鄉鎮 mapping，首頁 weather 必須跟著該行政區切換
 - 官方 CWA weather script 不可永久吃同一個固定 URL cache；runtime 應使用時間桶 cache key 避免天氣長時間卡在舊狀態
+- `version.json` 必須隨 build 更新，避免手機或 Safari 長時間卡在舊首頁 bundle
 - 若目前遠征地無正式背景圖，背景必須回退到 shared，而不是卡死在前一個行政區
 - `data/cwa-town-locations.json` 必須能正確把 `city / district` 對到 `countyCode / townId`
 - Phase 1 不會偷偷啟用 geolocation / IP fallback

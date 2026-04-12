@@ -122,6 +122,31 @@ a {
   gap: 3px;
 }
 
+.version-update-banner {
+  width: fit-content;
+  max-width: 100%;
+  margin: 2px auto 0;
+  padding: 8px 14px;
+  border: 1px solid rgba(255, 231, 186, 0.22);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(17, 22, 32, 0.56), rgba(17, 22, 32, 0.3)),
+    rgba(255, 255, 255, 0.02);
+  color: rgba(255, 236, 198, 0.92);
+  font-family: 'Noto Sans TC', 'PingFang TC', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-shadow: var(--header-meta-shadow);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+}
+
+.version-update-banner:hover {
+  border-color: rgba(255, 231, 186, 0.32);
+  color: rgba(255, 244, 222, 0.98);
+}
+
 .weather-line {
   margin: 0;
   color: var(--header-meta-soft);
