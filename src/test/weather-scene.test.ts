@@ -2,6 +2,8 @@ import {
   buildTaipeiWeatherSnapshot,
   buildTownDistrictWeatherSnapshot,
   buildZhongshanDistrictWeatherSnapshot,
+  createCwaCountyScriptUrl,
+  createCwaTownScriptUrl,
   extractCwaCountyScriptData,
   extractCwaTownScriptData,
   mapWxCodeToVariant,
@@ -71,6 +73,18 @@ test('extracts taipei weather from the official county script and derives a scen
   expect(snapshot.currentPeriod.wxCode).toBe(5);
   expect(snapshot.activeScene.variantKey).toBe('clear_cloudy');
   expect(snapshot.activeScene.sceneKey).toBe('desert_oasis');
+});
+
+test('adds a time-bucket cache key to official CWA script URLs so browsers do not pin stale forecast scripts forever', () => {
+  const now = Date.UTC(2026, 3, 12, 0, 45, 0);
+
+  expect(createCwaCountyScriptUrl(now)).toContain('?t=');
+  expect(createCwaTownScriptUrl('3hr', '63', now)).toBe(
+    'https://www.cwa.gov.tw/Data/js/3hr/ChartData_3hr_T_63.js?t=1973283',
+  );
+  expect(createCwaTownScriptUrl('gt24hr', '63', now)).toBe(
+    'https://www.cwa.gov.tw/Data/js/GT/ChartData_GT24hr_T_63.js?t=1973283',
+  );
 });
 
 test('maps thunderstorm forecast to the ruins scene', () => {

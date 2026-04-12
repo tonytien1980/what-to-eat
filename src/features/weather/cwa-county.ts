@@ -15,8 +15,9 @@ import {
 export { mapWxCodeToVariant, pickSceneForPeriod, getAltarSceneAsset };
 export { resolveCwaTownLocation } from './town-locations';
 
-export const CWA_COUNTY_SCRIPT_URL =
-  'https://www.cwa.gov.tw/Data/js/TableData_36hr_County_C.js?';
+const CWA_SCRIPT_CACHE_WINDOW_MS = 15 * 60 * 1000;
+const CWA_COUNTY_SCRIPT_BASE_URL =
+  'https://www.cwa.gov.tw/Data/js/TableData_36hr_County_C.js';
 
 const TAIPEI_CITY_CODE = '63';
 const ZHONGSHAN_TOWN_ID = '6300400';
@@ -116,12 +117,23 @@ function deriveComfortFromFeelsLike(feelsLikeTemp: number) {
   return '炎熱';
 }
 
-function createTownScriptUrl(kind: '3hr' | 'gt24hr', countyCode: string) {
+export function createCwaCountyScriptUrl(now = Date.now()) {
+  const cacheKey = Math.floor(now / CWA_SCRIPT_CACHE_WINDOW_MS);
+  return `${CWA_COUNTY_SCRIPT_BASE_URL}?t=${cacheKey}`;
+}
+
+export function createCwaTownScriptUrl(
+  kind: '3hr' | 'gt24hr',
+  countyCode: string,
+  now = Date.now(),
+) {
+  const cacheKey = Math.floor(now / CWA_SCRIPT_CACHE_WINDOW_MS);
+
   if (kind === '3hr') {
-    return `https://www.cwa.gov.tw/Data/js/3hr/ChartData_3hr_T_${countyCode}.js`;
+    return `https://www.cwa.gov.tw/Data/js/3hr/ChartData_3hr_T_${countyCode}.js?t=${cacheKey}`;
   }
 
-  return `https://www.cwa.gov.tw/Data/js/GT/ChartData_GT24hr_T_${countyCode}.js`;
+  return `https://www.cwa.gov.tw/Data/js/GT/ChartData_GT24hr_T_${countyCode}.js?t=${cacheKey}`;
 }
 
 export function extractCwaCountyScriptData(scriptText: string): CwaCountyDataset {
@@ -381,7 +393,7 @@ export function loadCwaCountyDataset(): Promise<CwaCountyDataset> {
     }
 
     const script = document.createElement('script');
-    script.src = CWA_COUNTY_SCRIPT_URL;
+    script.src = createCwaCountyScriptUrl();
     script.async = true;
     script.dataset.cwaCountyScript = 'true';
     script.onload = () => {
@@ -427,13 +439,13 @@ export function loadCwaTownDataset(countyCode: string): Promise<CwaTownDataset> 
   const nextPromise = Promise.all([
     loadScriptOnce(
       `script[data-cwa-town-3hr-script="${countyCode}"]`,
-      createTownScriptUrl('3hr', countyCode),
+      createCwaTownScriptUrl('3hr', countyCode),
       'data-cwa-town-3hr-script',
       countyCode,
     ),
     loadScriptOnce(
       `script[data-cwa-town-gt24hr-script="${countyCode}"]`,
-      createTownScriptUrl('gt24hr', countyCode),
+      createCwaTownScriptUrl('gt24hr', countyCode),
       'data-cwa-town-gt24hr-script',
       countyCode,
     ),
