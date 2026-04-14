@@ -1,5 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import App from '../App';
+import { createDefaultLocationPreference } from '../features/location/storage';
+import { restaurants } from '../features/restaurants/data';
+import { getLocationAwareCandidatePool } from '../features/restaurants/selectors';
 
 beforeEach(() => {
   window.localStorage.clear();
@@ -40,22 +43,36 @@ test('opens the lightweight location correction sheet', () => {
 });
 
 test('updates the visible candidate count when category changes', () => {
+  const defaultLocation = createDefaultLocationPreference();
+  const dinnerCount = getLocationAwareCandidatePool(
+    restaurants,
+    'dinner',
+    defaultLocation,
+  ).length;
+  const drinksCount = getLocationAwareCandidatePool(
+    restaurants,
+    'drinks',
+    defaultLocation,
+  ).length;
+
   render(<App />);
 
   fireEvent.click(screen.getByRole('button', { name: '晚餐' }));
-  expect(screen.getByText('晚餐遠征 · 可抽 4 家')).toBeInTheDocument();
+  expect(screen.getByText(`晚餐遠征 · 可抽 ${dinnerCount} 家`)).toBeInTheDocument();
   expect(screen.getByRole('button', { name: '決定今日命運' })).toBeEnabled();
 
   fireEvent.click(screen.getByRole('button', { name: '飲料' }));
-  expect(screen.getByText('飲料遠征 · 可抽 15 家')).toBeInTheDocument();
+  expect(screen.getByText(`飲料遠征 · 可抽 ${drinksCount} 家`)).toBeInTheDocument();
 });
 
 test('keeps an explicit district selection on refresh-like load and disables categories with zero candidates in that district', () => {
+  const preservedDistrict = '測試區';
+
   window.localStorage.setItem(
     'what-to-eat:location-preference',
     JSON.stringify({
       city: '臺北市',
-      district: '松山區',
+      district: preservedDistrict,
       source: 'manual',
       promptState: 'accepted',
       savedAt: '2026-04-08T00:00:00.000Z',
@@ -65,7 +82,7 @@ test('keeps an explicit district selection on refresh-like load and disables cat
   render(<App />);
 
   expect(screen.getByText('預計冒險地：')).toBeInTheDocument();
-  expect(screen.getByText('臺北市松山區')).toBeInTheDocument();
+  expect(screen.getByText(`臺北市${preservedDistrict}`)).toBeInTheDocument();
 
   fireEvent.click(screen.getByRole('button', { name: '晚餐' }));
   expect(screen.getByText('晚餐遠征 · 可抽 0 家')).toBeInTheDocument();

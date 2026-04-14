@@ -9,6 +9,7 @@ const originalGeolocation = window.navigator.geolocation;
 
 beforeEach(() => {
   window.localStorage.clear();
+  vi.spyOn(Math, 'random').mockReturnValue(0);
 });
 
 afterEach(() => {
@@ -16,6 +17,7 @@ afterEach(() => {
     configurable: true,
     value: originalGeolocation,
   });
+  vi.restoreAllMocks();
 });
 
 test('starts an expedition and reveals a destination', async () => {
