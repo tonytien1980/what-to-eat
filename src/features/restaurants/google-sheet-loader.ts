@@ -13,6 +13,7 @@ interface SheetRow {
   district: string | null;
   lat: number | null;
   lng: number | null;
+  placeId: string | null;
 }
 
 interface ResolveRestaurantCatalogOptions {
@@ -86,6 +87,7 @@ export function parsePublishedSheetCsv(text: string): SheetRow[] {
   const districtIndex = normalizedHeaders.indexOf('district');
   const latIndex = normalizedHeaders.indexOf('lat');
   const lngIndex = normalizedHeaders.indexOf('lng');
+  const placeIdIndex = normalizedHeaders.indexOf('placeid');
 
   if (nameIndex === -1 || mapUrlIndex === -1) {
     return [];
@@ -108,6 +110,7 @@ export function parsePublishedSheetCsv(text: string): SheetRow[] {
       district: dataRow[districtIndex]?.trim() || null,
       lat: parseOptionalNumber(dataRow[latIndex]),
       lng: parseOptionalNumber(dataRow[lngIndex]),
+      placeId: dataRow[placeIdIndex]?.trim() || null,
     }))
     .filter((row) => row.name && row.mapUrl);
 }
@@ -211,6 +214,7 @@ async function loadSourceSheet(
     name: row.name,
     category: source.category,
     mapUrl: row.mapUrl,
+    placeId: row.placeId,
     lat: row.lat,
     lng: row.lng,
     tags: inferTags(row.name, source.category),

@@ -1,18 +1,18 @@
 [
   {
     "category": "lunch",
-    "url": "https://docs.google.com/spreadsheets/d/1bVR4JtMgJTsDs3qPgPDZexZeOP-0qLhhLolwqDYNt7k/gviz/tq?tqx=out:csv&sheet=%E5%8D%88%E9%A4%90"
+    "url": "https://docs.google.com/spreadsheets/d/1bVR4JtMgJTsDs3qPgPDZexZeOP-0qLhhLolwqDYNt7k/export?format=csv&gid=1292660499"
   },
   {
     "category": "dinner",
-    "url": "https://docs.google.com/spreadsheets/d/1bVR4JtMgJTsDs3qPgPDZexZeOP-0qLhhLolwqDYNt7k/gviz/tq?tqx=out:csv&sheet=%E6%99%9A%E9%A4%90"
+    "url": "https://docs.google.com/spreadsheets/d/1bVR4JtMgJTsDs3qPgPDZexZeOP-0qLhhLolwqDYNt7k/export?format=csv&gid=2000631709"
   },
   {
     "category": "drinks",
-    "url": "https://docs.google.com/spreadsheets/d/1bVR4JtMgJTsDs3qPgPDZexZeOP-0qLhhLolwqDYNt7k/gviz/tq?tqx=out:csv&sheet=%E9%A3%B2%E6%96%99"
+    "url": "https://docs.google.com/spreadsheets/d/1bVR4JtMgJTsDs3qPgPDZexZeOP-0qLhhLolwqDYNt7k/export?format=csv&gid=1592174170"
   },
   {
     "category": "sweets",
-    "url": "https://docs.google.com/spreadsheets/d/1bVR4JtMgJTsDs3qPgPDZexZeOP-0qLhhLolwqDYNt7k/gviz/tq?tqx=out:csv&sheet=%E7%94%9C%E9%BB%9E"
+    "url": "https://docs.google.com/spreadsheets/d/1bVR4JtMgJTsDs3qPgPDZexZeOP-0qLhhLolwqDYNt7k/export?format=csv&gid=2025510556"
   }
 ]

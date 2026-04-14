@@ -119,8 +119,15 @@ MVP 採用靜態友善前端架構：
 
 - `data/restaurant-sheet-sources.json` 是公開試算表來源設定檔
 - 瀏覽器端直接 fetch published CSV 並轉成 runtime records
+- `data/restaurant-sheet-sources.json` 應優先使用 `export?format=csv&gid=...` 的 published CSV endpoint，而不是 `gviz/tq` query URL
 - `data/restaurants.json` 保留為 fallback snapshot
 - `npm run data:import` 的角色是刷新 fallback snapshot，不是主資料流程
+- 目前正式 runtime source 仍是 `publish` Google Sheet，而不是新的 `master` sheet
+- 目前已新增一份獨立 `master` Google Sheet 作為內部編輯主資料來源
+- `master` 目前採單表 `restaurants_master`，用分類布林欄位管理 fan-out
+- repo 內已存在 `master -> publish` sync core 與 bootstrap script，但 runtime 尚未直接讀取 `master`
+- repo 內已存在 `publish:preview` 指令，可從 live master 預覽將發布到 `publish` sheet 的四個分類表
+- 使用者手動觸發的「一鍵發布」目前採 Google Apps Script 路徑，而不是前端 runtime 直接讀 `master`
 - runtime data source state 屬於正式產品 contract，但是否直接露出在首頁 UI，必須由 `02_mvp_experience_and_gameplay_spec.md` 決定
 
 目前 owner sheet 的欄位 contract 為：
@@ -131,12 +138,35 @@ MVP 採用靜態友善前端架構：
 - `district`
 - `lat`
 - `lng`
+- `placeid`
+
+目前 `master` sheet 的欄位 contract 為：
+
+- `shop`
+- `maplink`
+- `city`
+- `district`
+- `lat`
+- `lng`
+- `placeid`
+- `is_lunch`
+- `is_dinner`
+- `is_drink`
+- `is_sweet`
+- `is_enabled`
 
 正式原則：
 
 - runtime loader 與 `npm run data:import` 只接受上述英文欄位 contract
+- `publish` sheet 仍是前端與 fallback import 的正式輸入面
+- `master` sheet 目前是內部治理層，不直接進入 runtime
+- `Apps Script` 發布器的角色是把 `master` 單表重建並覆蓋到 `publish` 的 `午餐 / 晚餐 / 飲料 / 甜點`
 - `lat` / `lng` 是正式位置欄位，用於後續距離顯示與 location-aware 能力
+- `placeid` 是正式精準地點識別欄位，用於後續更穩定的 map linking 與外部資料對位
 - 若單筆列暫時缺少 `lat` / `lng`，runtime 可安全視為 `null`，但 owner sheet 應以補齊為目標
+- 若單筆列暫時缺少 `placeid`，runtime 可安全視為 `null`，但 owner sheet 應以補齊為目標
+- `master` v1 rollout 的同步驗證目前只把缺 `shop / maplink` 視為 blocking error
+- `master` v1 rollout 對缺 `city / district / lat / lng / placeid` 採 warning-only，後續再逐步收斂
 - 結果階段的距離提示使用 browser geolocation 搭配 `lat` / `lng`
 - 距離提示另有獨立本地記憶層，用來保存上次成功定位的玩家座標
 
@@ -499,6 +529,7 @@ Pack 代表一組在特定情境下可成立、可被玩、可被接受的內容
   "city": "臺北市",
   "district": "中山區",
   "mapUrl": "https://maps.app.goo.gl/example",
+  "placeId": "ChIJ-example",
   "lat": 25.0521,
   "lng": 121.5438,
   "tags": ["noodle", "hot", "soup"],

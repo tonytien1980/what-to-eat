@@ -10,6 +10,7 @@ const sampleRestaurants: RestaurantRecord[] = [
     name: '中山午餐',
     category: 'lunch',
     mapUrl: 'https://example.com/zhongshan',
+    placeId: null,
     lat: 25.05,
     lng: 121.52,
     tags: ['meal'],

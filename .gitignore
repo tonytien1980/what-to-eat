@@ -1,6 +1,7 @@
 node_modules
 dist
 coverage
+output/
 .playwright-cli
 output/playwright
 output/background-trials
@@ -12,3 +13,4 @@ vite.config.d.ts
 vitest.config.js
 vitest.config.d.ts
 .DS_Store
+.gstack/

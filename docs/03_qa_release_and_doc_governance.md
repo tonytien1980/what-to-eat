@@ -84,8 +84,14 @@
 - 若目前遠征地無正式背景圖，背景必須回退到 shared，而不是卡死在前一個行政區
 - `data/cwa-town-locations.json` 必須能正確把 `city / district` 對到 `countyCode / townId`
 - Phase 1 不會偷偷啟用 geolocation / IP fallback
-- owner sheet 使用 `shop` / `maplink` / `city` / `district` / `lat` / `lng` 時，runtime loader 與 `npm run data:import` 都必須正常
+- owner sheet 使用 `shop` / `maplink` / `city` / `district` / `lat` / `lng` / `placeid` 時，runtime loader 與 `npm run data:import` 都必須正常
 - `lat` / `lng` 缺值時不能讓 loader crash，應安全落成 `null`
+- `placeid` 缺值時不能讓 loader crash，應安全落成 `null`
+- `master` sheet 的 `restaurants_master` 表頭必須維持 12 欄：
+  `shop / maplink / city / district / lat / lng / placeid / is_lunch / is_dinner / is_drink / is_sweet / is_enabled`
+- `master` bootstrap 後，單一店家在 `master` 只能保留一列；午晚餐等跨分類只用布林欄位表達
+- `master` v1 驗證目前只 hard-block 缺 `shop / maplink`，缺 `city / district / lat / lng / placeid` 應降級為 warning
+- live runtime 仍只讀 `publish` sheet；`master` 更新不可被誤認成前端已切換資料來源
 - 不可在首頁 first load 自動要求 geolocation
 - 玩家主動啟用定位後，結果區需顯示 `遠征地距離你約 ...`
 - 同一個 session 已取得玩家座標後，reroll 必須可直接重算距離
@@ -142,6 +148,27 @@ MVP 必須維持：
 - `npm test`
 - `npm run build`
 - `npm run build:pages`
+- `npm run master:bootstrap`
+- `npm run publish:preview`
+
+master / publish workflow 另需補做的 live checks：
+
+- 確認 `master` sheet 的 `restaurants_master` 可讀且表頭正確
+- 確認 bootstrap 後 `master` row count 非 0
+- 確認代表性的多分類店家在 `master` 仍維持單列與正確布林欄位
+- 確認 `publish:preview` 產出的分類數量合理，且 blocking errors = 0
+- 若 `publish:preview` 與目前 publish row count 有差異，需先確認是合理去重或 master 編輯變更，再執行正式發布
+- 確認 `publish` sheet 仍可正常被 runtime 與 `npm run data:import` 讀取
+- 確認 `data/restaurant-sheet-sources.json` 仍使用 stable published CSV export URL，而不是 `gviz/tq` 變體
+
+Apps Script workflow 補充：
+
+- repo 內的 `apps-script/master-publish-sync/Code.gs` 是使用者手動一鍵發布的正式腳本來源
+- 第一次安裝時需在 publish sheet 的 Apps Script editor 貼上、授權並刷新 sheet
+- 安裝完成後，正式使用路徑為：
+  1. `npm run publish:preview`
+  2. 在 publish sheet 點 `Master Sync -> 預覽同步摘要`
+  3. 確認無 blocking errors 後點 `Master Sync -> 發布到前端資料庫`
 
 ## Deployment
 

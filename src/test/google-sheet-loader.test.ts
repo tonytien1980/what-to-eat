@@ -19,7 +19,7 @@ test('loads restaurants from published Google Sheet sources at runtime', async (
   const fetcher = vi
     .fn()
     .mockResolvedValueOnce(
-      new Response('shop,maplink,city,district,lat,lng\n"招牌, 牛肉麵",https://maps.app.goo.gl/1,臺北市,中山區,25.047,121.531\n', {
+      new Response('shop,maplink,city,district,lat,lng,placeid\n"招牌, 牛肉麵",https://maps.app.goo.gl/1,臺北市,中山區,25.047,121.531,ChIJ-demo-place-id\n', {
         status: 200,
       }),
     )
@@ -47,11 +47,13 @@ test('loads restaurants from published Google Sheet sources at runtime', async (
     district: '中山區',
     lat: 25.047,
     lng: 121.531,
+    placeId: 'ChIJ-demo-place-id',
     isEnabled: true,
   });
   expect(result.restaurants[1]).toMatchObject({
     name: '迷客夏',
     category: 'drinks',
+    placeId: null,
   });
 });
 
@@ -82,14 +84,15 @@ test('parses quoted rows from published Google Sheet csv', () => {
       district: null,
       lat: null,
       lng: null,
+      placeId: null,
     },
   ]);
 });
 
-test('parses optional city, district, lat, and lng columns from published Google Sheet csv', () => {
+test('parses optional city, district, lat, lng, and placeid columns from published Google Sheet csv', () => {
   expect(
     parsePublishedSheetCsv(
-      'shop,maplink,city,district,lat,lng\n招牌牛肉麵,https://maps.app.goo.gl/demo,臺北市,中山區,25.047,121.531\n',
+      'shop,maplink,city,district,lat,lng,placeid\n招牌牛肉麵,https://maps.app.goo.gl/demo,臺北市,中山區,25.047,121.531,ChIJ-demo-place-id\n',
     ),
   ).toEqual([
     {
@@ -99,6 +102,7 @@ test('parses optional city, district, lat, and lng columns from published Google
       district: '中山區',
       lat: 25.047,
       lng: 121.531,
+      placeId: 'ChIJ-demo-place-id',
     },
   ]);
 });
@@ -121,6 +125,7 @@ test('defaults location columns when published Google Sheet rows still use the o
     district: '中山區',
     lat: null,
     lng: null,
+    placeId: null,
   });
 });
 

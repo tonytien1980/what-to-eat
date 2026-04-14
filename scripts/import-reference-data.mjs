@@ -71,6 +71,7 @@ function parseCsv(text) {
   const districtIndex = normalizedHeaders.indexOf('district');
   const latIndex = normalizedHeaders.indexOf('lat');
   const lngIndex = normalizedHeaders.indexOf('lng');
+  const placeIdIndex = normalizedHeaders.indexOf('placeid');
 
   if (nameIndex === -1 || mapUrlIndex === -1) {
     return [];
@@ -93,6 +94,7 @@ function parseCsv(text) {
       district: dataRow[districtIndex]?.trim() || null,
       lat: parseOptionalNumber(dataRow[latIndex]),
       lng: parseOptionalNumber(dataRow[lngIndex]),
+      placeId: dataRow[placeIdIndex]?.trim() || null,
     }))
     .filter((row) => row.name && row.mapUrl);
 }
@@ -193,6 +195,7 @@ async function loadSourceSheet(category, url) {
     name: row.name,
     category,
     mapUrl: row.mapUrl,
+    placeId: row.placeId,
     lat: row.lat,
     lng: row.lng,
     tags: inferTags(row.name, category),
