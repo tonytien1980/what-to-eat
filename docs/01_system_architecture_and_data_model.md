@@ -243,6 +243,7 @@ location-aware 方向已進入 Phase 1，但目前仍不是完整 detect-first r
 - 若目前遠征地有 CWA 鄉鎮 mapping，首頁天氣跟著該行政區
 - 若目前遠征地沒有 CWA mapping，天氣安全回退到本地 fallback snapshot
 - CWA town weather script URL 應附帶時間桶 cache key，避免瀏覽器長時間重用舊的官方 JS 導致天氣狀態卡住
+- weather runtime 不可只在 first paint 抓一次；頁面回到前景與固定刷新節點時，應重新請求目前遠征地的天氣資料
 - Phase 1 不啟用 browser geolocation
 - Phase 1 不啟用 IP-based city guess
 

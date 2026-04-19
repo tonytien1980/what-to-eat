@@ -3,6 +3,7 @@ import {
   buildTownDistrictWeatherSnapshot,
   buildZhongshanDistrictWeatherSnapshot,
   createCwaCountyScriptUrl,
+  createCwaTownScriptCacheKey,
   createCwaTownScriptUrl,
   extractCwaCountyScriptData,
   extractCwaTownScriptData,
@@ -85,6 +86,10 @@ test('adds a time-bucket cache key to official CWA script URLs so browsers do no
   expect(createCwaTownScriptUrl('gt24hr', '63', now)).toBe(
     'https://www.cwa.gov.tw/Data/js/GT/ChartData_GT24hr_T_63.js?t=1973283',
   );
+  expect(createCwaTownScriptCacheKey('63', now)).toBe('63:1973283');
+  expect(
+    createCwaTownScriptCacheKey('63', now + 15 * 60 * 1000),
+  ).toBe('63:1973284');
 });
 
 test('maps thunderstorm forecast to the ruins scene', () => {

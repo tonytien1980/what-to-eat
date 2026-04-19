@@ -80,6 +80,7 @@
 - Google Sheet 失敗時 fallback snapshot 仍可維持 location-aware safe fallback
 - 若目前遠征地有 CWA 鄉鎮 mapping，首頁 weather 必須跟著該行政區切換
 - 官方 CWA weather script 不可永久吃同一個固定 URL cache；runtime 應使用時間桶 cache key 避免天氣長時間卡在舊狀態
+- 同一個瀏覽器 session 中，頁面回到前景或超過刷新節點後，首頁 weather 必須重新抓取，不可永遠停留在第一次載入的狀態
 - `version.json` 必須隨 build 更新，避免手機或 Safari 長時間卡在舊首頁 bundle
 - 若目前遠征地無正式背景圖，背景必須回退到 shared，而不是卡死在前一個行政區
 - `data/cwa-town-locations.json` 必須能正確把 `city / district` 對到 `countyCode / townId`

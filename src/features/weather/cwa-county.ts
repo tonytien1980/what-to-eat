@@ -15,7 +15,7 @@ import {
 export { mapWxCodeToVariant, pickSceneForPeriod, getAltarSceneAsset };
 export { resolveCwaTownLocation } from './town-locations';
 
-const CWA_SCRIPT_CACHE_WINDOW_MS = 15 * 60 * 1000;
+export const CWA_SCRIPT_CACHE_WINDOW_MS = 15 * 60 * 1000;
 const CWA_COUNTY_SCRIPT_BASE_URL =
   'https://www.cwa.gov.tw/Data/js/TableData_36hr_County_C.js';
 
@@ -76,7 +76,12 @@ declare global {
   }
 }
 
-let countyScriptPromise: Promise<CwaCountyDataset> | null = null;
+let countyScriptCache:
+  | {
+      key: string;
+      promise: Promise<CwaCountyDataset>;
+    }
+  | null = null;
 const townScriptPromises = new Map<string, Promise<CwaTownDataset>>();
 
 function toForecastPeriod(period: RawForecastPeriod): CwaForecastPeriod {
@@ -118,8 +123,16 @@ function deriveComfortFromFeelsLike(feelsLikeTemp: number) {
 }
 
 export function createCwaCountyScriptUrl(now = Date.now()) {
-  const cacheKey = Math.floor(now / CWA_SCRIPT_CACHE_WINDOW_MS);
+  const cacheKey = getCwaScriptCacheBucket(now);
   return `${CWA_COUNTY_SCRIPT_BASE_URL}?t=${cacheKey}`;
+}
+
+export function getCwaScriptCacheBucket(now = Date.now()) {
+  return Math.floor(now / CWA_SCRIPT_CACHE_WINDOW_MS);
+}
+
+export function createCwaCountyScriptCacheKey(now = Date.now()) {
+  return `county:${getCwaScriptCacheBucket(now)}`;
 }
 
 export function createCwaTownScriptUrl(
@@ -127,13 +140,20 @@ export function createCwaTownScriptUrl(
   countyCode: string,
   now = Date.now(),
 ) {
-  const cacheKey = Math.floor(now / CWA_SCRIPT_CACHE_WINDOW_MS);
+  const cacheKey = getCwaScriptCacheBucket(now);
 
   if (kind === '3hr') {
     return `https://www.cwa.gov.tw/Data/js/3hr/ChartData_3hr_T_${countyCode}.js?t=${cacheKey}`;
   }
 
   return `https://www.cwa.gov.tw/Data/js/GT/ChartData_GT24hr_T_${countyCode}.js?t=${cacheKey}`;
+}
+
+export function createCwaTownScriptCacheKey(
+  countyCode: string,
+  now = Date.now(),
+) {
+  return `${countyCode}:${getCwaScriptCacheBucket(now)}`;
 }
 
 export function extractCwaCountyScriptData(scriptText: string): CwaCountyDataset {
@@ -362,22 +382,24 @@ function loadScriptOnce(
   });
 }
 
-export function loadCwaCountyDataset(): Promise<CwaCountyDataset> {
+export function loadCwaCountyDataset(now = Date.now()): Promise<CwaCountyDataset> {
   if (typeof window === 'undefined' || typeof document === 'undefined') {
     return Promise.reject(new Error('CWA county loader requires a browser environment.'));
   }
 
-  if (window.IssuedTime_36hr && window.TableData_36hr) {
-    return Promise.resolve(readGlobalsFromWindow());
+  const cacheKey = createCwaCountyScriptCacheKey(now);
+
+  if (countyScriptCache?.key === cacheKey) {
+    if (window.IssuedTime_36hr && window.TableData_36hr) {
+      return Promise.resolve(readGlobalsFromWindow());
+    }
+
+    return countyScriptCache.promise;
   }
 
-  if (countyScriptPromise) {
-    return countyScriptPromise;
-  }
-
-  countyScriptPromise = new Promise<CwaCountyDataset>((resolve, reject) => {
+  const nextPromise = new Promise<CwaCountyDataset>((resolve, reject) => {
     const existingScript = document.querySelector<HTMLScriptElement>(
-      'script[data-cwa-county-script="true"]',
+      `script[data-cwa-county-script="${cacheKey}"]`,
     );
 
     if (existingScript) {
@@ -393,9 +415,9 @@ export function loadCwaCountyDataset(): Promise<CwaCountyDataset> {
     }
 
     const script = document.createElement('script');
-    script.src = createCwaCountyScriptUrl();
+    script.src = createCwaCountyScriptUrl(now);
     script.async = true;
-    script.dataset.cwaCountyScript = 'true';
+    script.dataset.cwaCountyScript = cacheKey;
     script.onload = () => {
       try {
         resolve(readGlobalsFromWindow());
@@ -410,7 +432,12 @@ export function loadCwaCountyDataset(): Promise<CwaCountyDataset> {
     document.head.appendChild(script);
   });
 
-  return countyScriptPromise;
+  countyScriptCache = {
+    key: cacheKey,
+    promise: nextPromise,
+  };
+
+  return nextPromise;
 }
 
 export async function loadTaipeiWeatherSnapshot(
@@ -427,31 +454,36 @@ export async function loadTaipeiWeatherSnapshot(
   return buildTownDistrictWeatherSnapshot(dataset, townLocation, activeSceneSeed);
 }
 
-export function loadCwaTownDataset(countyCode: string): Promise<CwaTownDataset> {
+export function loadCwaTownDataset(
+  countyCode: string,
+  now = Date.now(),
+): Promise<CwaTownDataset> {
   if (typeof window === 'undefined' || typeof document === 'undefined') {
     return Promise.reject(new Error('CWA town loader requires a browser environment.'));
   }
 
-  if (townScriptPromises.has(countyCode)) {
-    return townScriptPromises.get(countyCode)!;
+  const cacheKey = createCwaTownScriptCacheKey(countyCode, now);
+
+  if (townScriptPromises.has(cacheKey)) {
+    return townScriptPromises.get(cacheKey)!;
   }
 
   const nextPromise = Promise.all([
     loadScriptOnce(
-      `script[data-cwa-town-3hr-script="${countyCode}"]`,
-      createCwaTownScriptUrl('3hr', countyCode),
+      `script[data-cwa-town-3hr-script="${cacheKey}"]`,
+      createCwaTownScriptUrl('3hr', countyCode, now),
       'data-cwa-town-3hr-script',
-      countyCode,
+      cacheKey,
     ),
     loadScriptOnce(
-      `script[data-cwa-town-gt24hr-script="${countyCode}"]`,
-      createCwaTownScriptUrl('gt24hr', countyCode),
+      `script[data-cwa-town-gt24hr-script="${cacheKey}"]`,
+      createCwaTownScriptUrl('gt24hr', countyCode, now),
       'data-cwa-town-gt24hr-script',
-      countyCode,
+      cacheKey,
     ),
   ]).then(() => readTownGlobalsFromWindow());
 
-  townScriptPromises.set(countyCode, nextPromise);
+  townScriptPromises.set(cacheKey, nextPromise);
 
   return nextPromise;
 }
