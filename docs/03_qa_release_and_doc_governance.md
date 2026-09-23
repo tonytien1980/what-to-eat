@@ -51,8 +51,8 @@
 - `出發去吃` 會開啟正確 map URL
 - 每局至少有一條 reroll 路徑
 - 特殊 destiny rule 會正確加送 bonus reroll
-- 中山區天氣可載入並影響場景選擇
-- 若官方天氣資料失敗，fallback weather 仍可顯示
+- 臺北市 12 區均能對應正式 CWA townId，並以該區有效預報決定背景
+- 若官方天氣資料失敗，不顯示固定假天氣；同區有 last-good 時顯示 stale，否則顯示 unavailable 與共享 default 背景
 - 重新整理頁面時，同天候可輪替到其他相容場景
 - 首頁需顯示 `預計冒險地 3 小時天氣預報`
 - 若遠端版本 manifest 與目前 bundle 的 build id 不同，首頁需顯示 `偵測到新版本，點此更新`
@@ -81,6 +81,10 @@
 - 若目前遠征地有 CWA 鄉鎮 mapping，首頁 weather 必須跟著該行政區切換
 - 官方 CWA weather script 不可永久吃同一個固定 URL cache；runtime 應使用時間桶 cache key 避免天氣長時間卡在舊狀態
 - 同一個瀏覽器 session 中，頁面回到前景或超過刷新節點後，首頁 weather 必須重新抓取，不可永遠停留在第一次載入的狀態
+- weather 測試不可全部 mock 掉 mapping / loader；需驗證真實管理表、script success/error/timeout、同桶重試與 script 清理
+- 驗證 Time_3hr 的臺灣時間、跨年、當前時段、未來 24 小時範圍、同筆體感、超過 3 小時來源與缺值拒絕
+- 驗證首次失敗、同區刷新失敗、city-only、切區後舊請求晚回，不得出現假溫度或跨區天氣
+- 2026-09-23 修復使用獨立分支 `codex/batch-one-data-safety`，測試與 build 不等於已部署；正式站與 Apps Script 啟用仍需另行批准
 - `version.json` 必須隨 build 更新，避免手機或 Safari 長時間卡在舊首頁 bundle
 - 若目前遠征地無正式背景圖，背景必須回退到 shared，而不是卡死在前一個行政區
 - `data/cwa-town-locations.json` 必須能正確把 `city / district` 對到 `countyCode / townId`

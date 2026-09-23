@@ -12,6 +12,8 @@
 
 本文件是架構與資料層 SSOT。若與 `00_product_principles_and_scope.md` 衝突，以 `00` 為準。
 
+2026-09-23 第一批修復狀態：本分支的天氣修復已實作，尚未部署至正式站。Apps Script 原子批次發布方案仍待核准與實作，線上發布器未變更。
+
 ## 架構總原則
 
 - 前台極輕
@@ -241,9 +243,17 @@ location-aware 方向已進入 Phase 1，但目前仍不是完整 detect-first r
 - 若沒有 saved location，先使用 `臺北市中山區` 預設錨點
 - 使用者可透過輕量 chooser 覆蓋預設錨點
 - 若目前遠征地有 CWA 鄉鎮 mapping，首頁天氣跟著該行政區
-- 若目前遠征地沒有 CWA mapping，天氣安全回退到本地 fallback snapshot
+- CWA mapping 目前涵蓋臺北市 12 個行政區，編碼以官方 `Info_Town.js` 為準
+- 若目前遠征地沒有 CWA mapping，或只選城市，weather snapshot 為 `null`；不得捏造天氣或暗中套用中山區
 - CWA town weather script URL 應附帶時間桶 cache key，避免瀏覽器長時間重用舊的官方 JS 導致天氣狀態卡住
 - weather runtime 不可只在 first paint 抓一次；頁面回到前景與固定刷新節點時，應重新請求目前遠征地的天氣資料
+- weather hook 維持 `loading / ready / stale / unavailable`；同區刷新失敗保留最後有效資料並標示過期，換區立即清除舊區資料
+- 每 5 分鐘、回到前景及預報時段到期均會重新解析／更新；只保留一個縣市時間桶的載入 Promise，失敗會移除並允許同桶重試
+- CWA script 10 秒逾時；載入完成或失敗後清理 script DOM 與資料 globals，避免無限制累積
+- 只使用 `ChartData_3hr_T_<countyCode>.js` 的 `Time_3hr` 和 `TempArray_3hr`，溫度、體感與 Wx 必須取同一時點；不再混用 GT 觀測末筆
+- 時間以 Asia/Taipei 解讀，依目前時段選取預報，處理跨日／跨年；來源首筆時點超過 3 小時或資料不完整時拒絕使用
+- snapshot 保存 `forecastAt / validUntil / currentPeriod`；未來 24 小時高低溫以所選預報起點往後 24 小時計算，不是當日高低溫
+- 無有效 snapshot 時，背景使用共享 default 圖並標示天氣未確認；不是某個假 Wx 的備援預報
 - Phase 1 不啟用 browser geolocation
 - Phase 1 不啟用 IP-based city guess
 

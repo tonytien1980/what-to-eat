@@ -13,7 +13,6 @@ import { getLocationAwareCandidatePool } from './features/restaurants/selectors'
 import {
   getCategoryLabel,
   getCategorySummary,
-  getComfortCopy,
   getRerollCopy,
 } from './features/result/result-copy';
 import { useRestaurantCatalog } from './features/restaurants/use-restaurant-catalog';
@@ -51,21 +50,21 @@ export default function App() {
     restaurantCatalog.restaurants,
     locationPreference.currentLocation,
   );
-  const { snapshot } = useTaipeiWeather(locationPreference.currentLocation);
+  const { snapshot, status: weatherStatus } = useTaipeiWeather(locationPreference.currentLocation);
   const backgroundSelection = useMemo(
     () =>
       resolveBackgroundSelection({
         location: locationPreference.currentLocation,
-        period: snapshot.currentPeriod,
+        period: snapshot?.currentPeriod ?? null,
         randomValue: backgroundSeed,
       }),
     [
       backgroundSeed,
       locationPreference.currentLocation.city,
       locationPreference.currentLocation.district,
-      snapshot.currentPeriod.wxCode,
-      snapshot.currentPeriod.highTemp,
-      snapshot.currentPeriod.lowTemp,
+      snapshot?.currentPeriod.wxCode,
+      snapshot?.currentPeriod.highTemp,
+      snapshot?.currentPeriod.lowTemp,
     ],
   );
   const rerollCopy = getRerollCopy(rerollsRemaining);
@@ -80,15 +79,16 @@ export default function App() {
         locationPreference.currentLocation,
       ).length
     : 0;
-  const weatherSceneLine = `${backgroundSelection.sceneLabel} · ${backgroundSelection.variantLabel}`;
-  const weatherPrimaryLine =
-    snapshot.currentPeriod.currentTemp !== undefined
-      ? `${snapshot.currentPeriod.weatherText} · 現在 ${snapshot.currentPeriod.currentTemp}°`
-      : `${snapshot.currentPeriod.weatherText} · ${snapshot.currentPeriod.lowTemp}°-${snapshot.currentPeriod.highTemp}°`;
-  const weatherSecondaryLine =
-    snapshot.currentPeriod.feelsLikeTemp !== undefined
-      ? `體感 ${snapshot.currentPeriod.feelsLikeTemp}° · 今日 ${snapshot.currentPeriod.lowTemp}°-${snapshot.currentPeriod.highTemp}°`
-      : `降雨 ${snapshot.currentPeriod.pop}% · ${getComfortCopy(snapshot.currentPeriod.comfort)}`;
+  const weatherSceneLine = `${backgroundSelection.sceneLabel} · ${weatherStatus === 'stale' ? '上次天氣：' : ''}${backgroundSelection.variantLabel}`;
+  const forecastTime = snapshot ? new Intl.DateTimeFormat('zh-TW', {
+    timeZone: 'Asia/Taipei', hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+  }).format(new Date(snapshot.forecastAt)) : '';
+  const weatherPrimaryLine = snapshot
+    ? `${forecastTime} 預報 · ${snapshot.currentPeriod.weatherText} ${snapshot.currentPeriod.currentTemp}°`
+    : weatherStatus === 'loading' ? '正在讀取天氣預報...' : '天氣資料暫時無法取得';
+  const weatherSecondaryLine = snapshot
+    ? `體感 ${snapshot.currentPeriod.feelsLikeTemp}° · 未來 24 小時 ${snapshot.currentPeriod.lowTemp}°-${snapshot.currentPeriod.highTemp}°`
+    : '不影響抽選，仍可繼續冒險';
 
   const startButtonLabel =
     activeCategory === null ? '準備好了嗎？' : '決定今日命運';
@@ -116,6 +116,7 @@ export default function App() {
             <div className="weather-lines">
               <p className="weather-line">{weatherPrimaryLine}</p>
               <p className="weather-line weather-line-soft">{weatherSecondaryLine}</p>
+              {weatherStatus === 'stale' ? <p className="weather-line weather-line-soft" role="status">預報待更新，以上為上次資料</p> : null}
             </div>
             {versionUpdate.hasUpdate ? (
               <button

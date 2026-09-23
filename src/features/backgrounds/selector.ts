@@ -1,6 +1,6 @@
 import rawManifest from '../../../images/backgrounds/district-manifest.json';
 import type { LocationPreference } from '../location/types';
-import { resolveSharedSceneSelection } from '../weather/scenes';
+import { getNeutralSceneSelection, resolveSharedSceneSelection } from '../weather/scenes';
 import { mapWxCodeToVariant } from '../weather/scenes';
 import type { CwaForecastPeriod, SceneVariantKey } from '../weather/types';
 
@@ -182,9 +182,13 @@ export function resolveBackgroundSelection({
   randomValue = 0,
 }: {
   location: Pick<LocationPreference, 'city' | 'district'> | null;
-  period: CwaForecastPeriod;
+  period: CwaForecastPeriod | null;
   randomValue?: number;
 }): RuntimeBackgroundSelection {
+  if (!period) {
+    const scene = getNeutralSceneSelection(randomValue);
+    return { source: 'shared', ...scene, assetPath: scene.assetPath ?? '' };
+  }
   const variantKey = mapWxCodeToVariant(period.wxCode);
   const districtSelection = resolveDistrictBackgroundSelectionFromManifest({
     manifest,

@@ -20,10 +20,10 @@ export interface CwaForecastPeriod {
   type: 'TD' | 'TN' | 'TM' | 'TMN' | '3hr';
   lowTemp: number;
   highTemp: number;
-  pop: number;
+  pop?: number;
   wxCode: number;
   weatherText: string;
-  comfort: string;
+  comfort?: string;
   currentTemp?: number;
   feelsLikeTemp?: number;
 }
@@ -39,10 +39,7 @@ export interface ActiveSceneSelection {
 
 export interface TaipeiWeatherSnapshot {
   cityName: string;
-  issuedTime: string;
-  sourceLabel: string;
+  forecastAt: string;
+  validUntil: string;
   currentPeriod: CwaForecastPeriod;
-  upcomingPeriods: CwaForecastPeriod[];
-  activeScene: ActiveSceneSelection;
-  forecastScenes: ActiveSceneSelection[];
 }

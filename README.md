@@ -6,14 +6,15 @@
 
 First release targets a no-login, same-screen MVP:
 
-- Taipei Zhongshan District weather driven by official CWA town forecast scripts
+- Taipei's 12 districts mapped to official timestamped CWA town forecasts
+- honest unavailable/stale weather states; no fabricated thunderstorm fallback
 - weather-selected fantasy scene backgrounds with reload-time scene rotation
 - Google Sheet runtime restaurant loading
 - category switcher for lunch, dinner, drinks, and sweets
 - no preselected category on first load
 - phase-1 location-aware restaurant routing with `city / district`
 - Zhongshan default location anchor with local remembered override
-- lightweight `更改位置` sheet without a blocking setup gate
+- lightweight `更改預計冒險地` sheet without a blocking setup gate
 - one-tap "today's expedition" flow
 - weighted card-back draw on load and reroll
 - tall playing-card reveal with cloud-clearing animation
@@ -63,8 +64,8 @@ The repository now includes:
 - bundled fallback snapshot refreshed from your published Google Sheet
 - runtime sheet sources switched to the owner's published Google Sheet
 - runtime Google Sheet loading with bundled fallback snapshot
-- Taipei weather scene selection via official CWA county forecast data
-- location-aware candidate pool using `district -> city -> fallback`
+- district weather and backgrounds via official CWA town forecast data
+- strict district filtering when selected, strict city filtering when city-only
 - destiny card filtering with fallback behavior
 - simplified altar header with fixed two-line title
 - transparent altar stage so the card stands on the scene instead of a dark panel
@@ -74,3 +75,11 @@ The repository now includes:
 - single source list for published restaurant sheets
 - tall reveal card with detached action buttons
 - rarity-matched front face templates from `images/faces/`
+
+## Batch-One Repair Status
+
+The 2026-09-23 weather repair is implemented on `codex/batch-one-data-safety`, not yet deployed.
+Forecast temperature and apparent temperature share the same timestamp. The UI distinguishes
+the forecast time and the following 24-hour range from current observations and today's range.
+Initial failure has no invented values; refresh failure preserves only the same district's last-good data with a stale label.
+The Apps Script atomic publishing design is pending owner approval; neither the live publisher nor live sheets changed.

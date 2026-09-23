@@ -1,9 +1,20 @@
 [
+  { "city": "臺北市", "district": "松山區", "countyCode": "63", "townId": "6300100", "label": "臺北市松山區" },
+  { "city": "臺北市", "district": "信義區", "countyCode": "63", "townId": "6300200", "label": "臺北市信義區" },
+  { "city": "臺北市", "district": "大安區", "countyCode": "63", "townId": "6300300", "label": "臺北市大安區" },
   {
     "city": "臺北市",
     "district": "中山區",
     "countyCode": "63",
     "townId": "6300400",
     "label": "臺北市中山區"
-  }
+  },
+  { "city": "臺北市", "district": "中正區", "countyCode": "63", "townId": "6300500", "label": "臺北市中正區" },
+  { "city": "臺北市", "district": "大同區", "countyCode": "63", "townId": "6300600", "label": "臺北市大同區" },
+  { "city": "臺北市", "district": "萬華區", "countyCode": "63", "townId": "6300700", "label": "臺北市萬華區" },
+  { "city": "臺北市", "district": "文山區", "countyCode": "63", "townId": "6300800", "label": "臺北市文山區" },
+  { "city": "臺北市", "district": "南港區", "countyCode": "63", "townId": "6300900", "label": "臺北市南港區" },
+  { "city": "臺北市", "district": "內湖區", "countyCode": "63", "townId": "6301000", "label": "臺北市內湖區" },
+  { "city": "臺北市", "district": "士林區", "countyCode": "63", "townId": "6301100", "label": "臺北市士林區" },
+  { "city": "臺北市", "district": "北投區", "countyCode": "63", "townId": "6301200", "label": "臺北市北投區" }
 ]
