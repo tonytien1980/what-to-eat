@@ -67,3 +67,26 @@ For publish safety, the existing Apps Script remains the owner. Validate every r
 - Live activation next requires approved test copies, service authorization and Google Apps Script validation. Production deployment remains separate; CSV propagation and frontend catalog consistency remain batch-two work.
 - Final local verification: `npm test` passed 21 suites / 101 tests; `npm run build`, `npm run build:pages`, `node --check scripts/build-publish-preview-from-master.mjs`, and `git diff --check` passed. Both builds retain the pre-existing large-chunk warning. The production Apps Script service and its authorization were not exercised.
 - The original workspace still has only the pre-existing `data/restaurants.json` diff (4221 insertions / 76 deletions), untouched by this batch. The repair uses its separate worktree; no main/deploy branch merge is included.
+
+## 2026-09-24 Test-Copy Acceptance Checkpoint
+
+Status: prepared; awaiting human confirmation of Google API terms. Live acceptance has **not** passed.
+
+- The owner approved test-copy acceptance only. The earlier no-live-write boundary is lifted for these test copies, not for production, deployment, or account-wide permission changes.
+- Created native copies in the private My Drive `ChatGPT` folder. Both Sheet UIs show owner-only sharing; no sharing permissions were changed.
+- [Master copy](https://docs.google.com/spreadsheets/d/1rR4Yt5Bz2fxkKntWxj3V6tkB-M2-y5IjQ_WeyhAO7xs/edit): `restaurants_master`, sheet ID 0, grid 2421 x 26.
+- [Publish copy](https://docs.google.com/spreadsheets/d/1Wucd9jIFUweyvAsxIoHsmZgaBETtKGtlTQjnOcG2Y8g/edit): four original category tabs, IDs 1292660499 / 2000631709 / 1592174170 / 2025510556.
+- [Copy-bound Apps Script](https://script.google.com/u/0/home/projects/1X7bOGgtQtSh2HZtne7-o5huTPar_TpKOkA6H4hU0E86IpbUc-ka72EZv/edit): renamed `what-to-eat-acceptance-2026-09-24`.
+- The copied old script initially retained production IDs. Before any manual function execution, replaced its source with commit `7af80c1459c4fc29c5e18bfd4c490f57a6c398c8` Code.gs, substituting only the two verified copy IDs. The repository config remains unchanged.
+- Saved editor content was selected and copied back through the UI: exact equality with the pasted source; no production ID present. Its 11693 UTF-16 code units / FNV-1a `e6ef3be3` match the locally derived test source. Local derived-source SHA-256: `c359425721ea77c665ae4e47292fe7d510da3c6180470da86e4c86d44dfbf081`.
+- Selected `Google Sheets API`, version `v4`, identifier `Sheets` in Add Service, but **did not click Add**: the dialog requires agreement to Google API terms. No preview or publish was manually run, no test fixture values written, and no account access consent granted.
+- Read-only connector checks of copy `A1:A2421` and `H1:L2421` found 69 enabled rows with all four categories false. Examples: row 48 `すき家(士林店)`, row 58 `吉野家(重北店)`, row 64 `麥當勞(民生三店)`, row 65 `摩斯漢堡(台北重慶店)`, row 70 `鬍鬚張(寧夏店)`. These are expected blockers under the existing contract, not a live execution result. Do not classify or disable production rows without owner approval.
+- Fresh local `npm test`: 21 suites / 101 tests passed. Builds were not rerun in this docs-and-copy preparation turn; their earlier passing evidence is recorded above.
+- No production spreadsheet, production script, runtime source URL, frontend code or Pages deployment was modified. Original worktree still has its pre-existing restaurant snapshot diff (4221 insertions / 76 deletions), untouched.
+
+Resume from these existing copies; do not create another pair:
+
+1. Obtain confirmation before accepting the Add Service terms. Complete any subsequent Google account-access consent with the owner; do not bypass warnings or enable account-wide Apps Script API settings as a workaround.
+2. Recheck copy-only script config and service state, then run read-only `previewMasterPublishSync` for authorization. Verify the copied-data blockers in the actual Google runtime.
+3. Use controlled fixtures only in the test master for success, cancellation, missing-header, all-empty/all-disabled, single-category-clear warning and changed-during-confirmation cases. Read back all four published A:G ranges; verify H+ and formatting preservation. Restore the test fixture deliberately and record its final state.
+4. Report actual Google runtime results separately from VM coverage and any untested failure injection. Production activation, data correction and frontend CSV propagation remain separate gates.

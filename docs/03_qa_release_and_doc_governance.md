@@ -180,7 +180,9 @@ Apps Script workflow 補充：
   4. 檢視四類筆數增減及清空警告，按確認；取得 lock 後重讀，輸入有變就重來
   5. 只有寫後逐值核對一致才算發布完成；結果未確認時停止重試，依 INSTALL.md 核對與復原
 
-本機 VM 與 fixture 測試不能取代線上服務授權、實際 Sheets API、多人編輯及 CSV 傳播驗證。2026-09-24 本分支完成本機實作，線上啟用仍未執行。
+本機 VM 與 fixture 測試不能取代線上服務授權、實際 Sheets API、多人編輯及 CSV 傳播驗證。2026-09-24 已核准測試副本驗收，建立私人 master / publish 副本並安裝僅指向副本的新版腳本；目前等待 Google API 服務條款確認與後續授權，尚未執行 preview / publish，不能標為線上驗收通過。正式環境未更新。
+
+副本唯讀檢查另發現 69 筆 `is_enabled = TRUE` 但四分類皆未勾選的資料，依既定 contract 會阻擋發布；此為資料檢查結果，不是 Apps Script 已執行的證據。正式分類修正需 owner 決定，不得自動猜測、停用或繞過驗證。副本連結、恢復步驟與待驗項目記錄於 `docs/superpowers/plans/2026-09-23-batch-one-data-safety.md`。
 
 ## Deployment
 

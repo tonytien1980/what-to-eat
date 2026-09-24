@@ -86,5 +86,8 @@ The Apps Script atomic publishing design was approved on 2026-09-24 and is imple
 It validates the complete master schema, asks for confirmation, rechecks inputs under a script lock,
 replaces four tabs in one Sheets v4 batch, and verifies all values before reporting success.
 The CLI preview shares the actual `Code.gs` contract instead of a separate validator.
-Neither the live publisher nor live sheets changed. Activation requires the Sheets advanced service
-and a separately approved test-copy/production rollout; see `apps-script/master-publish-sync/INSTALL.md`.
+The production publisher and production sheets remain unchanged. On 2026-09-24, private test copies
+were created and the new script installed with copy-only IDs. Live acceptance is pending Google API
+terms confirmation and subsequent authorization, not passed. The copied master also contains 69 enabled
+rows without a category; no production data was corrected. See the acceptance checkpoint in
+`docs/superpowers/plans/2026-09-23-batch-one-data-safety.md` and `apps-script/master-publish-sync/INSTALL.md`.
