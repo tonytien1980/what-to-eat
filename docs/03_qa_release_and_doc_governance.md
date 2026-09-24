@@ -156,6 +156,8 @@ MVP 必須維持：
 - `npm run master:bootstrap`
 - `npm run publish:preview`
 
+Vitest 的正式測試搜尋根目錄固定為 `src/test/`，由 `vitest.config.ts` 的 `test.dir` 管理。`npm test` 不掃描 `output/` 的試作腳本、舊測試或其他 worktree；這些本地產物不可混入正式測試結果。正式測試檔一律放在 `src/test/`，不得以排除個別失敗案例取代修復。
+
 master / publish workflow 另需補做的 live checks：
 
 - 確認 `master` sheet 的 `restaurants_master` 可讀且表頭正確
