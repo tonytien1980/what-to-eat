@@ -17,6 +17,7 @@ The product should feel playful, fast, and low-friction:
 3. Prefer the smallest shippable MVP over speculative features.
 4. Preserve Traditional Chinese as the primary product language.
 5. Do not add accounts, multiplayer sync, or progression systems in MVP unless the active docs change first.
+6. For this project, generate and edit artwork through the user-designated sidebar ChatGPT workflow. Do not use API-key-based image generation, the legacy imagegen CLI, or this Codex task's image-generation tool as a fallback. If the sidebar workflow is unavailable, report the blocker; do not change global credentials or other projects. See the background batch rules in `docs/02_mvp_experience_and_gameplay_spec.md`.
 
 ## Source Of Truth
 

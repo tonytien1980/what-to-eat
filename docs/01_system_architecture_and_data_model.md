@@ -723,7 +723,7 @@ Pack 代表一組在特定情境下可成立、可被玩、可被接受的內容
 
 `output/background-trials/<city>-<district>/`
 
-已核准的 medium 母檔固定放在：
+已核准的交付母檔固定放在（不以 API quality 參數命名）：
 
 `output/background-finals/<city>-<district>/`
 
@@ -800,24 +800,25 @@ Playwright 預覽圖屬於本地驗證產物，固定放在 `output/playwright/`
 - 正式 runtime 背景目標大小為 `150 KB - 350 KB`
 - 正式 runtime 背景硬上限為 `500 KB`
 
-品質分層：
+現行產圖入口與品質紀錄：
 
-- `trial`：`low`
-- `final background`：`medium`
-- `high` 只保留給少數宣傳級主視覺，不是背景圖預設
+- 本專案改由使用者指定的側邊欄 ChatGPT 內建圖片功能產圖、修圖；不使用舊的付費 API、imagegen CLI 或本 Codex 對話的產圖工具
+- 原先 `trial-low -> final-medium-edit` 是舊 API 流程的歷史規格，不再是現行定稿的必要步驟
+- 側邊欄若未提供圖片引擎版本或 `low / medium / high` 控制，不得聲稱已指定、驗證或升階；也不得以此為由切回 API
+- WebP 編碼器的 quality 只控制本機壓縮，與生圖品質參數分開記錄
+- 產圖入口不可用時停止並回報，不改全域 API Key、shell 設定或其他專案
 
-升階規則：
+核准與定稿規則：
 
-- `trial-low` 的角色是確認地標、構圖、氣氛與裁切安全區
-- 一旦某張 `trial-low` 被接受，必須先明確指定它是 `lock-master`
-- `final-medium` 不可直接用同一 prompt 重新 `generate`
-- `final-medium` 必須以已核准的 `trial-low` / `lock-master` 為輸入，走 `edit` 升階
-- `edit` 指令必須明確要求：`keep architecture unchanged`、`keep composition unchanged`、`change only weather / detail / polish`
-- 正式流程應視為：`trial-low -> lock-master -> final-medium-edit -> runtime-webp`
-- `final-medium` 的輸出目錄是 `output/background-finals/<city>-<district>/`
-- `runtime-webp` 的導出目錄是 `output/background-runtime/<city>-<district>/`
-- 正式網站讀取目錄是 `images/backgrounds/<city>/<district>/`
-- `final-medium` 與正式 `runtime-webp` 的檔名都固定使用 canonical 名稱，不帶版本尾巴
+- `trial` 用來確認地標、構圖、氣氛與裁切安全區；使用者接受後才指定為 `lock-master`
+- 其餘五種天氣都直接使用同一張已核准晴天母版，不從前一張天氣變體接力衍生
+- 編輯要求包含：`keep architecture unchanged`、`keep composition unchanged`、`change only weather / lighting / atmospheric visibility / weather-related wetness`
+- 六種天氣需逐張核准；全組核准不代表可自行替換正式圖或發布，仍需使用者授權正式替換
+- 已核准且符合尺寸、格式與容量上限的 WebP 可直接定稿，不為了階段名稱或無法指定的 medium 再生一次
+- 正式流程為：`trial -> lock-master -> five-weather trials -> user-approved set -> runtime-webp`
+- 已核准交付檔存於 `output/background-finals/<city>-<district>/`；匯入前 WebP 存於 `output/background-runtime/<city>-<district>/`；兩者可為同一份已驗證圖檔的位元組相同副本
+- 正式網站只讀取 `images/backgrounds/<city>/<district>/`，檔名固定使用 canonical 名稱，不帶版本尾巴
+- 替換既有景點時只更新其正式檔案；路徑與天氣契約未變，不必修改 manifest 或抽選器
 
 ### 背景 manifest 與中英對應規則
 

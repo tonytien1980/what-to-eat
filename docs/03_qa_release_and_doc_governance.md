@@ -116,8 +116,12 @@
 - 共享 fallback 背景必須落在 `images/backgrounds/shared/`
 - 正式背景單張目標大小應落在 `150 KB - 350 KB`
 - 正式背景單張不得超過 `500 KB`
-- 已核准的 `trial-low` 升階到 `final-medium` 時，不可直接重新 `generate`
-- `final-medium` 必須能追溯到對應的 `lock-master` 與 `edit` 升階流程
+- 背景定稿前需確認六種天氣都已核准；替換檔須與核准交付檔一致，不得因定稿重新生圖
+- 同一組天氣變體需核對主體比例、屋頂、主要物件與鏡頭位置；格式驗證不能取代逐張視覺審查
+- 側邊欄 ChatGPT 的引擎與生成品質僅能依介面可驗證資訊記錄，不能把本機 WebP quality 當成生圖品質
+- 替換既有景點時核對六個 canonical 路徑、manifest 中英對應與同區同天氣抽選；其他景點與未授權資料不可連帶修改
+- `codex/initial-mvp` 推送會自動部署 GitHub Pages；發布前需取得使用者對此部署影響的授權，不能把一般 GitHub 同步當成純備份
+- 正式檔必須能追溯到已核准的 `lock-master`、天氣變體與使用者正式替換授權；舊 API 的 low / medium 升階不再是現行發布條件
 - 更換圖資後仍符合 safe-frame guide
 - disabled 或缺資料狀態可閱讀
 - 動畫不阻塞最終結果
