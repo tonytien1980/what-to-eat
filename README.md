@@ -82,4 +82,9 @@ The 2026-09-23 weather repair is implemented on `codex/batch-one-data-safety`, n
 Forecast temperature and apparent temperature share the same timestamp. The UI distinguishes
 the forecast time and the following 24-hour range from current observations and today's range.
 Initial failure has no invented values; refresh failure preserves only the same district's last-good data with a stale label.
-The Apps Script atomic publishing design is pending owner approval; neither the live publisher nor live sheets changed.
+The Apps Script atomic publishing design was approved on 2026-09-24 and is implemented locally.
+It validates the complete master schema, asks for confirmation, rechecks inputs under a script lock,
+replaces four tabs in one Sheets v4 batch, and verifies all values before reporting success.
+The CLI preview shares the actual `Code.gs` contract instead of a separate validator.
+Neither the live publisher nor live sheets changed. Activation requires the Sheets advanced service
+and a separately approved test-copy/production rollout; see `apps-script/master-publish-sync/INSTALL.md`.

@@ -95,7 +95,10 @@
 - `master` sheet 的 `restaurants_master` 表頭必須維持 12 欄：
   `shop / maplink / city / district / lat / lng / placeid / is_lunch / is_dinner / is_drink / is_sweet / is_enabled`
 - `master` bootstrap 後，單一店家在 `master` 只能保留一列；午晚餐等跨分類只用布林欄位表達
-- `master` v1 驗證目前只 hard-block 缺 `shop / maplink`，缺 `city / district / lat / lng / placeid` 應降級為 warning
+- master 缺／重複必要表頭、非法或空 flag、整庫空／停用、啟用列缺 shop/maplink 或無分類都需阻擋；單筆缺 city/district/lat/lng/placeid 維持 warning
+- 必須測真正 Code.gs：取消、缺目標分頁、確認期間 master/publish 變更、lock 忙碌、批次被拒、已套用但回應遺失、readback 失敗／不符，都不得誤報成功或自動重試
+- 必須驗證只提交一次 native batch、保留 H 欄與格式、文字不作公式、增列及四表尾列清除都在同批內
+- CLI 與 Apps Script 共用 Code.gs 驗證／投影，CLI fixture 測試不可連線或寫入 Google Sheet
 - live runtime 仍只讀 `publish` sheet；`master` 更新不可被誤認成前端已切換資料來源
 - 不可在首頁 first load 自動要求 geolocation
 - 玩家主動啟用定位後，結果區需顯示 `遠征地距離你約 ...`
@@ -169,11 +172,15 @@ master / publish workflow 另需補做的 live checks：
 Apps Script workflow 補充：
 
 - repo 內的 `apps-script/master-publish-sync/Code.gs` 是使用者手動一鍵發布的正式腳本來源
-- 第一次安裝時需在 publish sheet 的 Apps Script editor 貼上、授權並刷新 sheet
+- 第一次安裝需另行核准，先以測試副本驗收；啟用 Sheets v4 進階服務，執行唯讀 preview 完成授權，不可用 publish 作安裝測試
 - 安裝完成後，正式使用路徑為：
   1. `npm run publish:preview`
   2. 在 publish sheet 點 `Master Sync -> 預覽同步摘要`
   3. 確認無 blocking errors 後點 `Master Sync -> 發布到前端資料庫`
+  4. 檢視四類筆數增減及清空警告，按確認；取得 lock 後重讀，輸入有變就重來
+  5. 只有寫後逐值核對一致才算發布完成；結果未確認時停止重試，依 INSTALL.md 核對與復原
+
+本機 VM 與 fixture 測試不能取代線上服務授權、實際 Sheets API、多人編輯及 CSV 傳播驗證。2026-09-24 本分支完成本機實作，線上啟用仍未執行。
 
 ## Deployment
 

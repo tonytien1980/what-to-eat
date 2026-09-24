@@ -12,7 +12,7 @@
 
 本文件是架構與資料層 SSOT。若與 `00_product_principles_and_scope.md` 衝突，以 `00` 為準。
 
-2026-09-23 第一批修復狀態：本分支的天氣修復已實作，尚未部署至正式站。Apps Script 原子批次發布方案仍待核准與實作，線上發布器未變更。
+2026-09-24 第一批修復狀態：本分支的天氣修復與已核准的 Apps Script 原子批次發布已實作；尚未部署正式站、安裝線上 Apps Script 或修改線上資料。
 
 ## 架構總原則
 
@@ -127,7 +127,7 @@ MVP 採用靜態友善前端架構：
 - 目前正式 runtime source 仍是 `publish` Google Sheet，而不是新的 `master` sheet
 - 目前已新增一份獨立 `master` Google Sheet 作為內部編輯主資料來源
 - `master` 目前採單表 `restaurants_master`，用分類布林欄位管理 fan-out
-- repo 內已存在 `master -> publish` sync core 與 bootstrap script，但 runtime 尚未直接讀取 `master`
+- `Code.gs` 是 master 驗證與 publish 投影／發布的唯一 owner；CLI 預覽直接執行其純函式，TypeScript helper 僅保留 bootstrap 合併，不再維護另一套發布驗證
 - repo 內已存在 `publish:preview` 指令，可從 live master 預覽將發布到 `publish` sheet 的四個分類表
 - 使用者手動觸發的「一鍵發布」目前採 Google Apps Script 路徑，而不是前端 runtime 直接讀 `master`
 - runtime data source state 屬於正式產品 contract，但是否直接露出在首頁 UI，必須由 `02_mvp_experience_and_gameplay_spec.md` 決定
@@ -167,8 +167,14 @@ MVP 採用靜態友善前端架構：
 - `placeid` 是正式精準地點識別欄位，用於後續更穩定的 map linking 與外部資料對位
 - 若單筆列暫時缺少 `lat` / `lng`，runtime 可安全視為 `null`，但 owner sheet 應以補齊為目標
 - 若單筆列暫時缺少 `placeid`，runtime 可安全視為 `null`，但 owner sheet 應以補齊為目標
-- `master` v1 rollout 的同步驗證目前只把缺 `shop / maplink` 視為 blocking error
+- master 的 12 個必要表頭必須各存在一次；五個 flag 必須明確合法，不將缺失或拼錯當成 FALSE
+- 全空／全停用 master、啟用列缺 `shop / maplink` 或未選分類會阻擋發布；本工具不提供整庫清空
 - `master` v1 rollout 對缺 `city / district / lat / lng / placeid` 採 warning-only，後續再逐步收斂
+- 四表必須存在且為 GRID；發布前顯示各分類筆數增減與清空警告，操作者確認後才取得 script lock 並重讀所有輸入
+- 發布使用 Sheets v4 `spreadsheets.batchUpdate`，四表 A:G 的替換、尾列清除及必要格線擴充同一批原子套用；不清除 H 欄之後、不改格式、不執行文字公式
+- 成功回應後另以 `Values.batchGet` 逐值核對；送出後失敗或 readback 不符是結果未確認，不重試、不自動 rollback
+- Script lock 不阻止人工編輯；Sheets 儲存端原子性也不代表四個 CSV cache 同步，前端仍需自己的 catalog 交接規則
+- 線上安裝需 Sheets v4 進階服務；安裝、人工操作限制與回復流程見 `apps-script/master-publish-sync/INSTALL.md`
 - 結果階段的距離提示使用 browser geolocation 搭配 `lat` / `lng`
 - 距離提示另有獨立本地記憶層，用來保存上次成功定位的玩家座標
 
