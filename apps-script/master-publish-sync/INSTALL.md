@@ -2,7 +2,7 @@
 
 ## 狀態與範圍
 
-2026-09-24 已核准原子批次方案；本分支已完成本機實作，並將僅指向私人測試副本的腳本安裝至副本綁定的 Apps Script。2026-09-25 owner 已同意新增 Sheets API v4 與其服務條款，但瀏覽器頁面控制逾時，尚未由代理按下「新增」，本輪無法重新確認服務狀態；後續帳號授權與線上驗收仍待完成。正式 Apps Script 與正式試算表未修改，未執行線上發布。不要把 GitHub 分支同步當成 Google Sheet 已更新。副本與續接紀錄見 `docs/superpowers/plans/2026-09-23-batch-one-data-safety.md`。
+2026-09-24 已核准原子批次方案；本分支已完成本機實作，並將僅指向私人測試副本的腳本安裝至副本綁定的 Apps Script。2026-09-25 瀏覽器恢復後，依 owner 批准新增並儲存 Sheets API v4；首次唯讀 preview 的 OAuth 授權遭 Google 顯示「系統已封鎖這個應用程式」。已停止等待授權的執行，未進入資料驗證，也未執行發布。線上驗收尚未通過；正式 Apps Script 與正式試算表未修改。不要把服務新增或 GitHub 同步當成 Google Sheet 已發布。副本與續接紀錄見 `docs/superpowers/plans/2026-09-23-batch-one-data-safety.md`。
 
 `Code.gs` 是發布、驗證與分類投影的唯一正式實作。本機 `npm run publish:preview` 只讀 master，並透過 Node VM 呼叫同一份 repo 腳本的純函式。CSV 資料不會作為程式執行。前端仍只讀 publish 的四個 CSV，不直接讀 master。
 
@@ -43,6 +43,7 @@ Google 對同一個 [batchUpdate](https://developers.google.com/workspace/sheets
 
 ## 失敗與回復
 
+- **Google OAuth 封鎖**：若授權畫面直接顯示「系統已封鎖這個應用程式」且無同意入口，停止等待中的執行。這發生在程式驗證前，不是 master 分類錯誤；不得繞過警示、降低帳號保護或改走另一條寫入路徑。先唯讀確認專案 owner、容器、OAuth scopes 與 Cloud 專案類型，再由 owner 批准必要的正式 OAuth 設定／審核處理；不能保證更換專案即可解決。2026-09-25 測試專案確認只有 `https://www.googleapis.com/auth/spreadsheets` 一項 scope，且使用預設 GCP 專案。此 scope 的授權範圍涵蓋帳號試算表，兩個副本 ID 是程式操作範圍，不是 OAuth 的兩檔案限制。參考 [授權說明](https://developers.google.com/apps-script/guides/services/authorization) 與 [OAuth client verification](https://developers.google.com/apps-script/guides/client-verification)。
 - **寫入前阻擋**：顯示「本次未送出寫入」，修正欄位或重新預覽；此執行不會修改資料。
 - **取消或 lock 忙碌**：不送出寫入。不要以第二個 Apps Script 專案繞過鎖。
 - **送出後發生錯誤／逾時／readback 不符**：顯示「發布結果尚未確認，可能已寫入」。不自動重試、不自動回寫舊值，不宣稱四表仍是舊資料。
