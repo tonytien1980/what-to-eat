@@ -2,7 +2,7 @@
 
 ## 狀態與範圍
 
-2026-09-24 已核准原子批次方案；本分支已完成本機實作，尚未安裝到線上 Apps Script，也未執行線上發布。不要把 GitHub 分支同步當成 Google Sheet 已更新。
+2026-09-24 已核准原子批次方案；本分支已完成本機實作，並將僅指向私人測試副本的腳本安裝至副本綁定的 Apps Script。2026-09-25 owner 已同意新增 Sheets API v4 與其服務條款，但瀏覽器頁面控制逾時，尚未由代理按下「新增」，本輪無法重新確認服務狀態；後續帳號授權與線上驗收仍待完成。正式 Apps Script 與正式試算表未修改，未執行線上發布。不要把 GitHub 分支同步當成 Google Sheet 已更新。副本與續接紀錄見 `docs/superpowers/plans/2026-09-23-batch-one-data-safety.md`。
 
 `Code.gs` 是發布、驗證與分類投影的唯一正式實作。本機 `npm run publish:preview` 只讀 master，並透過 Node VM 呼叫同一份 repo 腳本的純函式。CSV 資料不會作為程式執行。前端仍只讀 publish 的四個 CSV，不直接讀 master。
 

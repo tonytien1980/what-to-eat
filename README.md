@@ -87,7 +87,8 @@ It validates the complete master schema, asks for confirmation, rechecks inputs 
 replaces four tabs in one Sheets v4 batch, and verifies all values before reporting success.
 The CLI preview shares the actual `Code.gs` contract instead of a separate validator.
 The production publisher and production sheets remain unchanged. On 2026-09-24, private test copies
-were created and the new script installed with copy-only IDs. Live acceptance is pending Google API
-terms confirmation and subsequent authorization, not passed. The copied master also contains 69 enabled
+were created and the new script installed with copy-only IDs. The owner approved adding Sheets API v4
+and its terms on 2026-09-25, but browser page-control timeouts prevented the Add action; live acceptance
+and subsequent account authorization remain pending, not passed. The copied master also contains 69 enabled
 rows without a category; no production data was corrected. See the acceptance checkpoint in
 `docs/superpowers/plans/2026-09-23-batch-one-data-safety.md` and `apps-script/master-publish-sync/INSTALL.md`.

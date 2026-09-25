@@ -70,7 +70,7 @@ For publish safety, the existing Apps Script remains the owner. Validate every r
 
 ## 2026-09-24 Test-Copy Acceptance Checkpoint
 
-Status: prepared; awaiting human confirmation of Google API terms. Live acceptance has **not** passed.
+Status at the 2026-09-24 checkpoint: prepared; awaiting human confirmation of Google API terms. See the 2026-09-25 continuation below for the current blocker. Live acceptance has **not** passed.
 
 - The owner approved test-copy acceptance only. The earlier no-live-write boundary is lifted for these test copies, not for production, deployment, or account-wide permission changes.
 - Created native copies in the private My Drive `ChatGPT` folder. Both Sheet UIs show owner-only sharing; no sharing permissions were changed.
@@ -90,3 +90,11 @@ Resume from these existing copies; do not create another pair:
 2. Recheck copy-only script config and service state, then run read-only `previewMasterPublishSync` for authorization. Verify the copied-data blockers in the actual Google runtime.
 3. Use controlled fixtures only in the test master for success, cancellation, missing-header, all-empty/all-disabled, single-category-clear warning and changed-during-confirmation cases. Read back all four published A:G ranges; verify H+ and formatting preservation. Restore the test fixture deliberately and record its final state.
 4. Report actual Google runtime results separately from VM coverage and any untested failure injection. Production activation, data correction and frontend CSV propagation remain separate gates.
+
+## 2026-09-25 Consent And Browser Blocker
+
+- The owner confirmed acceptance of the Google API terms and adding Sheets API v4 to the existing test project. This exact approval is recorded; do not ask for it again unless its scope or terms change. Subsequent account-access consent remains a separate boundary.
+- Chrome inventory still lists the same test project and both copies. Selecting the script page by URL and then its current tab ID timed out. The documented same-browser Playwright alternative also timed out on `Emulation.setFocusEmulationEnabled` before returning page content.
+- No Add click, preview, publish, spreadsheet write or script edit was sent in this continuation. Current service/auth state could not be reverified; do not infer it from the prior dialog or mark acceptance passed.
+- Requested that the owner open and refresh the existing test project in Chrome, keep it open, and report readiness. Resume by reading the actual page, checking copy-only IDs and existing services, then applying the already-approved Add action only if still needed. Do not create another copy or use a different authorization/write path to bypass the failed browser control.
+- This continuation changes documentation only; local code tests/builds were not rerun. The previous 101-test result remains historical, not live acceptance evidence. The original workspace still contains only the pre-existing restaurant snapshot diff (4221 insertions / 76 deletions), untouched.
