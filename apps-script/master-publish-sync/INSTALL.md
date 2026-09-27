@@ -44,6 +44,8 @@ Google 對同一個 [batchUpdate](https://developers.google.com/workspace/sheets
 ## 失敗與回復
 
 - **Google OAuth 封鎖**：若授權畫面直接顯示「系統已封鎖這個應用程式」且無同意入口，停止等待中的執行。這發生在程式驗證前，不是 master 分類錯誤；不得繞過警示、降低帳號保護或改走另一條寫入路徑。先唯讀確認專案 owner、容器、OAuth scopes 與 Cloud 專案類型，再由 owner 批准必要的正式 OAuth 設定／審核處理；不能保證更換專案即可解決。2026-09-25 測試專案確認只有 `https://www.googleapis.com/auth/spreadsheets` 一項 scope，且使用預設 GCP 專案。此 scope 的授權範圍涵蓋帳號試算表，兩個副本 ID 是程式操作範圍，不是 OAuth 的兩檔案限制。參考 [授權說明](https://developers.google.com/apps-script/guides/services/authorization) 與 [OAuth client verification](https://developers.google.com/apps-script/guides/client-verification)。
+- **封鎖診斷順序**：先確認帳號是否加入「進階保護計畫」，不要將一般兩步驟驗證當成同一功能。[Google 官方說明](https://support.google.com/accounts/answer/7539956?hl=zh-Hant)指出進階保護可能封鎖 Apps Script，但未確認帳號狀態前，這只是待查假設。若已加入，維持保護並評估官方驗證／支援途徑；若未加入，續查 OAuth client 與同意畫面設定，仍不可保證切換 Cloud 專案能解除封鎖。
+- **不可直接縮成目前文件權限**：目前 master 與 publish 是兩份不同試算表，`@OnlyCurrentDoc` 不是此流程可直接套用的修復。`spreadsheets.readonly` 不能執行發布，且[官方 scope 表](https://developers.google.com/workspace/sheets/api/scopes)仍將它列為 sensitive；`drive.file` 雖支援逐檔權限，也必須有適當的檔案授權流程，不可只換 scope 字串就宣稱相容。任何此類授權流程調整應另行設計、批准與驗收，不加相容繞路。
 - **寫入前阻擋**：顯示「本次未送出寫入」，修正欄位或重新預覽；此執行不會修改資料。
 - **取消或 lock 忙碌**：不送出寫入。不要以第二個 Apps Script 專案繞過鎖。
 - **送出後發生錯誤／逾時／readback 不符**：顯示「發布結果尚未確認，可能已寫入」。不自動重試、不自動回寫舊值，不宣稱四表仍是舊資料。
