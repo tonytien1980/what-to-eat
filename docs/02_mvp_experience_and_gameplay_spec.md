@@ -303,7 +303,7 @@ Reduced motion：
 ### 背景 runtime 規則
 
 - 正式背景 runtime 路徑固定為 `images/backgrounds/<city>/<district>/`
-- 美麗華百樂園摩天輪六種天氣固定使用已核准的夜景版本，白天開啟服務也顯示夜景；不新增日夜判斷，`clear-cloudy` 僅代表晴到多雲的天氣，不代表白天
+- 美麗華百樂園摩天輪與士林夜市六種天氣固定使用已核准的夜景版本，白天開啟服務也顯示夜景；不新增日夜判斷，`clear-cloudy` 僅代表晴到多雲的天氣，不代表白天
 - `scene-line` 只以「當前背景地標 + 天氣狀態」組成
 - 同一行政區若同一種天氣下有多張正式景點圖，應從該天氣可用景點池中隨機抽取
 - 未命中 district 級正式圖時，回退到 `images/backgrounds/shared/` 的共享奇幻背景
