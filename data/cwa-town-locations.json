@@ -5,5 +5,12 @@
     "countyCode": "63",
     "townId": "6300400",
     "label": "臺北市中山區"
+  },
+  {
+    "city": "臺北市",
+    "district": "中正區",
+    "countyCode": "63",
+    "townId": "6300500",
+    "label": "臺北市中正區"
   }
 ]

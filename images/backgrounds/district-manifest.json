@@ -26,6 +26,31 @@
     "臺北市": {
       "slug": "taipei",
       "districts": {
+        "中正區": {
+          "slug": "zhongzheng",
+          "landmarks": {
+            "kishu-an": {
+              "label_zh": "紀州庵",
+              "weight": 1,
+              "variants": {
+                "clear_cloudy": "taipei/zhongzheng/background-taipei-zhongzheng-clear-cloudy-kishu-an.webp",
+                "overcast": "taipei/zhongzheng/background-taipei-zhongzheng-overcast-kishu-an.webp",
+                "rain": "taipei/zhongzheng/background-taipei-zhongzheng-rain-kishu-an.webp",
+                "heavy_rain": "taipei/zhongzheng/background-taipei-zhongzheng-heavy-rain-kishu-an.webp",
+                "thunderstorm": "taipei/zhongzheng/background-taipei-zhongzheng-thunderstorm-kishu-an.webp",
+                "dense_fog": "taipei/zhongzheng/background-taipei-zhongzheng-dense-fog-kishu-an.webp"
+              }
+            }
+          },
+          "weather_pools": {
+            "clear_cloudy": [{ "landmark": "kishu-an", "weight": 1 }],
+            "overcast": [{ "landmark": "kishu-an", "weight": 1 }],
+            "rain": [{ "landmark": "kishu-an", "weight": 1 }],
+            "heavy_rain": [{ "landmark": "kishu-an", "weight": 1 }],
+            "thunderstorm": [{ "landmark": "kishu-an", "weight": 1 }],
+            "dense_fog": [{ "landmark": "kishu-an", "weight": 1 }]
+          }
+        },
         "中山區": {
           "slug": "zhongshan",
           "landmarks": {

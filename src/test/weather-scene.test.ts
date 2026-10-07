@@ -206,3 +206,28 @@ test('builds a town weather snapshot from the resolved location instead of hard-
   expect(snapshot.sourceLabel).toBe('3 小時天氣預報');
   expect(snapshot.currentPeriod.timeRange).toContain('中山區');
 });
+
+test.each(['臺北市', '台北市'])('resolves %s Zhongzheng to its own CWA town forecast', (city) => {
+  const location = resolveCwaTownLocation({ city, district: '中正區' });
+
+  expect(location).toMatchObject({
+    city: '臺北市',
+    district: '中正區',
+    countyCode: '63',
+    townId: '6300500',
+    label: '臺北市中正區',
+  });
+  if (!location) throw new Error('Missing Zhongzheng CWA mapping');
+
+  const dataset = extractCwaTownScriptData({
+    threeHourScript: officialShapeTownThreeHourScript.replaceAll('6300400', '6300500'),
+    gt24hrScript: sampleTownGtScript.replaceAll('6300400', '6300500'),
+  });
+  const snapshot = buildTownDistrictWeatherSnapshot(dataset, location, 0);
+
+  expect(snapshot.cityName).toBe('臺北市中正區');
+  expect(snapshot.sourceLabel).toBe('3 小時天氣預報');
+  expect(snapshot.currentPeriod.timeRange).toContain('中正區');
+  expect(snapshot.currentPeriod.wxCode).toBe(8);
+  expect(snapshot.currentPeriod.currentTemp).toBe(21);
+});

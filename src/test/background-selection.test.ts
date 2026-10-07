@@ -3,6 +3,54 @@ import {
   resolveDistrictBackgroundSelectionFromManifest,
 } from '../features/backgrounds/selector';
 import type { CwaForecastPeriod } from '../features/weather/types';
+import districtManifest from '../../images/backgrounds/district-manifest.json';
+
+test.each([
+  ['clear_cloudy', 'clear-cloudy'],
+  ['overcast', 'overcast'],
+  ['rain', 'rain'],
+  ['heavy_rain', 'heavy-rain'],
+  ['thunderstorm', 'thunderstorm'],
+  ['dense_fog', 'dense-fog'],
+] as const)('resolves Zhongzheng %s to the sole approved Kishu An asset', (variantKey, weatherSlug) => {
+  for (const randomValue of [0, 0.5, 0.999999]) {
+    const selection = resolveDistrictBackgroundSelectionFromManifest({
+      manifest: districtManifest,
+      location: { city: '臺北市', district: '中正區' },
+      variantKey,
+      randomValue,
+    });
+
+    expect(selection).toMatchObject({
+      source: 'district',
+      sceneLabel: '紀州庵',
+      landmarkSlug: 'kishu-an',
+      districtSlug: 'zhongzheng',
+      variantKey,
+      assetPath: `taipei/zhongzheng/background-taipei-zhongzheng-${weatherSlug}-kishu-an.webp`,
+    });
+    expect(selection?.imageUrl).toBeTruthy();
+  }
+});
+
+test.each([
+  [1, 'clear_cloudy'],
+  [7, 'overcast'],
+  [8, 'rain'],
+  [15, 'thunderstorm'],
+  [31, 'dense_fog'],
+] as const)('maps Zhongzheng CWA code %i through the existing weather contract', (wxCode, variantKey) => {
+  const selection = resolveBackgroundSelection({
+    location: { city: '臺北市', district: '中正區' },
+    period: { ...thunderstormPeriod, wxCode },
+  });
+
+  expect(selection).toMatchObject({
+    source: 'district',
+    sceneLabel: '紀州庵',
+    variantKey,
+  });
+});
 
 const thunderstormPeriod: CwaForecastPeriod = {
   timeRange: '中山區未來 24 小時',
