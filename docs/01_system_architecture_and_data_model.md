@@ -614,7 +614,7 @@ Pack 代表一組在特定情境下可成立、可被玩、可被接受的內容
 
 - Phase 1 的 weather runtime 已可跟隨目前遠征地，但仍只涵蓋已有 CWA mapping 的行政區
 - Phase 1 的 CWA mapping source of truth 為 `data/cwa-town-locations.json`
-- 目前已登錄中山區 `63 / 6300400` 與中正區 `63 / 6300500`；中正區代碼核對來源為 [CWA 中正區鄉鎮預報](https://www.cwa.gov.tw/V8/C/W/Town/Town.html?TID=6300500)。兩區沿用同一縣市腳本載入器，不新增 API 或獨立天氣來源
+- 目前已登錄中山區 `63 / 6300400`、中正區 `63 / 6300500` 與大同區 `63 / 6300600`；代碼核對來源為 [CWA 中正區鄉鎮預報](https://www.cwa.gov.tw/V8/C/W/Town/Town.html?TID=6300500)及 [CWA 大同區鄉鎮預報](https://www.cwa.gov.tw/V8/C/W/Town/Town.html?TID=6300600)。三區沿用同一縣市腳本載入器，不新增 API 或獨立天氣來源
 - district 級背景與 weather 會一起使用目前遠征地
 - 無 district 正式背景圖時，背景回退到 `images/backgrounds/shared/`
 
@@ -822,6 +822,7 @@ Playwright 預覽圖屬於本地驗證產物，固定放在 `output/playwright/`
 - 替換既有景點時只更新其正式檔案；路徑與天氣契約未變，不必修改 manifest 或抽選器
 - 新增行政區時在既有 district manifest 登錄中文地區、景點及六種 canonical 路徑，並在 `data/cwa-town-locations.json` 補入經查證的 CWA town mapping；不另建選圖或天氣管理表
 - 中正區目前僅 `kishu-an`，正式檔位於 `images/backgrounds/taipei/zhongzheng/background-taipei-zhongzheng-<weather>-kishu-an.webp`。六個天氣池均只包含紀州庵，所有抽選種子都選到同一景點
+- 大同區目前僅 `dadaocheng-wharf`，正式檔位於 `images/backgrounds/taipei/datong/background-taipei-datong-<weather>-dadaocheng-wharf.webp`。六個天氣池均只包含大稻埕碼頭，所有抽選種子都選到同一景點；不得回用已否決的永樂市場或試作 v1
 - 既有 Wx 對應仍保留：雨天與豪雨共用的 Wx 代碼會先命中 `rain`，目前沒有獨立雨量升級判定；`heavy_rain` 正式圖與池已備妥，但不能宣稱僅依 Wx 即會自動選出豪雨圖。本次不變更全站天氣分類規則
 
 ### 背景 manifest 與中英對應規則

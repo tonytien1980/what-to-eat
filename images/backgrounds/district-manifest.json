@@ -26,6 +26,31 @@
     "臺北市": {
       "slug": "taipei",
       "districts": {
+        "大同區": {
+          "slug": "datong",
+          "landmarks": {
+            "dadaocheng-wharf": {
+              "label_zh": "大稻埕碼頭",
+              "weight": 1,
+              "variants": {
+                "clear_cloudy": "taipei/datong/background-taipei-datong-clear-cloudy-dadaocheng-wharf.webp",
+                "overcast": "taipei/datong/background-taipei-datong-overcast-dadaocheng-wharf.webp",
+                "rain": "taipei/datong/background-taipei-datong-rain-dadaocheng-wharf.webp",
+                "heavy_rain": "taipei/datong/background-taipei-datong-heavy-rain-dadaocheng-wharf.webp",
+                "thunderstorm": "taipei/datong/background-taipei-datong-thunderstorm-dadaocheng-wharf.webp",
+                "dense_fog": "taipei/datong/background-taipei-datong-dense-fog-dadaocheng-wharf.webp"
+              }
+            }
+          },
+          "weather_pools": {
+            "clear_cloudy": [{ "landmark": "dadaocheng-wharf", "weight": 1 }],
+            "overcast": [{ "landmark": "dadaocheng-wharf", "weight": 1 }],
+            "rain": [{ "landmark": "dadaocheng-wharf", "weight": 1 }],
+            "heavy_rain": [{ "landmark": "dadaocheng-wharf", "weight": 1 }],
+            "thunderstorm": [{ "landmark": "dadaocheng-wharf", "weight": 1 }],
+            "dense_fog": [{ "landmark": "dadaocheng-wharf", "weight": 1 }]
+          }
+        },
         "中正區": {
           "slug": "zhongzheng",
           "landmarks": {

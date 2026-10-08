@@ -6,8 +6,9 @@
 
 First release targets a no-login, same-screen MVP:
 
-- Taipei Zhongshan District weather driven by official CWA town forecast scripts
+- Taipei Zhongshan, Zhongzheng, and Datong District weather driven by official CWA town forecast scripts
 - weather-selected fantasy scene backgrounds with reload-time scene rotation
+- 84 approved district backgrounds across 6 Taipei districts and 14 landmarks, including Dadaocheng Wharf in Datong
 - Google Sheet runtime restaurant loading
 - category switcher for lunch, dinner, drinks, and sweets
 - no preselected category on first load
