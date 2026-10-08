@@ -19,5 +19,12 @@
     "countyCode": "63",
     "townId": "6300600",
     "label": "臺北市大同區"
+  },
+  {
+    "city": "臺北市",
+    "district": "信義區",
+    "countyCode": "63",
+    "townId": "6300200",
+    "label": "臺北市信義區"
   }
 ]

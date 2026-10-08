@@ -26,6 +26,31 @@
     "臺北市": {
       "slug": "taipei",
       "districts": {
+        "信義區": {
+          "slug": "xinyi",
+          "landmarks": {
+            "taipei-101": {
+              "label_zh": "台北101",
+              "weight": 1,
+              "variants": {
+                "clear_cloudy": "taipei/xinyi/background-taipei-xinyi-clear-cloudy-taipei-101.webp",
+                "overcast": "taipei/xinyi/background-taipei-xinyi-overcast-taipei-101.webp",
+                "rain": "taipei/xinyi/background-taipei-xinyi-rain-taipei-101.webp",
+                "heavy_rain": "taipei/xinyi/background-taipei-xinyi-heavy-rain-taipei-101.webp",
+                "thunderstorm": "taipei/xinyi/background-taipei-xinyi-thunderstorm-taipei-101.webp",
+                "dense_fog": "taipei/xinyi/background-taipei-xinyi-dense-fog-taipei-101.webp"
+              }
+            }
+          },
+          "weather_pools": {
+            "clear_cloudy": [{ "landmark": "taipei-101", "weight": 1 }],
+            "overcast": [{ "landmark": "taipei-101", "weight": 1 }],
+            "rain": [{ "landmark": "taipei-101", "weight": 1 }],
+            "heavy_rain": [{ "landmark": "taipei-101", "weight": 1 }],
+            "thunderstorm": [{ "landmark": "taipei-101", "weight": 1 }],
+            "dense_fog": [{ "landmark": "taipei-101", "weight": 1 }]
+          }
+        },
         "大同區": {
           "slug": "datong",
           "landmarks": {
