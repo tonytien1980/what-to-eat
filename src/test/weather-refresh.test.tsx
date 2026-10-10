@@ -1,141 +1,61 @@
-import { act, render, screen } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import { useTaipeiWeather, WEATHER_REFRESH_INTERVAL_MS } from '../features/weather/useTaipeiWeather';
-import type { TaipeiWeatherSnapshot } from '../features/weather/types';
 
-const loadTaipeiWeatherSnapshotMock = vi.fn();
-
-vi.mock('../features/weather/cwa-county', async () => {
-  const actual = await vi.importActual<typeof import('../features/weather/cwa-county')>(
-    '../features/weather/cwa-county',
-  );
-
-  return {
-    ...actual,
-    createFallbackTaipeiWeatherSnapshot: vi.fn(
-      (): TaipeiWeatherSnapshot => ({
-        cityName: '臺北市松山區',
-        issuedTime: 'fallback',
-        sourceLabel: '3 小時天氣預報',
-        currentPeriod: {
-          timeRange: '松山區未來 24 小時',
-          type: '3hr',
-          lowTemp: 20,
-          highTemp: 27,
-          pop: 0,
-          wxCode: 15,
-          weatherText: '短暫陣雨或雷雨',
-          comfort: '舒適',
-          currentTemp: 22,
-          feelsLikeTemp: 24,
-        },
-        upcomingPeriods: [],
-        activeScene: {
-          sceneKey: 'forest_ruins',
-          sceneLabel: '森林遺跡',
-          variantKey: 'thunderstorm',
-          variantLabel: '雷雨',
-          imageUrl: '/fallback.webp',
-          assetPath: 'shared/fallback.webp',
-        },
-        forecastScenes: [],
-      }),
-    ),
-    loadTaipeiWeatherSnapshot: (...args: Parameters<typeof actual.loadTaipeiWeatherSnapshot>) =>
-      loadTaipeiWeatherSnapshotMock(...args),
-  };
-});
-
-function createSnapshot(weatherText: string): TaipeiWeatherSnapshot {
-  return {
-    cityName: '臺北市松山區',
-    issuedTime: 'official',
-    sourceLabel: '3 小時天氣預報',
-    currentPeriod: {
-      timeRange: '松山區未來 24 小時',
-      type: '3hr',
-      lowTemp: 23,
-      highTemp: 32,
-      pop: 0,
-      wxCode: weatherText === '陰' ? 7 : 15,
-      weatherText,
-      comfort: '舒適',
-      currentTemp: 28,
-      feelsLikeTemp: 32,
-    },
-    upcomingPeriods: [],
-    activeScene: {
-      sceneKey: weatherText === '陰' ? 'floating_isles' : 'forest_ruins',
-      sceneLabel: weatherText === '陰' ? '漂浮群島' : '森林遺跡',
-      variantKey: weatherText === '陰' ? 'overcast' : 'thunderstorm',
-      variantLabel: weatherText === '陰' ? '陰天' : '雷雨',
-      imageUrl: '/weather.webp',
-      assetPath: 'shared/weather.webp',
-    },
-    forecastScenes: [],
-  };
-}
-
-function TestHarness() {
-  const { snapshot } = useTaipeiWeather({
-    city: '臺北市',
-    district: '松山區',
-  });
-
-  return <p>{snapshot.currentPeriod.weatherText}</p>;
-}
+const loader = vi.hoisted(() => vi.fn());
+vi.mock('../features/weather/cwa-county', async (original) => ({ ...await original<object>(), loadTaipeiWeatherSnapshot: loader }));
+const location = { city: '臺北市', district: '松山區' };
+const snapshot = {
+  cityName: '臺北市松山區', forecastAt: '2026-09-23T13:00:00.000Z', validUntil: '2026-09-23T14:00:00.000Z',
+  currentPeriod: { type: '3hr', timeRange: '21:00', wxCode: 1, weatherText: '晴', currentTemp: 27, feelsLikeTemp: 29, lowTemp: 24, highTemp: 29 },
+};
 
 beforeEach(() => {
   globalThis.__ENABLE_LIVE_WEATHER_IN_TEST__ = true;
-  loadTaipeiWeatherSnapshotMock.mockReset();
-  vi.useFakeTimers();
+  vi.useFakeTimers(); vi.setSystemTime(new Date('2026-09-23T13:30:00Z'));
+  loader.mockReset();
+});
+afterEach(() => { delete globalThis.__ENABLE_LIVE_WEATHER_IN_TEST__; vi.useRealTimers(); });
+
+test('refreshes on focus and interval, retaining last-good while a refresh fails', async () => {
+  loader.mockResolvedValueOnce(snapshot).mockRejectedValueOnce(new Error('offline')).mockResolvedValueOnce(snapshot);
+  const { result } = renderHook(() => useTaipeiWeather(location));
+  await act(async () => {});
+  expect(result.current.status).toBe('ready');
+  await act(async () => { window.dispatchEvent(new Event('focus')); });
+  expect(result.current.snapshot).toEqual(snapshot);
+  expect(result.current.status).toBe('stale');
+  await act(async () => { vi.advanceTimersByTime(WEATHER_REFRESH_INTERVAL_MS); });
+  expect(result.current.status).toBe('ready');
+  expect(loader).toHaveBeenCalledTimes(3);
 });
 
-afterEach(() => {
-  delete globalThis.__ENABLE_LIVE_WEATHER_IN_TEST__;
-  vi.useRealTimers();
+test('does not retain weather from another district or accept its late response', async () => {
+  let finishOld!: (value: typeof snapshot) => void;
+  loader.mockImplementationOnce(() => new Promise(resolve => { finishOld = resolve; })).mockResolvedValueOnce(null);
+  const { result, rerender } = renderHook(({ district }) => useTaipeiWeather({ city: '臺北市', district }), { initialProps: { district: '松山區' } });
+  rerender({ district: '未知區' });
+  await act(async () => {});
+  expect(result.current.snapshot).toBeNull();
+  expect(result.current.status).toBe('unavailable');
+  await act(async () => { finishOld(snapshot); });
+  expect(result.current.snapshot).toBeNull();
 });
 
-test('refreshes town weather when the page regains focus', async () => {
-  loadTaipeiWeatherSnapshotMock
-    .mockResolvedValueOnce(createSnapshot('短暫陣雨或雷雨'))
-    .mockResolvedValueOnce(createSnapshot('陰'));
-
-  render(<TestHarness />);
-
-  await act(async () => {
-    await Promise.resolve();
-  });
-
-  expect(screen.getByText('短暫陣雨或雷雨')).toBeInTheDocument();
-
-  await act(async () => {
-    window.dispatchEvent(new Event('focus'));
-    await Promise.resolve();
-  });
-
-  expect(screen.getByText('陰')).toBeInTheDocument();
-  expect(loadTaipeiWeatherSnapshotMock).toHaveBeenCalledTimes(2);
+test('clears a loaded district immediately on location change', async () => {
+  loader.mockResolvedValueOnce(snapshot).mockImplementationOnce(() => new Promise(() => {}));
+  const { result, rerender } = renderHook(({ district }) => useTaipeiWeather({ city: '臺北市', district }), { initialProps: { district: '松山區' } });
+  await act(async () => {});
+  rerender({ district: '中山區' });
+  expect(result.current.snapshot).toBeNull();
+  expect(result.current.status).toBe('loading');
 });
 
-test('refreshes town weather on the periodic refresh interval', async () => {
-  loadTaipeiWeatherSnapshotMock
-    .mockResolvedValueOnce(createSnapshot('短暫陣雨或雷雨'))
-    .mockResolvedValueOnce(createSnapshot('陰'));
-
-  render(<TestHarness />);
-
-  await act(async () => {
-    await Promise.resolve();
-  });
-
-  expect(screen.getByText('短暫陣雨或雷雨')).toBeInTheDocument();
-
-  await act(async () => {
-    vi.advanceTimersByTime(WEATHER_REFRESH_INTERVAL_MS);
-    await Promise.resolve();
-  });
-
-  expect(screen.getByText('陰')).toBeInTheDocument();
-  expect(loadTaipeiWeatherSnapshotMock).toHaveBeenCalledTimes(2);
+test('marks expired forecasts stale while refresh is still pending', async () => {
+  loader.mockResolvedValueOnce(snapshot).mockImplementation(() => new Promise(() => {}));
+  const { result } = renderHook(() => useTaipeiWeather(location));
+  await act(async () => {});
+  await act(async () => { vi.advanceTimersByTime(31 * 60000); });
+  expect(result.current.status).toBe('stale');
+  expect(result.current.snapshot).toEqual(snapshot);
 });

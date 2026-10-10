@@ -241,7 +241,7 @@ location-aware 方向已進入 Phase 1，但目前仍不是完整 detect-first r
 - 若沒有 saved location，先使用 `臺北市中山區` 預設錨點
 - 使用者可透過輕量 chooser 覆蓋預設錨點
 - 若目前遠征地有 CWA 鄉鎮 mapping，首頁天氣跟著該行政區
-- 若目前遠征地沒有 CWA mapping，天氣安全回退到本地 fallback snapshot
+- 若目前遠征地沒有 CWA mapping、只選城市，或首次請求失敗，顯示天氣無法取得並使用共享 default 背景；不得捏造雷雨或溫度
 - CWA town weather script URL 應附帶時間桶 cache key，避免瀏覽器長時間重用舊的官方 JS 導致天氣狀態卡住
 - weather runtime 不可只在 first paint 抓一次；頁面回到前景與固定刷新節點時，應重新請求目前遠征地的天氣資料
 - Phase 1 不啟用 browser geolocation
@@ -614,7 +614,12 @@ Pack 代表一組在特定情境下可成立、可被玩、可被接受的內容
 
 - Phase 1 的 weather runtime 已可跟隨目前遠征地，但仍只涵蓋已有 CWA mapping 的行政區
 - Phase 1 的 CWA mapping source of truth 為 `data/cwa-town-locations.json`
-- 目前已登錄中山區 `63 / 6300400`、中正區 `63 / 6300500`、大同區 `63 / 6300600` 與信義區 `63 / 6300200`；代碼核對來源為 [CWA 中正區鄉鎮預報](https://www.cwa.gov.tw/V8/C/W/Town/Town.html?TID=6300500)、[CWA 大同區鄉鎮預報](https://www.cwa.gov.tw/V8/C/W/Town/Town.html?TID=6300600)及 [CWA 信義區鄉鎮預報](https://www.cwa.gov.tw/V8/C/W/Town/Town.html?TID=6300200)。四區沿用同一縣市腳本載入器，不新增 API 或獨立天氣來源
+- 已涵蓋臺北市全部 12 區，`countyCode` 均為 `63`：松山 `6300100`、信義 `6300200`、大安 `6300300`、中山 `6300400`、中正 `6300500`、大同 `6300600`、萬華 `6300700`、文山 `6300800`、南港 `6300900`、內湖 `6301000`、士林 `6301100`、北投 `6301200`。代碼來源為 [CWA 鄉鎮對照](https://www.cwa.gov.tw/Data/js/info/Info_Town.js)，共同沿用既有載入器，不新增 API 或獨立天氣來源
+- 天氣唯一資料來源為 CWA `ChartData_3hr_T_63.js` 的 `Time_3hr` 與 `TempArray_3hr`。依臺灣時區選出涵蓋現在的時段，`T / AT / Wx` 必須取相同 index，不再混用 `GT24hr` 的觀測值
+- snapshot 必須帶 `forecastAt / validUntil`；拒絕未來起始、起始已滿 3 小時、時間順序錯誤、缺值或不足未來 24 小時的資料。跨年時依現在年份解析來源未帶年份的時間標籤
+- 高低溫為該預報起點起算未來 24 小時的範圍，UI 不得稱為「今天」或把預報溫度稱為即時觀測
+- 保留單一有界腳本快取，使用 15 分鐘時間桶；請求 10 秒逾時，失敗與無效資料不留在快取，允許同桶重試。每 5 分鐘、回到前景及目前預報到期時刷新
+- 同區刷新失敗保留上次成功 snapshot 並標記待更新；切區立即隔離舊區 snapshot，晚到的舊請求不可覆寫新區。沒有有效 snapshot 時使用中性共享 default 圖，不讓載入失敗冒充雷雨
 - district 級背景與 weather 會一起使用目前遠征地
 - 無 district 正式背景圖時，背景回退到 `images/backgrounds/shared/`
 

@@ -26,6 +26,9 @@ test('renders expedition board title and start button', () => {
   ).not.toBeInTheDocument();
   expect(screen.queryByText('Google Sheet 即時資料')).not.toBeInTheDocument();
   expect(screen.queryByText(/^臺北市中山區 ·/)).not.toBeInTheDocument();
+  expect(screen.getByText('天氣資料暫時無法取得')).toBeInTheDocument();
+  expect(screen.queryByText(/現在 22°/)).not.toBeInTheDocument();
+  expect(screen.getByText(/天氣未確認/)).toBeInTheDocument();
 });
 
 test('opens the lightweight location correction sheet', () => {

@@ -6,7 +6,8 @@
 
 First release targets a no-login, same-screen MVP:
 
-- Taipei Zhongshan, Zhongzheng, Datong, and Xinyi District weather driven by official CWA town forecast scripts
+- all 12 Taipei districts covered by official CWA town forecasts, with temperature, apparent temperature and weather from the same timestamp
+- unavailable forecasts shown honestly; failed refreshes retain and label the last valid forecast for the same district
 - weather-selected fantasy scene backgrounds with reload-time scene rotation
 - 90 approved district backgrounds across 7 Taipei districts and 15 landmarks, including Taipei 101 in Xinyi
 - Google Sheet runtime restaurant loading
@@ -43,7 +44,9 @@ npm run build:pages
 ## GitHub Pages
 
 - pushes to `codex/initial-mvp` now trigger automatic GitHub Pages deployment
+- the workflow must pass `npm test` before building or deploying
 - the workflow uses `npm run build:pages` with a relative asset base so the site works under the Pages subpath
+- a release is verified only after the workflow succeeds and live `version.json` plus weather UI match the deployed commit and official forecast
 
 ## Repo Layout
 
@@ -64,7 +67,7 @@ The repository now includes:
 - bundled fallback snapshot refreshed from your published Google Sheet
 - runtime sheet sources switched to the owner's published Google Sheet
 - runtime Google Sheet loading with bundled fallback snapshot
-- Taipei weather scene selection via official CWA county forecast data
+- Taipei weather scene selection via official CWA town forecast data; no fabricated fallback weather
 - location-aware candidate pool using `district -> city -> fallback`
 - destiny card filtering with fallback behavior
 - simplified altar header with fixed two-line title

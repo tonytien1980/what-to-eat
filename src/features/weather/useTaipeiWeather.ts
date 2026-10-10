@@ -1,91 +1,60 @@
 import { useEffect, useState } from 'react';
 import type { LocationPreference } from '../location/types';
-import {
-  createFallbackTaipeiWeatherSnapshot,
-  loadTaipeiWeatherSnapshot,
-} from './cwa-county';
+import { loadTaipeiWeatherSnapshot } from './cwa-county';
 import type { TaipeiWeatherSnapshot } from './types';
 
 export const WEATHER_REFRESH_INTERVAL_MS = 5 * 60 * 1000;
+type WeatherStatus = 'loading' | 'ready' | 'stale' | 'unavailable';
 
-export function useTaipeiWeather(
-  location: Pick<LocationPreference, 'city' | 'district'> | null,
-) {
-  const liveWeatherEnabled =
-    import.meta.env.MODE !== 'test' || globalThis.__ENABLE_LIVE_WEATHER_IN_TEST__ === true;
-  const [snapshot, setSnapshot] = useState<TaipeiWeatherSnapshot>(() =>
-    import.meta.env.MODE === 'test'
-      ? createFallbackTaipeiWeatherSnapshot(location)
-      : createFallbackTaipeiWeatherSnapshot(location, Math.random()),
-  );
-  const [status, setStatus] = useState<'loading' | 'ready' | 'error'>(
-    import.meta.env.MODE === 'test' ? 'ready' : 'loading',
+export function useTaipeiWeather(location: Pick<LocationPreference, 'city' | 'district'> | null) {
+  const enabled = import.meta.env.MODE !== 'test' || globalThis.__ENABLE_LIVE_WEATHER_IN_TEST__ === true;
+  const key = `${location?.city ?? ''}/${location?.district ?? ''}`;
+  const [state, setState] = useState<{ key: string; snapshot: TaipeiWeatherSnapshot | null; status: WeatherStatus }>(
+    { key, snapshot: null, status: enabled ? 'loading' : 'unavailable' },
   );
   const [refreshTick, setRefreshTick] = useState(0);
+  const snapshot = state.key === key ? state.snapshot : null;
+  const status: WeatherStatus = snapshot && Date.parse(snapshot.validUntil) <= Date.now()
+    ? 'stale' : state.key === key ? state.status : 'loading';
 
   useEffect(() => {
-    if (!liveWeatherEnabled || typeof window === 'undefined') {
-      return;
-    }
-
-    const refreshWeather = () => {
-      setRefreshTick((previous) => previous + 1);
-    };
-
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible') {
-        refreshWeather();
-      }
-    };
-
-    const intervalId = window.setInterval(
-      refreshWeather,
-      WEATHER_REFRESH_INTERVAL_MS,
-    );
-
-    window.addEventListener('focus', refreshWeather);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-
+    if (!enabled) return;
+    const refresh = () => setRefreshTick(tick => tick + 1);
+    const visible = () => { if (document.visibilityState === 'visible') refresh(); };
+    const interval = window.setInterval(refresh, WEATHER_REFRESH_INTERVAL_MS);
+    window.addEventListener('focus', refresh);
+    document.addEventListener('visibilitychange', visible);
     return () => {
-      window.clearInterval(intervalId);
-      window.removeEventListener('focus', refreshWeather);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.clearInterval(interval);
+      window.removeEventListener('focus', refresh);
+      document.removeEventListener('visibilitychange', visible);
     };
-  }, [liveWeatherEnabled]);
+  }, [enabled]);
 
   useEffect(() => {
-    if (!liveWeatherEnabled) {
-      return;
-    }
+    if (!enabled || !snapshot) return;
+    const remaining = Date.parse(snapshot.validUntil) - Date.now();
+    if (remaining <= 0) return;
+    const timeout = window.setTimeout(() => setRefreshTick(tick => tick + 1), remaining);
+    return () => window.clearTimeout(timeout);
+  }, [enabled, snapshot]);
 
-    let isCancelled = false;
-    setStatus('loading');
-    setSnapshot(createFallbackTaipeiWeatherSnapshot(location, Math.random()));
+  useEffect(() => {
+    if (!enabled) return;
+    let active = true;
+    setState(previous => previous.key === key && previous.snapshot
+      ? previous : { key, snapshot: null, status: 'loading' });
+    loadTaipeiWeatherSnapshot(location).then(next => {
+      if (active) setState({ key, snapshot: next, status: next ? 'ready' : 'unavailable' });
+    }).catch(() => {
+      if (active) setState(previous => ({
+        key,
+        snapshot: previous.key === key ? previous.snapshot : null,
+        status: previous.key === key && previous.snapshot ? 'stale' : 'unavailable',
+      }));
+    });
+    return () => { active = false; };
+  }, [enabled, key, location?.city, location?.district, refreshTick]);
 
-    loadTaipeiWeatherSnapshot(location, Math.random())
-      .then((nextSnapshot) => {
-        if (isCancelled) {
-          return;
-        }
-
-        setSnapshot(nextSnapshot);
-        setStatus('ready');
-      })
-      .catch(() => {
-        if (isCancelled) {
-          return;
-        }
-
-        setStatus('error');
-      });
-
-    return () => {
-      isCancelled = true;
-    };
-  }, [liveWeatherEnabled, location?.city, location?.district, refreshTick]);
-
-  return {
-    snapshot,
-    status,
-  };
+  return { snapshot, status };
 }

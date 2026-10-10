@@ -36,14 +36,6 @@ const sceneLabelMap: Record<SceneKey, string> = {
   crystal_cavern: '水晶洞窟',
 };
 
-const timeLabelMap = {
-  TD: '今天白天',
-  TN: '今晚明晨',
-  TM: '明天白天',
-  TMN: '明天夜晚',
-  '3hr': '中山區 3 小時天氣預報',
-} as const;
-
 function resolveBackgroundFile(relativePath: string) {
   return backgroundModules[`../../../images/backgrounds/shared/${relativePath}`];
 }
@@ -176,7 +168,7 @@ export function resolveSceneSelection(
   const label =
     variantKey !== 'default' && scene.variants[variantKey]
       ? scene.variants[variantKey]!.label_zh
-      : timeLabelMap[period.type];
+      : period.weatherText;
 
   return {
     sceneKey,
@@ -194,6 +186,21 @@ export function resolveSceneSelection(
 
 export function getAltarSceneAsset() {
   return getSceneAsset('crystal_cavern', 'default');
+}
+
+export function getNeutralSceneSelection(randomValue = 0): ActiveSceneSelection {
+  const sceneKeys = (Object.keys(manifest.scenes) as SceneKey[]).filter(
+    key => manifest.scenes[key].type !== 'special_indoor',
+  );
+  const sceneKey = sceneKeys[Math.floor(normalizeRandomValue(randomValue) * sceneKeys.length)];
+  return {
+    sceneKey,
+    sceneLabel: sceneLabelMap[sceneKey],
+    variantKey: 'default',
+    variantLabel: '天氣未確認',
+    imageUrl: getSceneAsset(sceneKey, 'default', randomValue),
+    assetPath: `shared/${manifest.scenes[sceneKey].default}`,
+  };
 }
 
 export const resolveSharedSceneSelection = resolveSceneSelection;

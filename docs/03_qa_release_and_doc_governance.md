@@ -51,8 +51,12 @@
 - `出發去吃` 會開啟正確 map URL
 - 每局至少有一條 reroll 路徑
 - 特殊 destiny rule 會正確加送 bonus reroll
-- 中山區天氣可載入並影響場景選擇
-- 若官方天氣資料失敗，fallback weather 仍可顯示
+- 臺北市 12 區的天氣可載入並影響各自場景；所有正式背景行政區必須具備 CWA mapping
+- 官方天氣首次失敗或無 mapping 時顯示無法取得與中性背景，不得以固定雷雨、溫度作 fallback
+- 同區刷新失敗保留上次資料並明確標記待更新；切區不得殘留舊區天氣，抽選不受影響
+- 有效 Wx 沒有對應素材時，使用 default 圖與官方天氣文字，不可錯標成中山區預報
+- `Time_3hr / T / AT / Wx` 必須對應同一有效時段，涵蓋跨年、過期、錯誤時間、缺值與未來 24 小時範圍驗證
+- 載入器需驗證 10 秒逾時、失敗不快取、同桶重試、成功快取及到期刷新；真實 hook / loader / App 整合測試必須覆蓋全 12 區與背景一致性
 - 重新整理頁面時，同天候可輪替到其他相容場景
 - 首頁需顯示 `預計冒險地 3 小時天氣預報`
 - 若遠端版本 manifest 與目前 bundle 的 build id 不同，首頁需顯示 `偵測到新版本，點此更新`
@@ -186,7 +190,10 @@ Apps Script workflow 補充：
 ## Deployment
 
 - GitHub Pages workflow：`.github/workflows/deploy-pages.yml`
+- workflow 必須先通過 `npm test` 才能執行 `npm run build:pages`，不得忽略測試失敗；`weather-release-gate.test.ts` 守住此順序
 - Pages 應發佈 `dist/` artifact
+- 修復分支完成不等於正式環境完成；發布必須整合至 `codex/initial-mvp`，核對對應 SHA 的 Actions 成功、正式 `version.json` build id，以及瀏覽器實際載入的新 bundle
+- 天氣發布另需將正式 UI 的時段、天氣、溫度、體感與背景對照當時 CWA 資料；不得只用無痕視窗有更新或 Git push 成功當成驗收。外部資料不可用時須驗證誠實的失敗狀態，不能保證 CWA 永不斷線
 
 ## Release Rules
 
